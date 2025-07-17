@@ -6,6 +6,10 @@ const postSchema = new mongoose.Schema(
       type: String,
     },
     favoritedByUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    photo: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
