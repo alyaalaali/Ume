@@ -5,7 +5,8 @@ const Comment = require("./../models/comment")
 
 
 router.get("/:postId", commentsCtrl.comments_index_get)
-router.get("/:postId", commentsCtrl.comments_index_get)
+router.post("/:postId", commentsCtrl.comments_create_post)
+
 
 
 
