@@ -13,7 +13,7 @@ exports.post_index_get = async (req, res) => {
     })
     res.status(200).render("posts/index.ejs", { posts })
   } catch (error) {
-    res.status(500).json({ error: "Page not found" })
+    res.status(500).json({ error: "Page not found!" })
   }
 }
 
@@ -21,7 +21,7 @@ exports.post_create_get = async (req, res) => {
   try {
     res.status(200).render("posts/new.ejs")
   } catch (error) {
-    res.status(500).json({ error: "Failed to spawn new page" })
+    res.status(500).json({ error: "Failed to render new page!" })
   }
 }
 
@@ -36,7 +36,7 @@ exports.post_create_post = async (req, res) => {
     await Post.create(postData)
     res.redirect("/posts")
   } catch (error) {
-    res.status(500).json({ error: "Failed to create post" })
+    res.status(500).json({ error: "Failed to create post!" })
   }
 }
 
@@ -46,8 +46,32 @@ exports.post_show_get = async (req, res) => {
       path: "userId",
       select: "username displayName"
     })
-    res.status(200).render("show.ejs", { post })
+    res.status(200).render("posts/show.ejs", { post })
   } catch (error) {
-    res.status(500).json({ error: "Failed to show specific post" })
+    res.status(500).json({ error: "Failed to show specific post!" })
+  }
+}
+
+exports.post_edit_get = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).populate({
+      path: "userId",
+      select: "username displayName"
+    })
+    res.status(200).render("posts/edit.ejs", { post })
+  } catch (error) {
+    res.status(500).json({ error: "Failed to render edit page!" })
+  }
+}
+
+exports.post_update_put = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    )
+    res.redirect(`/posts/${post._id}`)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to edit post!" })
   }
 }
