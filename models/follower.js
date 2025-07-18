@@ -8,7 +8,7 @@ const followerSchema = new mongoose.Schema({
     required: true,
   },
   followingId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  followersId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+  followersId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 })
 
 const Follower = mongoose.model("Follower", followerSchema)
