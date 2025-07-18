@@ -39,3 +39,15 @@ exports.post_create_post = async (req, res) => {
     res.status(500).json({ error: "Failed to create post" })
   }
 }
+
+exports.post_show_get = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id).populate({
+      path: "userId",
+      select: "username displayName"
+    })
+    res.status(200).render("show.ejs", { post })
+  } catch (error) {
+    res.status(500).json({ error: "Failed to show specific post" })
+  }
+}

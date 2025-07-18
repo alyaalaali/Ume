@@ -7,5 +7,6 @@ const postCtrl = require("../controllers/postsCtrl.js")
 router.get("/", postCtrl.post_index_get)
 router.get("/new", postCtrl.post_create_get)
 router.post("/:userId", postCtrl.post_create_post)
+router.get("/:id", postCtrl.post_show_get)
 
 module.exports = router
