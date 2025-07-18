@@ -10,5 +10,6 @@ router.post("/:userId", postCtrl.post_create_post)
 router.get("/:id", postCtrl.post_show_get)
 router.get("/:id/edit", postCtrl.post_edit_get)
 router.put("/:id", postCtrl.post_update_put)
+router.delete("/:id", postCtrl.post_delete_destroy)
 
 module.exports = router

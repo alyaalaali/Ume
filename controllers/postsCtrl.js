@@ -75,3 +75,12 @@ exports.post_update_put = async (req, res) => {
     res.status(500).json({ error: "Failed to edit post!" })
   }
 }
+
+exports.post_delete_destroy = async (req, res) => {
+  try {
+    await Post.findByIdAndDelete(req.params.id)
+    res.status(200).redirect("/posts")
+  } catch {
+    res.status(500).json({ error: "Failed to destroy post!" })
+  }
+}
