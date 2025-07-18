@@ -4,9 +4,11 @@ const Comment = require("./../models/comment")
 
 
 
+
 router.get("/:postId", commentsCtrl.comments_index_get)
 router.post("/:postId", commentsCtrl.comments_create_post)
-router.PUT("/:commentId", commentsCtrl.comments_update_put)
+router.put("/:commentId", commentsCtrl.comments_update_put)
+router.delete("/:commentId", commentsCtrl.comments_delete_delete)
 
 
 
