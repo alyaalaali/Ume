@@ -20,7 +20,7 @@
 
 ### Entity Relationship Diagram
 
-## ![alt text](../insta-dupe/public/images/readme-images/image-1.png)
+## ![Wireframes](../insta-dupe/public/images/readme-images/image-1.png)
 
 ### Prototype
 
