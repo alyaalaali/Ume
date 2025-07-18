@@ -51,13 +51,12 @@ app.get('/', (req, res) => {
 })
 
 // Require Routers
-
+const postRouter = require("./routes/postRouter.js")
 
 // use Routers
-
+app.use("/posts", postRouter)
 
 // Listener
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })
-
