@@ -51,10 +51,11 @@ app.get('/', (req, res) => {
 })
 
 // Require Routers
+const commentsRouter = require("./routes/comments")
 
 
 // use Routers
-
+app.use("/comments", commentsRouter)
 
 // Listener
 app.listen(port, () => {
