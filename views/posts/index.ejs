@@ -1,0 +1,13 @@
+<h1>All posts</h1>
+
+<% posts.forEach((post) => { %>
+  <img src="<%= post.photo %>" alt="post image"/>
+  <%= post.caption %>
+  <% if (post.comments && post.comments.length) { %>
+    <h3>Comments:</h3>
+    <% post.comments.forEach((com) => { %>
+      <%= com.description %>
+    <% }) %>
+  <% } %>
+<% }) %>
+
