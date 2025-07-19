@@ -51,14 +51,17 @@ app.get("/", async (req, res) => {
 });
 
 // Require Routers
+const authController = require("./controllers/auth.js");
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments")
 
-// use Routers
 
+// use Routers
+app.use("/auth", authController);
 
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
+
 
 // Listener
 app.listen(port, () => {
