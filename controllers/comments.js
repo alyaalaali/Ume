@@ -1,22 +1,24 @@
 const Comment = require("./../models/comment")
 const Post = require("./../models/post")
 
-exports.comments_index_get = async (req, res) => {
-  const post_commnets = await Comment.find({ postId: req.params.postId })
-  res.send(post_commnets)
+
+
+exports.comment_index_get = async (req, res) => {
+  const postCommnets = await Comment.find({ postId: req.params.postId })
+  res.send(postCommnets) 
 }
 
-exports.comments_create_post = async (req, res) => {
+exports.comment_create_post = async (req, res) => {
   req.body.postId = req.params.postId
   req.body.userId = req.session.user._id
-  let newComment = await Comment.create(req.body)
-  
+  const newComment = await Comment.create(req.body)
+
   Post.findByIdAndUpdate(req.body.postId, {
     $push: { comments: newComment._id },
   })
 }
 
-exports.comments_update_put = async (req, res) => {
+exports.comment_update_put = async (req, res) => {
   const comment = await Comment.findById(req.params.commentId)
 
   if (comment.userId.equals(req.session.user._id)) {
@@ -28,7 +30,7 @@ exports.comments_update_put = async (req, res) => {
   }
 }
 
-exports.comments_delete_delete = async (req, res) => {
+exports.comment_delete_delete = async (req, res) => {
   const comment = await Comment.findById(req.params.commentId)
 
   if (comment.userId.equals(req.session.user._id)) {
