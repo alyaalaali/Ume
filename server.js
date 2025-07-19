@@ -38,8 +38,22 @@ app.use(
 //passUserToView middleware
 
 // Root Route
-app.get("/", (req, res) => {
-  res.send("Your app is connected . . . ")
+app.get("/", async (req, res) => {
+  const User = require("./models/user.js")
+
+  // let dummyUser = await User.create({
+  //   username: "dummyUser",
+  //   password: "dummyPassword",
+  //   displayName: "dummyDisplay",
+  // })
+  
+  req.session.user = {
+    _id: "687b2956c13f4b626c7d813a",
+    username: "dummyUser",
+    password: "dummyPassword"
+  }
+
+  res.send(`Your app is connected . . . \n ur current user is ${req.session.user.username}`)
 })
 
 // Require Routers
@@ -47,6 +61,8 @@ const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments")
 
 // use Routers
+
+
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 
