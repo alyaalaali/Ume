@@ -30,9 +30,8 @@ exports.post_create_post = async (req, res) => {
     const postData = {
       photo: req.body.photo,
       caption: req.body.caption,
-      userId: req.session.userId
+      userId: req.session.user.userId
     }
-
     await Post.create(postData)
     res.redirect("/posts")
   } catch (error) {
@@ -48,7 +47,7 @@ exports.post_show_get = async (req, res) => {
     })
     res.status(200).render("posts/show.ejs", { post })
   } catch (error) {
-    res.status(500).json({ error: "Failed to show specific post!" })
+    res.status(500).json({ error: "Failed to show specific post!"})
   }
 }
 
