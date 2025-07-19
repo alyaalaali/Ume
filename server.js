@@ -46,6 +46,10 @@ app.get("/", async (req, res) => {
   res.send(`Your app is connected . . . `)
 })
 
+app.get("/", async (req, res) => {
+  res.render("index.ejs");
+});
+
 // Require Routers
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments")
