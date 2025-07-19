@@ -38,7 +38,6 @@ app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
 
-
 //passUserToView middleware
 
 // Root Route
@@ -49,12 +48,13 @@ app.get("/", async (req, res) => {
 // Require Routers
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments")
+const followRouter = require("./routes/follows.js")
 
 // use Routers
 
-
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
+app.use("/follows", followRouter)
 
 // Listener
 app.listen(port, () => {
