@@ -1,11 +1,18 @@
 <h1>Posted by: <%= post.userId.username %></h1>
 
-<img src="<%= post.photo %>"/>
+<img src="<%= post.photo %>" />
 <p><%= post.caption %></p>
 
 <a href="/posts/<%= post._id %>/edit"> Edit </a>
 
-<form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+<form action="/comments/<%= post._id%>" method="post">
+  <label for="description">Write a comment: </label>
+  <input type="text" name="description" id="description" />
+  <button type="submit">Send</button>
+</form>
 
+<form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+  <label for="comment">Write a comment: </label>
+  <input type="text" name="comment" id="comment" />
   <button type="submit">Delete this post</button>
 </form>
