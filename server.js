@@ -26,10 +26,12 @@ app.use(
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
+const createDummyUser = require("./middlewares/create-dummy-user.js")
 
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
+app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
