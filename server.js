@@ -54,18 +54,12 @@ app.get("/", (req, res) => {
 // Require Routers
 const authRouter = require('./routes/auth.js')
 const postRouter = require("./routes/postRouter.js")
-
 const commentsRouter = require("./routes/comments.js")
-
-
-// use Routers
-app.use('/auth', authRouter)
-const commentsRouter = require("./routes/comments")
 const followRouter = require("./routes/follows.js")
 
 // use Routers
 
-
+app.use("/auth", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)

@@ -9,8 +9,9 @@ html {
 }
 @font-face {
   font-family: "GeologicaBold";
-  src: url("./../fonts/Geologica/static/Geologica-Bold.ttf");
+  src: url("./../fonts/Geologica/Geologica-Bold.ttf");
 }
+
 
 body {
   margin: 0;
@@ -99,7 +100,17 @@ html {
 
 @font-face {
   font-family: "DMSansThin";
-  src: url("./../fonts/Geologica/static/DMSans_36pt-Thin");
+  src: url("./../fonts/DMSans/DMSans_36pt-Thin.ttf");
+}
+
+@font-face {
+  font-family: "DMSansRegular";
+  src: url("./../fonts/DMSans/DMSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "";
+  src: url();
 }
 
 body {
