@@ -37,13 +37,18 @@ header .pageName {
   font-size: 3rem;
 }
 
-header img,
- footer img{
+header img{
   height: 30%;
+}
+
+header img,
+footer img{
   width: auto;
   filter: invert(100%);
   transition: all  0.1s;
-
+}
+footer img{
+  height: 40%;
 }
 header img:hover,
 footer img:hover{
