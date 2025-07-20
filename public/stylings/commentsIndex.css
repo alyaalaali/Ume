@@ -1,4 +1,4 @@
-.newCommentForm{
+.newCommentForm {
   height: 18vw;
   width: 99vw;
   background-color: #24293d;
@@ -9,7 +9,6 @@
   align-items: center;
 }
 
-
 .inputContainer input {
   width: 70%;
   height: 100%;
@@ -19,7 +18,7 @@
   color: white;
 }
 
-.inputContainer input:focus{
+.inputContainer input:focus {
   border: none;
 }
 .inputContainer {
@@ -32,15 +31,83 @@
   padding: 0rem 2rem;
   border-radius: 20px;
 }
-.inputContainer img{
+.inputContainer img {
   height: 40%;
   filter: invert(100%);
 }
-.inputContainer button{
+.inputContainer button {
   background-color: transparent;
   border: none;
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
+  
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: white;
+  width: 100%;
+}
+
+.commentsSection{
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  flex-direction:column ;
+}
+.comment {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: #BFBFBF 3px solid ;
+  padding-bottom: 3rem ;
+  font-family: "GeologicaBold";
+}
+
+.commenterImage{
+  height: 80%;
+}
+
+.commentDetails{
+  width: 50%;
+  border: white solid 1px;
+  height: 100%;
+}
+
+.commentButtons{
+  height: 40%;
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+}
+
+.commentButtons img {
+  height: 100%;
+  aspect-ratio:1/1;
+  filter: invert(100%);
+}
+
+.commentDetails{
+  display: flex;
+  flex-direction: column;
+}
+
+.commentDetails div{
+  display: flex;
+  justify-content: left;
+  align-items: center; 
+  width: 50% ;
+  gap: 1rem;
+  font-size: 1.75rem;
+  font-family: "";
+}
+
+.commentContent {
+  font-size: 2rem;
 }

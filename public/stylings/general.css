@@ -11,6 +11,11 @@ html {
   font-family: "GeologicaBold";
   src: url("./../fonts/Geologica/static/Geologica-Bold.ttf");
 }
+
+@font-face {
+  font-family: "GeologicaThin";
+  src: url("./../fonts/Geologica/static/Geologica-Thin.ttf");
+}
 body {
   margin: 0;
   width: 100%;

@@ -21,7 +21,7 @@ const createDummyUser = async (req, res, next) => {
       displayName: "dummyUser",
     }
   }
-
+  
   next()
 }
 
