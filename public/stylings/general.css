@@ -7,10 +7,32 @@ html {
   width: 100%;
   min-height: 100vh;
 }
+
 @font-face {
   font-family: "GeologicaBold";
   src: url("./../fonts/Geologica/static/Geologica-Bold.ttf");
 }
+
+@font-face {
+  font-family: "GeologicaThin";
+  src: url("./../fonts/Geologica/static/Geologica-Thin.ttf");
+}
+
+@font-face {
+  font-family: "Geologica";
+  src: url("./../fonts/Geologica/static/Geologica.ttf");
+}
+
+@font-face {
+  font-family: "DMSansBold";
+  src: url("./../fonts/Geologica/static/DMSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "DMSansThin";
+  src: url("./../fonts/Geologica/static/DMSans_36pt-Thin");
+}
+
 body {
   margin: 0;
   width: 100%;
