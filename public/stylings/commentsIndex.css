@@ -68,6 +68,7 @@ main {
   border-bottom: #BFBFBF 3px solid ;
   padding-bottom: 3rem ;
   font-family: "GeologicaBold";
+  margin-top: 2rem;
 }
 
 .commenterImage{
@@ -76,7 +77,6 @@ main {
 
 .commentDetails{
   width: 50%;
-  border: white solid 1px;
   height: 100%;
 }
 
@@ -105,9 +105,17 @@ main {
   width: 50% ;
   gap: 1rem;
   font-size: 1.75rem;
-  font-family: "";
 }
 
 .commentContent {
   font-size: 2rem;
+}
+
+.commenterName{
+  font-family: "DMSansRegular";
+}
+
+.commentTime{
+  color: #7F7F7F;
+  font-family: "DMSansRegular";
 }

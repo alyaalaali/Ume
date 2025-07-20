@@ -9,13 +9,29 @@ html {
 }
 @font-face {
   font-family: "GeologicaBold";
-  src: url("./../fonts/Geologica/static/Geologica-Bold.ttf");
+  src: url("./../fonts/Geologica/Geologica-Bold.ttf");
 }
 
 @font-face {
   font-family: "GeologicaThin";
-  src: url("./../fonts/Geologica/static/Geologica-Thin.ttf");
+  src: url("./../fonts/Geologica/Geologica-Thin.ttf");
 }
+
+@font-face {
+  font-family: "DMSansThin";
+  src: url("./../fonts/DMSans/DMSans_36pt-Thin.ttf");
+}
+
+@font-face {
+  font-family: "DMSansRegular";
+  src: url("./../fonts/DMSans/DMSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "";
+  src: url();
+}
+
 body {
   margin: 0;
   width: 100%;
