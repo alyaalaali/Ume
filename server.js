@@ -11,6 +11,11 @@ const app = express()
 // Database Configuration
 const mongoose = require("./config/db")
 
+app.engine("html", require("ejs").renderFile)
+app.set("view engine", "ejs")
+// got a rendering issue? solved it with
+// https://stackoverflow.com/questions/23595282/error-no-default-engine-was-specified-and-no-extension-was-provided
+
 // set Port Configuration
 const port = process.env.PORT ? process.env.PORT : 3000
 
@@ -62,7 +67,6 @@ app.use("/auth", authRouter)
 const followRouter = require("./routes/follows.js")
 
 // use Routers
-
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
