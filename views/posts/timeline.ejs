@@ -1,0 +1,44 @@
+<head>
+  <link rel="stylesheet" href="/stylings/general.css" />
+  <link rel="stylesheet" href="/stylings/timeline.css" />
+</head>
+<%- include("./../partials/_header.ejs")%>
+<search class="postsSection">
+  <div class="post">
+    <div class="postHeader">
+      <div class="postDetails">
+        <img
+          class="postOwnerProfile"
+          src="/images/icons/dummyUser.png"
+          alt=""
+        />
+        <div>
+          <p class="postOwner">Chris</p>
+          <p class="postTime">3 hours ago</p>
+        </div>
+      </div>
+      <img class="postOptions" src="/images/icons/options.png" alt="" />
+    </div>
+    <div class="postImageContainer"></div>
+    <p class="postCaption">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    </p>
+    <div class="postButtons">
+      <div class="reactions">
+        <div class="likes">
+          <img src="/images/icons/heart.png" alt="" />
+          <p>1</p>
+        </div>
+        <div class="comments">
+          <img src="/images/icons/heart.png" alt="" />
+          <p>1</p>
+        </div>
+      </div>
+      <div class="share">
+        <img src="/images/icons/heart.png" alt="" />
+        <p>Share</p>
+      </div>
+    </div>
+  </div>
+</search>
+<%- include("./../partials/_footer.ejs")%>
