@@ -8,7 +8,7 @@ exports.following_index_get = async (req, res) => {
       path: "followingId",
       select: "username displayName",
     })
-    res.send(followingList)
+    res.render("users/follow", { followingList })
   } catch (error) {
     res.status(500).json({ error: "failed to get the followings list!" })
   }
@@ -21,7 +21,7 @@ exports.follower_index_get = async (req, res) => {
       path: "followersId", //
       select: "username displayName",
     })
-    res.send(followersList)
+    res.render("users/follow", { followersList })
   } catch (error) {
     res.status(500).json({ error: "failed to get the followers list!" })
   }

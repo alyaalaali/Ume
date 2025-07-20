@@ -1,5 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Profile Page</title>
+</head>
+<body>
+
 <h2><%= user.displayName %> 
-<h3><%= user.username%></h2></h3>
+<h3><%= user.username%></h3>
 
 <img src="<% user.photo %>" alt="<%=username%> profile photo" />
 <h2><%=user.bio%></h2>
@@ -17,3 +26,5 @@
 <p><%= post.caption%></p>
 <% }) %>
 </div>
+</body>
+</html>
