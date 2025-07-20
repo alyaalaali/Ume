@@ -25,6 +25,7 @@
       <div id="followers" class="tab-pane fade in active">
         <ul>
           <% followersList.forEach(user => { %>
+
           <li>
             <a href="/profile/<%= user._id %>"><%= user.displayName %></a>
           </li>
@@ -34,6 +35,7 @@
       <div id="following" class="tab-pane fade">
         <ul>
           <% followingList.forEach(user => { %>
+
           <li>
             <a href="/profile/<%= user._id %>"><%= user.displayName %></a>
           </li>
