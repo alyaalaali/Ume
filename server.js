@@ -60,7 +60,6 @@ const commentsRouter = require("./routes/comments.js")
 
 // use Routers
 app.use('/auth', authRouter)
-=======
 const commentsRouter = require("./routes/comments")
 const followRouter = require("./routes/follows.js")
 
