@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>following List</title>
+  </head>
+  <body>
+    <h1>Friends</h1>
+    <ul>
+      <%followingId.forEach(user => { %>
+      <li><a href="/profile/<%= user._id%>" <%="user.DisplayName%"></a></li>
+      <% }) %>
+    </ul>
+  </body>
+</html>
