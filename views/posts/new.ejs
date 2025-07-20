@@ -1,14 +1,20 @@
+<head>
+  <link rel="stylesheet" href="/stylings/general.css" />
+</head>
+<%- include("./../partials/_header.ejs")%>
+
 <h1>upload new post</h1>
 <form action="/posts/<%= user.userId %>" method="POST">
   <label for="photo">URL: </label>
-  <input type="text" name="photo" id="photo">
-  
-  <br>
+  <input type="text" name="photo" id="photo" />
+
+  <br />
 
   <label for="caption">caption: </label>
-  <input type="text" name="caption" id="caption">
+  <input type="text" name="caption" id="caption" />
 
-  <br>
+  <br />
 
   <button type="submit">Upload post</button>
 </form>
+<%- include("./../partials/_footer.ejs")%>
