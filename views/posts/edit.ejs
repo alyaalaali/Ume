@@ -1,15 +1,12 @@
+<img src="/uploadImeges/<%= post.photo %>" alt="Profile Picture" width="150" />
+
 <h1>Edit: <img src="<%= post.photo %>"></h1>
 
-<form action="/posts/<%= post._id %>?_method=PUT" method="POST">
-  <label for="photo">URL: </label>
-  <input type="text" name="photo" id="photo" value="<%= post.photo %>">
-  
-  <br>
-
-  <label for="caption">caption: </label>
-  <input type="text" name="caption" id="caption" value="<%= post.caption %>">
-
-  <br>
+<form
+  action="/posts/<%= post._id %>?_method=PUT"
+  method="POST"
+>
+  <input type="text" name="caption" id="caption" value="<%= post.caption %>" />
 
   <button type="submit">Upload post</button>
 </form>
