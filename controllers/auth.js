@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("../models/user.js")
+const Post = require("../models/post.js")
+const Follow = require("../models/post.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
@@ -84,4 +86,26 @@ exports.auth_updatePassword = async (req, res) => {
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
   res.redirect("/")
+}
+
+exports.profile_get = async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  const posts = await Post.find({ username: req.params.userId })
+  const follows = await Follow.findOne({ userId: req.params.userId })
+  let followersId = []
+  let followingId = []
+  if (follows) {
+    if (follows.followersId) {
+      followersId = follows.followersId
+    }
+    if (follows.followingId) {
+      followingId = follows.followingId
+    }
+  }
+  res.render("users/profile", {
+    user,
+    posts: posts,
+    followerCount: followersId.length,
+    followingCount: followingId.length,
+  })
 }
