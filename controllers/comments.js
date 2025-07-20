@@ -23,7 +23,7 @@ exports.comment_delete_delete = async (req, res) => {
     await Post.findByIdAndUpdate(comment.postId, {
       $pull: { comments: comment._id },
     })
-    
+
     await Comment.findByIdAndDelete(comment._id)
     res.send("Your comment has been deleted successfully !")
   } else {
