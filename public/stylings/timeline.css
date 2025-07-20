@@ -77,9 +77,16 @@ main {
 .postImageContainer{
   height: 55%;
   width: 100%;
+  overflow: hidden;
   background-color:white ;
-  border-radius: 15px;
+  border-radius: 15px;  
 }
+
+.postImageContainer img {
+  object-fit: cover;
+  width: 100% ;
+}
+
 
 .postCaption{
   font-size: 2.4rem;
@@ -99,7 +106,7 @@ main {
 .reactions {
   display: flex;
   gap: 2rem;
-  
+
 }
 .reactions .likes,
 .reactions .comments,
