@@ -12,9 +12,90 @@ html {
   src: url("./../fonts/Geologica/Geologica-Bold.ttf");
 }
 
+
+body {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #24293d;
+  height: 100%;
+}
+header {
+  height: 15vw;
+  width: 99vw;
+  background-color: #24293d;
+  box-shadow: 0 0 30px 0 rgba(66, 75, 114, 0.42);
+  display: flex;
+  padding: 0rem 3rem;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+}
+header .pageName {
+  font-family: "GeologicaBold";
+  font-size: 3rem;
+}
+
+header img{
+  height: 30%;
+}
+
+header img,
+footer img{
+  width: auto;
+  filter: invert(100%);
+  transition: all  0.1s;
+}
+footer img{
+  height: 40%;
+}
+header img:hover,
+footer img:hover{
+  filter: invert(0%);
+}
+
+footer {
+  height: 15vw;
+  width: 99vw;
+  background-color: #24293d;
+  box-shadow: 30px 30px 30px 30px rgba(66, 75, 114, 0.42);
+  display: flex;
+  color: white;
+  justify-content: space-around;
+  align-items: center;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@font-face {
+  font-family: "GeologicaBold";
+  src: url("./../fonts/Geologica/static/Geologica-Bold.ttf");
+}
+
 @font-face {
   font-family: "GeologicaThin";
-  src: url("./../fonts/Geologica/Geologica-Thin.ttf");
+  src: url("./../fonts/Geologica/static/Geologica-Thin.ttf");
+}
+
+@font-face {
+  font-family: "Geologica";
+  src: url("./../fonts/Geologica/static/Geologica.ttf");
+}
+
+@font-face {
+  font-family: "DMSansBold";
+  src: url("./../fonts/Geologica/static/DMSans-Bold.ttf");
 }
 
 @font-face {

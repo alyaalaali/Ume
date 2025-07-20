@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Profile Page</title>
+</head>
+<body>
+
+<h2><%= user.displayName %> 
+<h3><%= user.username%></h3>
+
+<img src="<% user.photo %>" alt="<%=username%> profile photo" />
+<h2><%=user.bio%></h2>
+
+<h3>posts</h3>
+<p><%= posts.length %></p>
+<h3>followers</h3>
+<p><a href="/follows/followers/<%= user._id %>"><%= followerCount %></a></p>
+<h2>following</h2>
+<p><a href="/follows/followings/<%= user._id %>"><%= followingCount %></a></p>
+
+<div>
+<% }) %> <% posts.forEach((post) => { %>
+<img src="<%= post.photo%>" alt="post image" />
+<p><%= post.caption%></p>
+<% }) %>
+</div>
+</body>
+</html>

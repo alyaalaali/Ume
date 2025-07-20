@@ -1,7 +1,9 @@
 <h1>All posts</h1>
 
 <% posts.forEach((post) => { %>
-  <img src="<%= post.photo %>" alt="post image"/>
+  <a href="/posts/<%= post._id %>">
+  <img src="/uploadImeges/<%= post.photo %>" alt="post image"/>
+  </a>
   <%= post.caption %>
   <% if (post.comments && post.comments.length) { %>
     <h3>Comments:</h3>
