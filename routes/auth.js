@@ -10,6 +10,7 @@ router.post('/sign-in', authCtrl.auth_signin_post)
 
 router.get('/sign-out', authCtrl.auth_signout_get)
 
-router.put('/:id', authCtrl.auth_updatePassword)
+router.get('/update-password', authCtrl.auth_updatePassword_get)
+router.put('/:id', authCtrl.auth_updatePassword_post)
 
 module.exports = router

@@ -53,7 +53,7 @@ exports.auth_signin_post = async (req, res) => {
   res.redirect('/')
 }
 
-exports.auth_updatePassword = async (req, res) => {
+exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
@@ -79,6 +79,10 @@ exports.auth_updatePassword = async (req, res) => {
       error.message
     )
   }
+}
+
+exports.auth_updatePassword_get = (req, res) => {
+  res.render('auth/update-password.ejs')
 }
 
 exports.auth_signout_get = (req, res) => {
