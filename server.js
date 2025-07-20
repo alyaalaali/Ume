@@ -31,7 +31,7 @@ const createDummyUser = require("./middlewares/create-dummy-user.js")
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-app.use(createDummyUser)
+// app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
@@ -45,16 +45,32 @@ app.get("/", async (req, res) => {
   res.send(`Your app is connected . . . `)
 })
 
+app.get("/", (req, res) => {
+  res.render("index.ejs", {
+    user: req.session.user,
+  });
+});
+
 // Require Routers
+const authRouter = require('./routes/auth.js')
 const postRouter = require("./routes/postRouter.js")
+
+const commentsRouter = require("./routes/comments.js")
+
+
+// use Routers
+app.use('/auth', authRouter)
+=======
 const commentsRouter = require("./routes/comments")
 const followRouter = require("./routes/follows.js")
 
 // use Routers
 
+
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
+
 
 // Listener
 app.listen(port, () => {
