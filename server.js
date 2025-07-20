@@ -48,29 +48,24 @@ app.get("/", async (req, res) => {
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     user: req.session.user,
-  });
-});
+  })
+})
 
 // Require Routers
-const authRouter = require('./routes/auth.js')
+const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
 
 const commentsRouter = require("./routes/comments.js")
 
-
 // use Routers
-app.use('/auth', authRouter)
-=======
-const commentsRouter = require("./routes/comments")
+app.use("/auth", authRouter)
 const followRouter = require("./routes/follows.js")
 
 // use Routers
 
-
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
-
 
 // Listener
 app.listen(port, () => {
