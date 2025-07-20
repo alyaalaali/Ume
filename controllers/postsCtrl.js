@@ -1,5 +1,5 @@
 const Post = require("../models/post.js")
-const upload = require("../config/multer.js")
+
 // API's
 
 exports.post_index_get = async (req, res) => {
