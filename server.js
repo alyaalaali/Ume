@@ -11,6 +11,11 @@ const app = express()
 // Database Configuration
 const mongoose = require("./config/db")
 
+app.engine("html", require("ejs").renderFile)
+app.set("view engine", "ejs")
+// got a rendering issue? solved it with
+// https://stackoverflow.com/questions/23595282/error-no-default-engine-was-specified-and-no-extension-was-provided
+
 // set Port Configuration
 const port = process.env.PORT ? process.env.PORT : 3000
 
@@ -48,22 +53,20 @@ app.get("/", async (req, res) => {
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     user: req.session.user,
-  });
-});
+  })
+})
 
 // Require Routers
-const authRouter = require('./routes/auth.js')
+const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments.js")
 const followRouter = require("./routes/follows.js")
 
 // use Routers
-
-app.use("/auth", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
-
+app.use("/auth", authRouter)
 
 // Listener
 app.listen(port, () => {
