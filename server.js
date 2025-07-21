@@ -67,7 +67,6 @@ const commentsRouter = require("./routes/comments.js")
 app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
-// app.use("/follows", followRouter)
 
 // Listener
 app.listen(port, () => {

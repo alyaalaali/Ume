@@ -3,7 +3,6 @@ const authCtrl = require("../controllers/auth")
 
 // Routes - Call API's
 
-
 router.get("/sign-up", authCtrl.auth_signup_get)
 router.post("/sign-up", authCtrl.auth_signup_post)
 
