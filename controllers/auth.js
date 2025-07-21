@@ -119,12 +119,15 @@ exports.profile_get = async (req, res) => {
 }
 
 exports.search_get = async (req, res) => {
-  res.render("users/search")
+  const users = await User.find()
+  console.log(users)
+  res.render("users/search.ejs", { users })
 }
 
 exports.search_post = async (req, res) => {
   try {
     const string = req.body.string
+    console.log(string)
     const users = await User.find({
       $or: [
         { username: { $regex: string, $options: "i" } },
@@ -132,7 +135,7 @@ exports.search_post = async (req, res) => {
       ],
     })
 
-    res.render("users/search", { users })
+    res.render("users/search.ejs", { users })
   } catch (error) {
     console.error(error)
     res.status(500)("Error searching users")
