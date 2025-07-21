@@ -1,0 +1,21 @@
+main {
+
+  height: 100%;
+  width: 100%;
+  
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+}
+
+.img {
+  max-width: 33%;
+  max-height: 33%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover, contain;
+}
+

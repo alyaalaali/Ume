@@ -11,7 +11,7 @@ exports.post_index_get = async (req, res) => {
         select: "username displayName",
       },
     })
-    res.status(200).render("posts/index.ejs", { posts })
+    res.status(200).render("posts/index.ejs", { posts , pageName: "Explorer"})
   } catch (error) {
     res.status(500).json({ error: "Page not found!" })
   }
