@@ -1,15 +1,24 @@
 <html>
   <head>
     <title>User Search</title>
+    <link rel="stylesheet" href="/stylings/general.css" />
   </head>
   <body>
-    <h1>User Search</h1>
+    <header>
+      <img
+        class="previousPage"
+        onclick=""
+        src="/images/icons/leftArrow.png"
+        alt=""
+      />
+      <h1 class="pageName"><%= pageName %></h1>
+      <img src="/images/icons/searchIcon.png" />
+    </header>
     <form action="/users/search" method="post">
       <input type="text" name="string" placeholder="Search for users..." />
       <button type="submit">Search</button>
     </form>
-    <% if (users) { %>
-    <h2>Search Results:</h2>
+    <% if (hasSearched){ %>
     <ul>
       <% users.forEach(user => { %>
       <li>
@@ -19,6 +28,8 @@
       </li>
       <% }); %>
     </ul>
+    <% } else if (users && users.length === 0) { %>
+    <p>No Users Found</p>
     <% } %>
   </body>
 </html>
