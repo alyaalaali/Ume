@@ -22,11 +22,15 @@
       <a href="/follows/followings/<%= user._id %>"><%= followingCount %></a>
     </p>
 
-    <form action="<%=user._id%>/follow" method="POST">
+    <form action="/users/<%=user._id%>/follow" method="POST">
       <button type="submit">Follow</button>
     </form>
 
-    <form action="<%=user._id%>/unfollow/" ?_method="DELETE" method="POST">
+    <form
+      action="/users/<%=user._id%>/unfollow/"
+      ?_method="DELETE"
+      method="POST"
+    >
       <button type="submit">Unfollow</button>
     </form>
 
@@ -38,4 +42,3 @@
     </div>
   </body>
 </html>
-

@@ -67,7 +67,6 @@ app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
-app.use("/auth", authRouter)
 
 // Listener
 app.listen(port, () => {
