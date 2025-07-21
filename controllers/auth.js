@@ -168,7 +168,7 @@ exports.search_post = async (req, res) => {
     res.status(500)("Error searching users")
   }
 }
-// site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
+// site used for search bar: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
 exports.follow_create_post = async (req, res) => {
   console.log("it works")
