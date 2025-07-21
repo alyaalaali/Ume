@@ -18,8 +18,8 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     bio: {
-      type: String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 )
