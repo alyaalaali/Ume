@@ -37,7 +37,6 @@ exports.post_create_post = async (req, res) => {
     await Post.create(postData)
     res.redirect("/posts")
   } catch (error) {
-    console.error(error)
     res.status(500).json({ error: "Failed to create post!" })
   }
 }
