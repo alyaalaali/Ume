@@ -1,15 +1,13 @@
-<h1>All posts</h1>
-
+<head>
+  <link rel="stylesheet" href="/stylings/general.css" />
+  <link rel="stylesheet" href="/stylings/explorer.css" />
+</head>
+<%- include("./../partials/_header.ejs")%>
 <% posts.forEach((post) => { %>
+  <div class="img">
   <a href="/posts/<%= post._id %>">
-  <img src="/uploadImages/<%= post.photo %>" alt="post image"/>
+    <img src="/uploadImages/<%= post.photo %>"  />
   </a>
-  <%= post.caption %>
-  <% if (post.comments && post.comments.length) { %>
-    <h3>Comments:</h3>
-    <% post.comments.forEach((com) => { %>
-      <%= com.description %>
-    <% }) %>
-  <% } %>
-<% }) %>
-
+  </div>
+  <% }) %>
+<%- include("./../partials/_footer.ejs") %>
