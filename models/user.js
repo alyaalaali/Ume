@@ -21,14 +21,14 @@ const userSchema = new mongoose.Schema(
       type: String
     },
     follow:{
-      followingsId:{
+      followingsId:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-      },
-      followersId:{
+      }],
+      followersId:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-      }
+      }]
     }
 },
   { timestamps: true }
