@@ -22,7 +22,7 @@
       <a href="/follows/followings/<%= user._id %>"><%= followingCount %></a>
     </p>
 
-    <form action="<%=user._id%>/follow" method="POST">
+    <form action="/users/<%=user._id%>/follow" method="POST">
       <button type="submit">Follow</button>
     </form>
 

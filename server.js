@@ -36,7 +36,7 @@ const createDummyUser = require("./middlewares/create-dummy-user.js")
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-// app.use(createDummyUser)
+app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
@@ -67,7 +67,6 @@ app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
-app.use("/auth", authRouter)
 
 // Listener
 app.listen(port, () => {

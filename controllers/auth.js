@@ -25,6 +25,8 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   // validation logic
+
+
   const user = await User.create(req.body)
   res.send(`Thanks for signing up ${user.username}`)
 }
@@ -144,17 +146,21 @@ exports.follow_create_post = async (req, res) => {
   console.log("it works")
   try {
     const followedUserId = req.params.userId
-    const user = req.session.user.userId
+    const userid = req.session.user.userId
+    // who is being followed
+    const followedUser = User.findById(followedUserId)
+    // who is trying to follow
+    const user = User.findById(userid)
 
-    await Follow.findByIdAndUpdate(followedUserId, {
-      $push: { followingId: user },
+    await Follow.findByIdAndUpdate(followedUser.follower, {
+      $push: { followingId: user._id },
     })
 
-    await Follow.findByIdAndUpdate(user, {
-      $push: { followersId: followedUserId },
+    await Follow.findByIdAndUpdate(user.follower, {
+      $push: { followersId: followedUser._id },
     })
-  } catch {
-    res.status(500).json({ error: "failed to follow user!" })
+  } catch (error) {
+    res.status(500).json({ error: `failed to follow user! ${error}` })
   }
 }
 
