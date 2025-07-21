@@ -16,5 +16,6 @@ router.put('/:id', authCtrl.auth_updatePassword_post)
 router.get('/:id/profile/edit', authCtrl.auth_updateProfileById_get)
 router.put('/:id/profile/', authCtrl.auth_updateProfileById_put)
 
+router.delete('/:id', authCtrl.auth_deleteProfileById_delete)
 
 module.exports = router

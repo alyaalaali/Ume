@@ -102,9 +102,9 @@ exports.auth_updatePassword_post = async (req, res) => {
   }
 }
 
-exports.auth_deleteProfileById = async (req, res) => {
+exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
-    await Auth.findByIdAndDelete(req.params.id)
+    await user.findByIdAndDelete(req.params.id)
     res.render('./user/confirm.ejs')
   } catch (error) {
     console.error('An error has occured')
