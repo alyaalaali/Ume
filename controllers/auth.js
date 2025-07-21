@@ -52,10 +52,29 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
-  res.redirect("/")
+  res.render("index.ejs")
 }
 
-exports.auth_updatePassword = async (req, res) => {
+exports.auth_updateProfileById_get = async (req, res) => {
+  res.render('users/edit.ejs')
+}
+
+exports.auth_updateProfileById_put = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
+    // res.redirect(`/users`)
+  } catch (error) {
+    console.log('An error has occured')
+  }
+}
+
+exports.auth_updatePassword_get = (req, res) => {
+  res.render('auth/update-password.ejs')
+}
+
+exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
@@ -83,6 +102,15 @@ exports.auth_updatePassword = async (req, res) => {
   }
 }
 
+exports.auth_deleteProfileById_delete = async (req, res) => {
+  try {
+    await user.findByIdAndDelete(req.params.id)
+    res.render('./user/confirm.ejs')
+  } catch (error) {
+    console.error('An error has occured')
+  }
+}
+
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
   res.redirect("/")
@@ -92,20 +120,88 @@ exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
   const posts = await Post.find({ username: req.params.userId })
   const follows = await Follow.findOne({ userId: req.params.userId })
-  let followersId = []
-  let followingId = []
-  if (follows) {
-    if (follows.followersId) {
-      followersId = follows.followersId
-    }
-    if (follows.followingId) {
-      followingId = follows.followingId
-    }
-  }
+  // let followersId = []
+  // let followingId = []
+  // if (follows) {
+  //   if (follows.followersId.length > 0) {
+  //     followersId = follows.followersId
+  //   }
+  //   if (follows.followingId) {
+  //     followingId = follows.followingId
+  //   }
+  // }
+  // const populatedList = await Follow.findById(req.params.userId).populate(
+  //   "userId"
+  // )
+  // const userHasFollowed = populatedList.followingId.some((user) =>
+  //   user.equals(req.session.user.userId)
+  // )
+
   res.render("users/profile", {
     user,
     posts: posts,
-    followerCount: followersId.length,
-    followingCount: followingId.length,
+    followerCount: follows?.followersId.length,
+    followingCount: follows?.followingId.length,
+    userHasFollowed: false,
   })
+}
+
+exports.search_get = async (req, res) => {
+  const users = await User.find()
+  console.log(users)
+  res.render("users/search.ejs", { users })
+}
+
+exports.search_post = async (req, res) => {
+  try {
+    const string = req.body.string
+    console.log(string)
+    const users = await User.find({
+      $or: [
+        { username: { $regex: string, $options: "i" } },
+        { displayName: { $regex: string, $options: "i" } },
+      ],
+    })
+
+    res.render("users/search.ejs", { users })
+  } catch (error) {
+    console.error(error)
+    res.status(500)("Error searching users")
+  }
+}
+// site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
+
+exports.follow_create_post = async (req, res) => {
+  console.log("it works")
+  try {
+    const followedUserId = req.params.userId
+    const user = req.session.user.userId
+
+    await Follow.findByIdAndUpdate(followedUserId, {
+      $push: { followingId: user },
+    })
+
+    await Follow.findByIdAndUpdate(user, {
+      $push: { followersId: followedUserId },
+    })
+  } catch {
+    res.status(500).json({ error: "failed to follow user!" })
+  }
+}
+
+exports.follow_delete_delete = async (req, res) => {
+  try {
+    const unfollowedUserId = req.params.userId
+    const user = req.session.user.userId
+
+    await Follow.findByIdAndUpdate(unfollowedUserId, {
+      $pull: { followersId: user },
+    })
+
+    await Follow.findByIdAndUpdate(user, {
+      $pull: { followingId: unfollowedUserId },
+    })
+  } catch {
+    res.status(500).json({ error: "failed to unfollow user!" })
+  }
 }

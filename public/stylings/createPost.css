@@ -1,0 +1,62 @@
+img {
+  height: 300;
+  margin-top: 50px;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 400px 1fr 200px;
+}
+
+.form {
+  position: relative;
+  bottom: 0;
+}
+
+.upload-container {
+  height: 15vw;
+  width: 99vw;
+  background-color: #24293d;
+  box-shadow: 30px 30px 30px 30px rgba(66, 75, 114, 0.42);
+  display: flex;
+  color: white;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.upload {
+  border-radius: 10px;
+  color:#FFFFFF;
+  font-size: 2rem;
+  height: 75%;
+  width: 80%;
+  background-color: #8EBBFF;
+}
+
+
+header img:nth-of-type(2){
+  opacity: 0;
+  pointer-events:none ;
+}
+
+#input {
+  display:none;
+  visibility:hidden;
+}
+
+#caption {
+  background-color: #24293D;
+  border: none;
+  font-size: 2rem;
+  margin-left: 30px;
+  color: #FFFFFF;
+}
+
+#description {
+  color: #FFFFFF;
+  font-family: "GeologicaBold";
+  font-size: 3rem;
+  margin-left: 30px;
+}

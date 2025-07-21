@@ -22,6 +22,14 @@
       <a href="/follows/followings/<%= user._id %>"><%= followingCount %></a>
     </p>
 
+    <form action="<%=user._id%>/follow" method="POST">
+      <button type="submit">Follow</button>
+    </form>
+
+    <form action="<%=user._id%>/unfollow/" ?_method="DELETE" method="POST">
+      <button type="submit">Unfollow</button>
+    </form>
+
     <div>
       <% posts.forEach((post) => { %>
       <img src="<%= post.photo%>" alt="post image" />
