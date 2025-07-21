@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
     caption: {
       type: String,
@@ -15,10 +15,12 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    comments: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-    }]
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     timestamps: true,

@@ -12,7 +12,6 @@ html {
   src: url("./../fonts/Geologica/Geologica-Bold.ttf");
 }
 
-
 body {
   margin: 0;
   width: 100%;
@@ -39,21 +38,21 @@ header .pageName {
   font-size: 3rem;
 }
 
-header img{
+header img {
   height: 30%;
 }
 
 header img,
-footer img{
+footer img {
   width: auto;
   filter: invert(100%);
-  transition: all  0.1s;
+  transition: all 0.1s;
 }
-footer img{
+footer img {
   height: 40%;
 }
 header img:hover,
-footer img:hover{
+footer img:hover {
   filter: invert(0%);
 }
 
@@ -139,21 +138,21 @@ header .pageName {
   font-size: 3rem;
 }
 
-header img{
+header img {
   height: 30%;
 }
 
 header img,
-footer img{
+footer img {
   width: auto;
   filter: invert(100%);
-  transition: all  0.1s;
+  transition: all 0.1s;
 }
-footer img{
+footer img {
   height: 40%;
 }
 header img:hover,
-footer img:hover{
+footer img:hover {
   filter: invert(0%);
 }
 

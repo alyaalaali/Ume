@@ -28,6 +28,7 @@ app.use(
   })
 )
 // Require MiddleWares
+
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
@@ -36,8 +37,9 @@ const createDummyUser = require("./middlewares/create-dummy-user.js")
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-// app.use(createDummyUser)
+app.use(createDummyUser)
 app.use(passUserToViews)
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
@@ -45,9 +47,8 @@ app.use(express.static(path.join(__dirname, "public")))
 
 //passUserToView middleware
 
-// Root Route
 app.get("/", async (req, res) => {
-  res.render("users/search")
+  res.send(`Your app is connected . . . `)
 })
 
 app.get("/", (req, res) => {
@@ -60,13 +61,12 @@ app.get("/", (req, res) => {
 const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments.js")
-const followRouter = require("./routes/follows.js")
+// const followRouter = require("./routes/follows.js")
 
 // use Routers
 app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
-app.use("/follows", followRouter)
 
 // Listener
 app.listen(port, () => {

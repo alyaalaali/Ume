@@ -19,8 +19,18 @@ const userSchema = new mongoose.Schema(
     },
     bio: {
       type: String
+    },
+    follow:{
+      followingsId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }],
+      followersId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }]
     }
-  },
+},
   { timestamps: true }
 )
 
