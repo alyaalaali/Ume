@@ -55,7 +55,26 @@ exports.auth_signin_post = async (req, res) => {
   res.render("index.ejs")
 }
 
-exports.auth_updatePassword = async (req, res) => {
+exports.auth_updateProfileById_get = async (req, res) => {
+  res.render('users/edit.ejs')
+}
+
+exports.auth_updateProfileById_put = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
+    // res.redirect(`/users`)
+  } catch (error) {
+    console.log('An error has occured')
+  }
+}
+
+exports.auth_updatePassword_get = (req, res) => {
+  res.render('auth/update-password.ejs')
+}
+
+exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
@@ -80,6 +99,15 @@ exports.auth_updatePassword = async (req, res) => {
       "An error has occurred updating a user's password!",
       error.message
     )
+  }
+}
+
+exports.auth_deleteProfileById = async (req, res) => {
+  try {
+    await Auth.findByIdAndDelete(req.params.id)
+    res.render('./user/confirm.ejs')
+  } catch (error) {
+    console.error('An error has occured')
   }
 }
 
