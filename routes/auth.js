@@ -10,8 +10,11 @@ router.post("/sign-in", authCtrl.auth_signin_post)
 
 router.get("/sign-out", authCtrl.auth_signout_get)
 
-router.put("/:id", authCtrl.auth_updatePassword)
+router.get('/update-password', authCtrl.auth_updatePassword_get)
+router.put('/:id', authCtrl.auth_updatePassword_post)
 
-router.get("/:userId", authCtrl.profile_get)
+router.get('/:id/profile/edit', authCtrl.auth_updateProfileById_get)
+router.put('/:id/profile/', authCtrl.auth_updateProfileById_put)
+
 
 module.exports = router
