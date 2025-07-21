@@ -3,6 +3,7 @@
   <link rel="stylesheet" href="/stylings/commentsIndex.css" />
 </head>
 <%- include("./../partials/_header.ejs")%>
+<% %>
 <section class="commentsSection">
   
   <div class="comment">
@@ -12,43 +13,34 @@
         <p class="commenterName">Yousif</p>
         <p class="commentTime">2:21 PM</p>
       </div>
-      <p class="commentContent">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <p class="commentContent commentOptionsButton">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </div>
     <div class="commentButtons">
       <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" alt="">
+      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="">
+      <form class="commentOptionsPanel">
+        <button>Delete</button>
+      </form>
     </div>
   </div>
 
-  <div class="comment">
-    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
-    <div class="commentDetails">
-      <div>
-        <p class="commenterName">Yousif</p>
-        <p class="commentTime">2:21 PM</p>
+  <%postComments.forEach((postComment)=>{%>
+    <div class="comment">
+      <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
+      <div class="commentDetails">
+        <div>
+          <p class="commenterName"><%= postComment.userId.displayName %></p>
+          <p class="commentTime"><%= postComment.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %></p>
+        </div>
+        <p class="commentContent"><%= postComment.description %></p>
       </div>
-      <p class="commentContent">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <div class="commentButtons">
+        <img src="/images/icons/heart.png" alt="">
+        <img src="/images/icons/options.png" alt="">
+      </div>
     </div>
-    <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" alt="">
-    </div>
-  </div>
+<%  })%>
 
-  <div class="comment">
-    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
-    <div class="commentDetails">
-      <div>
-        <p class="commenterName">Yousif</p>
-        <p class="commentTime">2:21 PM</p>
-      </div>
-      <p class="commentContent">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </div>
-    <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" alt="">
-    </div>
-  </div>
 
 </section>
 </main>

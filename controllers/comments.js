@@ -1,10 +1,13 @@
+const { post } = require("../routes/comments")
 const Comment = require("./../models/comment")
 const Post = require("./../models/post")
 
+
 exports.comment_index_get = async (req, res) => {
-  const postCommnets = await Comment.find({ postId: req.params.postId })
-  // res.send(postCommnets)
-  res.render("./comments/index.ejs")
+  const postComments = await Comment.find({ postId: req.params.postId }).populate("userId")
+
+  res.render("./comments/index.ejs", {pageName: "Comments", postComments})
+
 }
 
 exports.comment_create_post = async (req, res) => {

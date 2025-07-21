@@ -79,6 +79,9 @@ main {
 .commentDetails{
   width: 50%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .commentButtons{
@@ -103,7 +106,7 @@ main {
   display: flex;
   justify-content: left;
   align-items: center; 
-  width: 50% ;
+  width: 100% ;
   gap: 1rem;
   font-size: 1.75rem;
 }
@@ -119,4 +122,20 @@ main {
 .commentTime{
   color: #7F7F7F;
   font-family: "DMSansRegular";
+}
+.commentOptionsPanel{
+  display: none;
+}
+
+
+.commentOptionsPanel{
+  position: absolute ;
+  width: 10rem;
+  right: 10px;
+  height: 4rem;
+}
+.commentOptionsPanel button{
+  width: 100%;
+  height: 100%;
+  font-size:1.75rem ;
 }
