@@ -4,11 +4,17 @@ const Follow = require("./../models/follower")
 exports.following_index_get = async (req, res) => {
   try {
     const userId = req.params.userId
-    const followingList = await Follow.findById({ userId }).populate({
-      path: "followingId",
-      select: "username displayName",
-    })
-    res.render("users/follow", { followingList })
+    const following = await Follow.findOne({ userId }).populate("followingId")
+
+    const data = {
+      followingList: [],
+      followersList: [],
+    }
+    if (following && following.followingId) {
+      data.followingList = following.followingId
+    }
+
+    res.render("users/follow", data)
   } catch (error) {
     res.status(500).json({ error: "failed to get the followings list!" })
   }
@@ -17,11 +23,16 @@ exports.following_index_get = async (req, res) => {
 exports.follower_index_get = async (req, res) => {
   try {
     const userId = req.params.userId
-    const followersList = await Follow.findOne({ userId }).populate({
-      path: "followersId", //
-      select: "username displayName",
-    })
-    res.render("users/follow", { followersList })
+    const followers = await Follow.findOne({ userId }).populate("followersId")
+    const data = {
+      followersList: [],
+      followingList: [],
+    }
+    if (followers && followers.followersId) {
+      data.followersList = followers.followersId
+    }
+    res.render("users/follow", data)
+
   } catch (error) {
     res.status(500).json({ error: "failed to get the followers list!" })
   }

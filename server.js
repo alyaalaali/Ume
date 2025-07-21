@@ -11,6 +11,11 @@ const app = express()
 // Database Configuration
 const mongoose = require('./config/db')
 
+app.engine("html", require("ejs").renderFile)
+app.set("view engine", "ejs")
+// got a rendering issue? solved it with
+// https://stackoverflow.com/questions/23595282/error-no-default-engine-was-specified-and-no-extension-was-provided
+
 // set Port Configuration
 const port = process.env.PORT ? process.env.PORT : 3000
 
@@ -47,9 +52,9 @@ app.get('/', async (req, res) => {
   res.send(`Your app is connected . . . `)
 })
 
-app.get('/', (req, res) => {
-  res.render('index.ejs', {
-    user: req.session.user
+app.get("/", (req, res) => {
+  res.render("index.ejs", {
+    user: req.session.user,
   })
 })
 

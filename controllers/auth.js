@@ -1,21 +1,23 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const bcrypt = require('bcrypt')
-const User = require('../models/user.js')
+const bcrypt = require("bcrypt")
+const User = require("../models/user.js")
+const Post = require("../models/post.js")
+const Follow = require("../models/post.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
-  res.render('auth/sign-up.ejs')
+  res.render("auth/sign-up.ejs")
 }
 
 exports.auth_signup_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
-    return res.send('Username already taken.')
+    return res.send("Username already taken.")
   }
 
   if (req.body.password !== req.body.confirmPassword) {
-    return res.send('Password and Confirm Password must match')
+    return res.send("Password and Confirm Password must match")
   }
 
   //bcryp
@@ -28,13 +30,13 @@ exports.auth_signup_post = async (req, res) => {
 }
 
 exports.auth_signin_get = async (req, res) => {
-  res.render('auth/sign-in.ejs')
+  res.render("auth/sign-in.ejs")
 }
 
 exports.auth_signin_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (!userInDatabase) {
-    return res.send('Login failed. Please try again.')
+    return res.send("Login failed. Please try again.")
   }
 
   const validPassword = bcrypt.compareSync(
@@ -42,15 +44,15 @@ exports.auth_signin_post = async (req, res) => {
     userInDatabase.password
   )
   if (!validPassword) {
-    return res.send('Login failed. Please try again.')
+    return res.send("Login failed. Please try again.")
   }
 
   //user exist and password matched
   req.session.user = {
     username: userInDatabase.username,
-    _id: userInDatabase._id
+    _id: userInDatabase._id,
   }
-  res.redirect('/')
+  res.redirect("/")
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
@@ -76,22 +78,22 @@ exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
-      return res.send('No user with that ID exists!')
+      return res.send("No user with that ID exists!")
     }
     const validPassword = bcrypt.compareSync(
       req.body.oldPassword,
       user.password
     )
     if (!validPassword) {
-      return res.send('Your old password was not correct! Please try again.')
+      return res.send("Your old password was not correct! Please try again.")
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-      return res.send('Password and Confirm Password must match')
+      return res.send("Password and Confirm Password must match")
     }
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.render('./auth/confpas.ejs', { user })
+    res.render("./auth/confpas.ejs", { user })
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
@@ -111,5 +113,27 @@ exports.auth_deleteProfileById = async (req, res) => {
 
 exports.auth_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect('/')
+  res.redirect("/")
+}
+
+exports.profile_get = async (req, res) => {
+  const user = await User.findById(req.params.userId)
+  const posts = await Post.find({ username: req.params.userId })
+  const follows = await Follow.findOne({ userId: req.params.userId })
+  let followersId = []
+  let followingId = []
+  if (follows) {
+    if (follows.followersId) {
+      followersId = follows.followersId
+    }
+    if (follows.followingId) {
+      followingId = follows.followingId
+    }
+  }
+  res.render("users/profile", {
+    user,
+    posts: posts,
+    followerCount: followersId.length,
+    followingCount: followingId.length,
+  })
 }

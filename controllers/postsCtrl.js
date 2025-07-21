@@ -1,5 +1,5 @@
 const Post = require("../models/post.js")
-const upload = require("../config/multer.js")
+
 // API's
 
 exports.post_index_get = async (req, res) => {
@@ -19,7 +19,9 @@ exports.post_index_get = async (req, res) => {
 
 exports.post_create_get = async (req, res) => {
   try {
-    res.status(200).render("posts/new.ejs")
+    res.status(200).render("posts/new.ejs", {
+      pageName: "Create Post"
+    })
   } catch (error) {
     res.status(500).json({ error: "Failed to render new page!" })
   }
