@@ -3,7 +3,6 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("../models/user.js")
 const Post = require("../models/post.js")
-const Follow = require("../models/post.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
@@ -56,22 +55,22 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  res.render('users/edit.ejs')
+  res.render("users/edit.ejs")
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
+      new: true,
     })
     // res.redirect(`/users`)
   } catch (error) {
-    console.log('An error has occured')
+    console.log("An error has occured")
   }
 }
 
 exports.auth_updatePassword_get = (req, res) => {
-  res.render('auth/update-password.ejs')
+  res.render("auth/update-password.ejs")
 }
 
 exports.auth_updatePassword_post = async (req, res) => {
@@ -105,9 +104,9 @@ exports.auth_updatePassword_post = async (req, res) => {
 exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
     await user.findByIdAndDelete(req.params.id)
-    res.render('./user/confirm.ejs')
+    res.render("./user/confirm.ejs")
   } catch (error) {
-    console.error('An error has occured')
+    console.error("An error has occured")
   }
 }
 
@@ -119,7 +118,7 @@ exports.auth_signout_get = (req, res) => {
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
   const posts = await Post.find({ username: req.params.userId })
-  const follows = await Follow.findOne({ userId: req.params.userId })
+  const follows = await User.findOne({ userId: req.params.userId })
   // let followersId = []
   // let followingId = []
   // if (follows) {
@@ -203,5 +202,41 @@ exports.follow_delete_delete = async (req, res) => {
     })
   } catch {
     res.status(500).json({ error: "failed to unfollow user!" })
+  }
+}
+
+exports.following_index_get = async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const following = await User.findOne({ userId }).populate("followingId")
+
+    const data = {
+      followingList: [],
+      followersList: [],
+    }
+    if (following && following.followingId) {
+      data.followingList = following.followingId
+    }
+
+    res.render("users/follow", data)
+  } catch (error) {
+    res.status(500).json({ error: "failed to get the followings list!" })
+  }
+}
+
+exports.follower_index_get = async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const followers = await User.findOne({ userId }).populate("followersId")
+    const data = {
+      followersList: [],
+      followingList: [],
+    }
+    if (followers && followers.followersId) {
+      data.followersList = followers.followersId
+    }
+    res.render("users/follow", data)
+  } catch (error) {
+    res.status(500).json({ error: "failed to get the followers list!" })
   }
 }

@@ -1,15 +1,15 @@
 // imports
-const express = require('express')
-require('dotenv').config()
-const session = require('express-session')
-const path = require('path')
-const multer = require('multer')
+const express = require("express")
+require("dotenv").config()
+const session = require("express-session")
+const path = require("path")
+const multer = require("multer")
 
 // Initialize app
 const app = express()
 
 // Database Configuration
-const mongoose = require('./config/db')
+const mongoose = require("./config/db")
 
 app.engine("html", require("ejs").renderFile)
 app.set("view engine", "ejs")
@@ -24,15 +24,15 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 )
 // Require MiddleWares
 
-const methodOverride = require('method-override')
-const morgan = require('morgan')
-const passUserToViews = require('./middlewares/pass-user-to-views.js')
-const createDummyUser = require('./middlewares/create-dummy-user.js')
+const methodOverride = require("method-override")
+const morgan = require("morgan")
+const passUserToViews = require("./middlewares/pass-user-to-views.js")
+const createDummyUser = require("./middlewares/create-dummy-user.js")
 
 // Require passUserToView & isSignedIn middlewares
 
@@ -41,20 +41,14 @@ app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(methodOverride("_method"))
+app.use(morgan("dev"))
+app.use(express.static(path.join(__dirname, "public")))
 
 //passUserToView middleware
 
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
   res.send(`Your app is connected . . . `)
-})
-
-app.get("/", (req, res) => {
-  res.render("index.ejs", {
-    user: req.session.user,
-  })
 })
 
 app.get("/", (req, res) => {
@@ -67,16 +61,13 @@ app.get("/", (req, res) => {
 const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments.js")
-const followRouter = require("./routes/follows.js")
-
-// use Routers
+// const followRouter = require("./routes/follows.js")
 
 // use Routers
 app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
-app.use("/follows", followRouter)
-
+// app.use("/follows", followRouter)
 
 // Listener
 app.listen(port, () => {
