@@ -26,7 +26,6 @@ exports.auth_signup_post = async (req, res) => {
 
   // validation logic
 
-
   const user = await User.create(req.body)
   res.send(`Thanks for signing up ${user.username}`)
 }
@@ -45,6 +44,7 @@ exports.auth_signin_post = async (req, res) => {
     req.body.password,
     userInDatabase.password
   )
+
   if (!validPassword) {
     return res.send("Login failed. Please try again.")
   }
@@ -140,25 +140,28 @@ exports.search_post = async (req, res) => {
     res.status(500)("Error searching users")
   }
 }
-// site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
 exports.follow_create_post = async (req, res) => {
   console.log("it works")
   try {
-    const followedUserId = req.params.userId
-    const userid = req.session.user.userId
-    // who is being followed
-    const followedUser = User.findById(followedUserId)
-    // who is trying to follow
-    const user = User.findById(userid)
+    // The user who is trying to follow
+    const follower = await User.findById(req.params.userId)
+    // The user who is being followed
+    const followed = await User.findById(req.session.user._id)
 
-    await Follow.findByIdAndUpdate(followedUser.follower, {
-      $push: { followingId: user._id },
+    await User.findByIdAndUpdate(followed._id, {
+      $push: {
+        "follow.followingsId": follower._id,
+      },
     })
 
-    await Follow.findByIdAndUpdate(user.follower, {
-      $push: { followersId: followedUser._id },
+    await User.findByIdAndUpdate(follower._id, {
+      $push: {
+        "follow.followersId": followed._id,
+      },
     })
+
+    res.send("You followed someone successfully")
   } catch (error) {
     res.status(500).json({ error: `failed to follow user! ${error}` })
   }
@@ -166,17 +169,24 @@ exports.follow_create_post = async (req, res) => {
 
 exports.follow_delete_delete = async (req, res) => {
   try {
-    const unfollowedUserId = req.params.userId
-    const user = req.session.user.userId
+    // The user who is trying to follow
+    const follower = await User.findById(req.params.userId)
+    // The user who is being followed
+    const followed = await User.findById(req.session.user._id)
 
-    await Follow.findByIdAndUpdate(unfollowedUserId, {
-      $pull: { followersId: user },
+    await User.findByIdAndUpdate(followed._id, {
+      $pull: {
+        "follow.followingsId": follower._id,
+      },
     })
 
-    await Follow.findByIdAndUpdate(user, {
-      $pull: { followingId: unfollowedUserId },
+    await User.findByIdAndUpdate(follower._id, {
+      $pull: {
+        "follow.followersId": followed._id,
+      },
     })
-  } catch {
-    res.status(500).json({ error: "failed to unfollow user!" })
+    res.send("Follow Deleted Successfuly")
+  } catch (error) {
+    res.status(500).json({ error: `failed to follow user! ${error}` })
   }
 }

@@ -36,7 +36,7 @@ const createDummyUser = require("./middlewares/create-dummy-user.js")
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-app.use(createDummyUser)
+// app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 // Root Route
 app.get("/", async (req, res) => {
-  res.render("users/search")
+  res.render("./posts/new.ejs")
 })
 
 app.get("/", (req, res) => {
