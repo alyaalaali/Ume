@@ -11,7 +11,7 @@ exports.post_index_get = async (req, res) => {
         select: "username displayName",
       },
     })
-    res.status(200).render("posts/index.ejs", { posts })
+    res.status(200).render("posts/index.ejs", { posts , pageName: "Explorer"})
   } catch (error) {
     res.status(500).json({ error: "Page not found!" })
   }
@@ -19,7 +19,9 @@ exports.post_index_get = async (req, res) => {
 
 exports.post_create_get = async (req, res) => {
   try {
-    res.status(200).render("posts/new.ejs")
+    res.status(200).render("posts/new.ejs", {
+      pageName: "Create Post"
+    })
   } catch (error) {
     res.status(500).json({ error: "Failed to render new page!" })
   }
@@ -35,7 +37,6 @@ exports.post_create_post = async (req, res) => {
     await Post.create(postData)
     res.redirect("/posts")
   } catch (error) {
-    console.error(error)
     res.status(500).json({ error: "Failed to create post!" })
   }
 }

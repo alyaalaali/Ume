@@ -1,21 +1,36 @@
 <head>
   <link rel="stylesheet" href="/stylings/general.css" />
+  <link rel="stylesheet" href="/stylings/createPost.css" />
+  <!-- <script defer src="../../public/click.js"></script> -->
 </head>
 <%- include("./../partials/_header.ejs")%>
 
-<h1>upload new post</h1>
-<form
+<img src="/image.png" class="add-photo" id="photo"/>
+<div class="form">
+<form name="form" id="form"
   action="/posts/<%= user.userId %>"
   method="POST"
   enctype="multipart/form-data"
 >
-  <input type="file" name="photo" id="photo" />
+  <input type="file" name="photo" id="input"/>
 
-  <input type="text" name="caption" id="caption" />
-
-  <br/>
-
-  <button type="submit">Upload post</button>
-
+  
 </form>
-<%- include("./../partials/_footer.ejs")%>
+<div>
+  <label id="description" for="caption" form="for">Description</label>
+  <br>
+  <input type="text" name="caption" id="caption" placeholder="Add a caption here..." form="form"/>
+</div>
+</div>
+</main>
+<div class="upload-container">
+  <button class="upload" type="submit" form="form">Share</button>
+</div>
+
+<script>
+  const image = document.getElementById("photo")
+image.addEventListener("click", () => {
+  document.getElementById("input").click()
+})
+</script>
+

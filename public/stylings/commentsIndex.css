@@ -56,7 +56,8 @@ main {
 
 .commentsSection{
   width: 100%;
-  height: 40vh;
+  overflow-x:scroll;
+  height: 80vh;
   display: flex;
   flex-direction:column ;
 }
