@@ -47,9 +47,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //passUserToView middleware
 
-// Root Route
 app.get('/', async (req, res) => {
   res.send(`Your app is connected . . . `)
+})
+
+app.get("/", (req, res) => {
+  res.render("index.ejs", {
+    user: req.session.user,
+  })
 })
 
 app.get("/", (req, res) => {
