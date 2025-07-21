@@ -32,6 +32,7 @@ exports.follower_index_get = async (req, res) => {
       data.followersList = followers.followersId
     }
     res.render("users/follow", data)
+
   } catch (error) {
     res.status(500).json({ error: "failed to get the followers list!" })
   }

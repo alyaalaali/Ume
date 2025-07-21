@@ -8,8 +8,8 @@ exports.post_index_get = async (req, res) => {
       path: "comments",
       populate: {
         path: "userId",
-        select: "username displayName"
-      }
+        select: "username displayName",
+      },
     })
     res.status(200).render("posts/index.ejs", { posts })
   } catch (error) {
@@ -28,13 +28,14 @@ exports.post_create_get = async (req, res) => {
 exports.post_create_post = async (req, res) => {
   try {
     const postData = {
-      photo: req.body.photo,
+      photo: `${req.file.filename}`,
       caption: req.body.caption,
-      userId: req.session.user.userId
+      userId: req.session.user.userId,
     }
     await Post.create(postData)
     res.redirect("/posts")
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: "Failed to create post!" })
   }
 }
@@ -43,11 +44,11 @@ exports.post_show_get = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate({
       path: "userId",
-      select: "username displayName"
+      select: "username displayName",
     })
     res.status(200).render("posts/show.ejs", { post })
   } catch (error) {
-    res.status(500).json({ error: "Failed to show specific post!"})
+    res.status(500).json({ error: "Failed to show specific post!" })
   }
 }
 
@@ -55,7 +56,7 @@ exports.post_edit_get = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate({
       path: "userId",
-      select: "username displayName"
+      select: "username displayName",
     })
     res.status(200).render("posts/edit.ejs", { post })
   } catch (error) {
@@ -65,12 +66,14 @@ exports.post_edit_get = async (req, res) => {
 
 exports.post_update_put = async (req, res) => {
   try {
-    const post = await Post.findByIdAndUpdate(
-      req.params.id,
-      req.body
-    )
+    // req.body.photo = `${req.file.filename}`
+    const post = await Post.findById(req.params.id)
+    post.caption = req.body.caption
+    await post.save()
+    // const post = await Post.findByIdAndUpdate(req.params.id, req.body.caption)
     res.redirect(`/posts/${post._id}`)
   } catch (error) {
+    console.log("err", error)
     res.status(500).json({ error: "Failed to edit post!" })
   }
 }

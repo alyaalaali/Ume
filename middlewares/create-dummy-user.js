@@ -33,6 +33,7 @@ const createDummyUser = async (req, res, next) => {
     password: "dummyUser",
     displayName: "dummyUser",
   }
+
   next()
 }
 

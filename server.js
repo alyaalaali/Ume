@@ -59,10 +59,7 @@ app.get("/", (req, res) => {
 // Require Routers
 const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
-
 const commentsRouter = require("./routes/comments.js")
-
-// use Routers
 const followRouter = require("./routes/follows.js")
 
 // use Routers
@@ -70,6 +67,7 @@ app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
+app.use("/auth", authRouter)
 
 // Listener
 app.listen(port, () => {
