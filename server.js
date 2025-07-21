@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 // Root Route
 app.get("/", async (req, res) => {
-  res.send(`Your app is connected . . . `)
+  res.render("users/search")
 })
 
 app.get("/", (req, res) => {
@@ -63,10 +63,10 @@ const postRouter = require("./routes/postRouter.js")
 const commentsRouter = require("./routes/comments.js")
 
 // use Routers
-app.use("/auth", authRouter)
 const followRouter = require("./routes/follows.js")
 
 // use Routers
+app.use("/users", authRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", followRouter)
