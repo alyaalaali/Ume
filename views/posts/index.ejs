@@ -2,7 +2,7 @@
 
 <% posts.forEach((post) => { %>
   <a href="/posts/<%= post._id %>">
-  <img src="/uploadImeges/<%= post.photo %>" alt="post image"/>
+  <img src="/uploadImages/<%= post.photo %>" alt="post image"/>
   </a>
   <%= post.caption %>
   <% if (post.comments && post.comments.length) { %>
