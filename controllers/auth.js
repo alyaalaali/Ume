@@ -10,7 +10,6 @@ exports.auth_signup_get = async (req, res) => {
 }
 
 exports.auth_signup_post = async (req, res) => {
-  console.log(await User.findOne({ username: req.body.username }))
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
     return res.send("Username already taken.")
@@ -119,8 +118,8 @@ exports.auth_updatePassword_post = async (req, res) => {
 }
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
-  const user = req.session.user
   try {
+  const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
     res.render("./user/confirm.ejs", { user })
   } catch (error) {
@@ -136,7 +135,6 @@ exports.users_signout_get = (req, res) => {
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
   const posts = await Post.find({ username: req.params.userId })
-
   const isOwnProfile =
     req.session.user && req.session.user._id.toString() === user._id.toString()
 

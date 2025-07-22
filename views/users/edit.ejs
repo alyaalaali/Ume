@@ -13,3 +13,6 @@
   <button type="submit">Save</button>
   <a href="/users/update-password"><p>Update Password</p></a>
 </form>
+<form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
