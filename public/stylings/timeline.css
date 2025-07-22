@@ -3,7 +3,6 @@
   pointer-events: none;
 }
 
-
 main {
   display: flex;
   flex-direction: column;
@@ -25,30 +24,25 @@ main {
 .post {
   background-color: #2f3855;
   width: 90%;
-  height: 60rem;
+  height: 75rem;
   border-radius: 15px;
   padding: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
-.postHeader{
-  height: 20%;
+.postHeader {
+  height: 15%;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
   padding: 0rem 2.5rem;
 }
-.postOwnerProfile  {
-  height:70%;
-  
-}
-.postOptions {
-  filter: invert(100%);
-  transform: rotate(90deg);
-  height: 30%;
+.postOwnerProfile {
+  height: 70%;
 }
 .postDetails {
   height: 100%;
@@ -63,54 +57,52 @@ main {
   flex-direction: column;
 }
 
-.postOwner{
+.postOwner {
   font-family: "GeologicaBold";
   font-size: 2.5rem;
   color: white;
 }
 
-.postTime{
+.postTime {
   font-size: 2rem;
   font-family: "DMSansRegular";
 }
 
-.postImageContainer{
-  height: 55%;
+.postImageContainer {
+  height: auto;
   width: 100%;
   overflow: hidden;
-  background-color:white ;
-  border-radius: 15px;  
+  background-color: white;
+  border-radius: 15px;
 }
 
 .postImageContainer img {
   object-fit: cover;
-  width: 100% ;
+  width: 100%;
 }
 
-
-.postCaption{
+.postCaption {
   font-size: 2.4rem;
-  color: #AAB2BA;
+  color: #aab2ba;
   margin-top: 1rem;
   padding: 0rem 2.5rem;
 }
 
-.postButtons{
+.postButtons {
   padding: 0rem 2.5rem;
   display: flex;
   justify-content: space-between;
-  height: 10%;
+  height: 7%;
   width: 100%;
 }
 
 .reactions {
   display: flex;
   gap: 2rem;
-
 }
 .reactions .likes,
 .reactions .comments,
-.postButtons .share{
+.postButtons .share {
   display: flex;
   height: 100%;
   width: auto;
@@ -119,7 +111,7 @@ main {
   gap: 1rem;
 }
 
-.reactions .likes img ,
+.reactions .likes img,
 .reactions .comments img,
 .postButtons .share img {
   height: 70%;
@@ -127,5 +119,43 @@ main {
 }
 
 .postButtons p {
-  font-size:2.5rem;
+  font-size: 2.5rem;
+}
+
+.comments,
+.likes,
+.share,
+.postTime {
+  color: white;
+}
+
+.postOptions {
+  filter: invert(100%);
+  transform: rotate(90deg);
+  height: 30%;
+  pointer-events: all;
+}
+
+.optionsPanel {
+  position: absolute;
+  right: 50px;
+  display: flex;
+  gap: 1rem;
+  height: 7rem;
+
+}
+
+.optionsPanel  {
+  display: none;
+}
+.optionsPanel button {
+  font-size: 3rem;
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  color: #24293D;
+  background-color: white;
+  border-radius: 10px;
+  
 }
