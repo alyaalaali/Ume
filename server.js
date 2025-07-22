@@ -59,7 +59,7 @@ app.get("/", async (req, res) => {
   res.render("posts/timeline.ejs", {pageName: "Timeline", allPosts})
 })
 app.get("/", async (req, res) => {
-  res.send(`Your app is connected . . . `)
+  res.render("posts/timeline.ejs", {pageName: "Timeline"})
 })
 
 // Require Routers
