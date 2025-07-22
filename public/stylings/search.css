@@ -74,8 +74,8 @@ header {
   border-radius: 8px;
   background-color: #24293d;
   color: white;
-  font-size: 1rem;
-  font-family: "Geologica", sans-serif;
+  font-size: 3rem;
+  font-family: "GeologicaBold";
 }
 
 .hidden-btn {
