@@ -1,9 +1,11 @@
 <h2>Edit Profile</h2>
-<%= user.userId %>
-<form action="/users/<%= user.userId %>/profile?_method=PUT" method="POST">
+<form action="/users/<%= user._id %>/profile?_method=PUT" method="POST">
   <input type="text" name="username" placeholder="Username" required />
   <input type="name" name="displayName" placeholder="Display Name" required />
   <input type="text" name="bio" placeholder="Bio" />
   <button type="submit">Save</button>
   <a href="/users/update-password"><p>Update Password</p></a>
 </form>
+<form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
