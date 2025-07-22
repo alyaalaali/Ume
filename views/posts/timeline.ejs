@@ -4,7 +4,7 @@
 </head>
 <%- include("./../partials/_header.ejs")%>
 <search class="postsSection">
-  <% allPosts.forEach((post)=>{%>
+  <% allPosts.forEach((post, index)=>{%>
   <div class="post">
     <div class="postHeader">
       <div class="postDetails">
@@ -20,14 +20,18 @@
           </p>
         </div>
       </div>
-      <img class="postOptions" src="/images/icons/options.png" alt="" />
+      <img
+        style="display:<%= post.userId.equals(user._id)?'block':'none'%> ;"
+        class="postOptions"
+        onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
+        src="/images/icons/options.png"
+        alt=""
+      />
     </div>
     <div class="postImageContainer">
-      <img src="uploadImeges/<%=post.photo %>" alt="" />
+      <img src="/uploadImages/<%= post.photo%>" alt="" />
     </div>
-    <p class="postCaption">
-      <%= post.caption %>
-    </p>
+    <p class="postCaption"><%= post.caption %></p>
     <div class="postButtons">
       <div class="reactions">
         <div class="likes">
@@ -35,14 +39,24 @@
           <p>1</p>
         </div>
         <div class="comments">
-          <img src="/images/icons/chatBubble.png" alt="" />
-          <p>1</p>
+          <img
+            onclick="document.location.href ='/comments/<%=post._id%>'"
+            src="/images/icons/chatBubble.png"
+            alt=""
+          />
+          <p><%=post.comments.length%></p>
         </div>
       </div>
       <div class="share">
-        <img src="/images/icons/share.png" alt="" />
+        <img class="pointer" src="/images/icons/share.png" alt="" />
         <p>Share</p>
       </div>
+    </div>
+    <div class="optionsPanel">
+      <a href="/posts/<%= post._id%>/edit"><button>Edit</button></a>
+      <form action="/posts/<%= post._id%>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
     </div>
   </div>
 

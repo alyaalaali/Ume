@@ -3,8 +3,10 @@ const Comment = require("./../models/comment")
 const Post = require("./../models/post")
 
 exports.comment_index_get = async (req, res) => {
-  const postComments = await Comment.find({ postId: req.params.postId })
-    
+  const postComments = await Comment.find({
+    postId: req.params.postId,
+  }).populate("userId")
+
   res.render("./comments/index.ejs", {
     pageName: "Comments",
     postComments,
@@ -27,13 +29,13 @@ exports.comment_create_post = async (req, res) => {
 exports.comment_delete_delete = async (req, res) => {
   const comment = await Comment.findById(req.params.commentId)
 
-  if (comment.userId.equals(req.session.user.userId)) {
+  if (comment.userId.equals(req.session.user._id)) {
     await Post.findByIdAndUpdate(comment.postId, {
       $pull: { comments: comment._id },
     })
 
     await Comment.findByIdAndDelete(comment._id)
-    res.send("Your comment has been deleted successfully !")
+    res.redirect(req.get("referer"))
   } else {
     res.send("Unauthorized action")
   }
@@ -41,10 +43,10 @@ exports.comment_delete_delete = async (req, res) => {
 
 exports.comment_update_put = async (req, res) => {
   const comment = await Comment.findById(req.params.commentId)
-  if (comment.userId.equals(req.session.user.userId)) {
+  if (comment.userId.equals(req.session.user._id)) {
     comment.description = req.body.description
     await comment.save()
-    res.send("Your comment has been edited successfully")
+    res.redirect(req.get("referer"))
   } else {
     res.send("Unauthorized action")
   }
