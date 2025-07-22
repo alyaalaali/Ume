@@ -57,15 +57,21 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  res.render("users/edit.ejs")
+  const user = await User.findById(req.params.id)
+  res.render("users/edit.ejs" ,{ user })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const user = await User.findByIdAndUpdate(req.params.id, {username: req.body.username,
+      displayName: req.body.displayName,
+      bio: req.body.bio,
+      photo:  `/uploadImages/${req.file.filename}`
+    }, {
       new: true,
     })
-    // res.redirect(`/users`)
+    
+    res.redirect(`/users/${user._id}/profile/edit`)
   } catch (error) {
     console.log("An error has occured")
   }
