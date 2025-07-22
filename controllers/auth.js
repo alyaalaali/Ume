@@ -119,7 +119,7 @@ exports.auth_updatePassword_post = async (req, res) => {
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
-  const user = req.session.user
+    const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
     res.render("./user/confirm.ejs", { user })
   } catch (error) {
@@ -237,6 +237,7 @@ exports.following_index_get = async (req, res) => {
     const data = {
       followingList: user?.follow?.followingsId || [],
       followersList: [],
+      pageName: "Following",
     }
 
     res.render("users/follow", data)
@@ -254,6 +255,7 @@ exports.follower_index_get = async (req, res) => {
     const data = {
       followersList: user?.follow?.followersId || [],
       followingList: [],
+      pageName: "Followers",
     }
     res.render("users/follow", data)
   } catch (error) {

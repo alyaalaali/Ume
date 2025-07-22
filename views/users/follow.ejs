@@ -1,26 +1,39 @@
-<h1>
-  <% if (followingList.length > 0) { %> Following <% } else if
-  (followersList.length > 0) { %> Followers <% } %>
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/general.css" />
 
-<% if (followingList.length > 0) { %>
-<div>
-  <% followingList.forEach(user => { %>
-  <div>
-    <img alt="<%= user.displayName %>" />
-    <h3><%= user.displayName %></h3>
-    <p>@<%= user.username %></p>
-  </div>
-  <% }); %>
-</div>
-<% } %> <% if (followersList.length > 0) { %>
-<div>
-  <% followersList.forEach(user => { %>
-  <div>
-    <img alt="<%= user.displayName %>" />
-    <h3><%= user.displayName %></h3>
-    <p>@<%= user.username %></p>
-  </div>
-  <% }); %>
-</div>
-<% } %>
+    <title>Follow</title>
+  </head>
+  <body>
+    <%- include("./../partials/_header.ejs")%>
+    <h1>
+      <% if (followingList.length > 0) { %> Following <% } else if
+      (followersList.length > 0) { %> Followers <% } %>
+    </h1>
+
+    <% if (followingList.length > 0) { %>
+    <div>
+      <% followingList.forEach(user => { %>
+      <div>
+        <img alt="<%= user.displayName %>" />
+        <h3><%= user.displayName %></h3>
+        <p>@<%= user.username %></p>
+      </div>
+      <% }); %>
+    </div>
+    <% } %> <% if (followersList.length > 0) { %>
+    <div>
+      <% followersList.forEach(user => { %>
+      <div>
+        <img alt="<%= user.displayName %>" />
+        <h3><%= user.displayName %></h3>
+        <p>@<%= user.username %></p>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </body>
+</html>
