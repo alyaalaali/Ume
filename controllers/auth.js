@@ -136,12 +136,24 @@ exports.users_signout_get = (req, res) => {
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
   const posts = await Post.find({ username: req.params.userId })
+
+  const isOwnProfile =
+    req.session.user && req.session.user._id.toString() === user._id.toString()
+
+  let userHasFollowed = false
+  if (req.session.user) {
+    userHasFollowed = user.follow.followersId.some(
+      (followerId) => followerId.toString() === req.session.user._id.toString()
+    )
+  }
   res.render("users/profile", {
     user,
     posts: posts,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
-    userHasFollowed: false,
+    userHasFollowed,
+    isOwnProfile,
+    req: req,
   })
 }
 
@@ -171,7 +183,6 @@ exports.search_post = async (req, res) => {
 // site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
 exports.follow_create_post = async (req, res) => {
-  console.log("it works")
   try {
     // The user who is trying to follow
     const follower = await User.findById(req.params.userId)
@@ -190,8 +201,7 @@ exports.follow_create_post = async (req, res) => {
         "follow.followersId": followed._id,
       },
     })
-
-    res.send("You followed someone successfully")
+    res.redirect(`/users/${req.params.userId}`)
   } catch (error) {
     res.status(500).json({ error: `failed to follow user! ${error}` })
   }
@@ -215,7 +225,7 @@ exports.follow_delete_delete = async (req, res) => {
         "follow.followersId": followed._id,
       },
     })
-    res.send("Follow Deleted Successfuly")
+    res.redirect(`/users/${req.params.userId}`)
   } catch (error) {
     res.status(500).json({ error: `failed to follow user! ${error}` })
   }

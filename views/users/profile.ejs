@@ -23,14 +23,28 @@
         <%= followingCount %>following
       </a>
     </div>
+    <% if (isOwnProfile) { %>
 
+    <form action="/users/<%= user._id %>/profile/edit">
+      <button>Edit</button>
+
+      <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+
+      <% } else if (req.session.user) { %> <% if (!userHasFollowed) { %>
+    </form>
     <form action="/users/<%=user._id%>/follow" method="POST">
       <button type="submit">Follow</button>
     </form>
 
+    <% } else { %>
+
     <form action="/users/<%=user._id%>/unfollow/?_method=DELETE" method="POST">
       <button type="submit">Unfollow</button>
     </form>
+
+    <% } %> <% } %>
 
     <div>
       <% posts.forEach((post) => { %>
@@ -38,13 +52,5 @@
       <p><%= post.caption%></p>
       <% }) %>
     </div>
-
-    <form action="/users/<%= user._id %>/profile/edit">
-      <button>Edit</button>
-    </form>
-
-    <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete</button>
-    </form>
   </body>
 </html>
