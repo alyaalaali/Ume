@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, "public")))
 //passUserToView middleware
 
 app.get("/", async (req, res) => {
-  res.send(`Your app is connected . . . `)
+  res.render("posts/timeline.ejs", {pageName: "Timeline"})
 })
 
 app.get("/", (req, res) => {
