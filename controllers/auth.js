@@ -59,23 +59,17 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_updateProfileById_get = async (req, res) => {
   const user = req.session.user
-  // Compare profile user id with session user id
-  // If true, proceed
-  // If false, restict access res.send('access not authorized')
-
   res.render('users/edit.ejs', { user })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    console.log(req.params.id)
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     })
-    console.log(user)
     res.redirect(`/users/${req.params.id}`)
   } catch (error) {
-    console.log('An error has occured')
+    res.send('An error has occured')
   }
 }
 
@@ -132,13 +126,6 @@ exports.profile_get = async (req, res) => {
   const posts = await Post.find({ username: req.params.userId })
   const follows = await User.findOne({ userId: req.params.userId })
   
-  // Logic for hiding Edit button
-  const toggleEdit = null
-  // Compare the userId of the profile to the session
-  // If true, set toggleEdit to true
-  // If false, set toggleEdit to false
-  // Then pass toggleEdit into the locals object and conditionally render the button based on its value in the .ejs
-
   // let followersId = []
   // let followingId = []
   // if (follows) {
