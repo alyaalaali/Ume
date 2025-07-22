@@ -32,7 +32,7 @@ exports.post_create_post = async (req, res) => {
     const postData = {
       photo: `${req.file.filename}`,
       caption: req.body.caption,
-      userId: req.session.user.userId,
+      userId: req.session.user._id,
     }
     await Post.create(postData)
     res.redirect("/posts")
@@ -47,6 +47,7 @@ exports.post_show_get = async (req, res) => {
       path: "userId",
       select: "username displayName",
     })
+    
     res.status(200).render("posts/show.ejs", { post })
   } catch (error) {
     res.status(500).json({ error: "Failed to show specific post!" })
@@ -59,7 +60,11 @@ exports.post_edit_get = async (req, res) => {
       path: "userId",
       select: "username displayName",
     })
-    res.status(200).render("posts/edit.ejs", { post })
+    if (req.session.user && post.userId._id.equals(req.session.user._id)) {
+      res.status(200).render("posts/edit.ejs", { post })
+    } else {
+      res.status(403).send("You are not allowed to edit this post.")
+    }
   } catch (error) {
     res.status(500).json({ error: "Failed to render edit page!" })
   }

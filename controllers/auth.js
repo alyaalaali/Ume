@@ -24,8 +24,10 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   // validation logic
+
   const user = await User.create(req.body)
-  res.send(`Thanks for signing up ${user.username}`)
+  console.log(user)
+  res.render("index.ejs")
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -42,6 +44,7 @@ exports.auth_signin_post = async (req, res) => {
     req.body.password,
     userInDatabase.password
   )
+
   if (!validPassword) {
     return res.send("Login failed. Please try again.")
   }
@@ -55,22 +58,35 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  res.render("users/edit.ejs")
+  const user = await User.findById(req.params.id)
+  res.render("users/edit.ejs", { user })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
-    // res.redirect(`/users`)
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        username: req.body.username,
+        displayName: req.body.displayName,
+        bio: req.body.bio,
+        photo: `/uploadImages/${req.file.filename}`,
+      },
+      {
+        new: true,
+      }
+    )
+    console.log(user)
+
+    res.redirect(`/users/${user._id}/profile/edit`)
   } catch (error) {
-    console.log("An error has occured")
+    console.log("An error has occured while updating")
   }
 }
 
 exports.auth_updatePassword_get = (req, res) => {
-  res.render("auth/update-password.ejs")
+  const user = req.session.user
+  res.render("auth/update-pass.ejs", { user })
 }
 
 exports.auth_updatePassword_post = async (req, res) => {
@@ -103,14 +119,15 @@ exports.auth_updatePassword_post = async (req, res) => {
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
-    await user.findByIdAndDelete(req.params.id)
-    res.render("./user/confirm.ejs")
+  const user = req.session.user
+    await User.findByIdAndDelete(req.params.id)
+    res.render("./user/confirm.ejs", { user })
   } catch (error) {
     console.error("An error has occured")
   }
 }
 
-exports.auth_signout_get = (req, res) => {
+exports.users_signout_get = (req, res) => {
   req.session.destroy()
   res.redirect("/")
 }
@@ -118,30 +135,23 @@ exports.auth_signout_get = (req, res) => {
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
   const posts = await Post.find({ username: req.params.userId })
-  const follows = await User.findOne({ userId: req.params.userId })
-  // let followersId = []
-  // let followingId = []
-  // if (follows) {
-  //   if (follows.followersId.length > 0) {
-  //     followersId = follows.followersId
-  //   }
-  //   if (follows.followingId) {
-  //     followingId = follows.followingId
-  //   }
-  // }
-  // const populatedList = await Follow.findById(req.params.userId).populate(
-  //   "userId"
-  // )
-  // const userHasFollowed = populatedList.followingId.some((user) =>
-  //   user.equals(req.session.user.userId)
-  // )
+  const isOwnProfile =
+    req.session.user && req.session.user._id.toString() === user._id.toString()
 
+  let userHasFollowed = false
+  if (req.session.user) {
+    userHasFollowed = user.follow.followersId.some(
+      (followerId) => followerId.toString() === req.session.user._id.toString()
+    )
+  }
   res.render("users/profile", {
     user,
     posts: posts,
-    followerCount: follows?.followersId.length,
-    followingCount: follows?.followingId.length,
-    userHasFollowed: false,
+    followerCount: user?.follow?.followersId?.length || 0,
+    followingCount: user?.follow?.followingsId?.length || 0,
+    userHasFollowed,
+    isOwnProfile,
+    req: req,
   })
 }
 
@@ -173,54 +183,65 @@ exports.search_post = async (req, res) => {
     hasSearched: true,
   })
 }
-// site used for search bar: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
+// site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
 exports.follow_create_post = async (req, res) => {
-  console.log("it works")
   try {
-    const followedUserId = req.params.userId
-    const user = req.session.user.userId
+    // The user who is trying to follow
+    const follower = await User.findById(req.params.userId)
+    // The user who is being followed
+    console.log(req.session.user)
+    const followed = await User.findById(req.session.user._id)
 
-    await Follow.findByIdAndUpdate(followedUserId, {
-      $push: { followingId: user },
+    await User.findByIdAndUpdate(followed._id, {
+      $push: {
+        "follow.followingsId": follower._id,
+      },
     })
 
-    await Follow.findByIdAndUpdate(user, {
-      $push: { followersId: followedUserId },
+    await User.findByIdAndUpdate(follower._id, {
+      $push: {
+        "follow.followersId": followed._id,
+      },
     })
-  } catch {
-    res.status(500).json({ error: "failed to follow user!" })
+    res.redirect(`/users/${req.params.userId}`)
+  } catch (error) {
+    res.status(500).json({ error: `failed to follow user! ${error}` })
   }
 }
 
 exports.follow_delete_delete = async (req, res) => {
   try {
-    const unfollowedUserId = req.params.userId
-    const user = req.session.user.userId
+    // The user who is trying to follow
+    const follower = await User.findById(req.params.userId)
+    // The user who is being followed
+    const followed = await User.findById(req.session.user._id)
 
-    await Follow.findByIdAndUpdate(unfollowedUserId, {
-      $pull: { followersId: user },
+    await User.findByIdAndUpdate(followed._id, {
+      $pull: {
+        "follow.followingsId": follower._id,
+      },
     })
 
-    await Follow.findByIdAndUpdate(user, {
-      $pull: { followingId: unfollowedUserId },
+    await User.findByIdAndUpdate(follower._id, {
+      $pull: {
+        "follow.followersId": followed._id,
+      },
     })
-  } catch {
-    res.status(500).json({ error: "failed to unfollow user!" })
+    res.redirect(`/users/${req.params.userId}`)
+  } catch (error) {
+    res.status(500).json({ error: `failed to follow user! ${error}` })
   }
 }
 
 exports.following_index_get = async (req, res) => {
   try {
-    const userId = req.params.userId
-    const following = await User.findOne({ userId }).populate("followingId")
-
+    const user = await User.findById(req.params.userId).populate(
+      "follow.followingsId"
+    )
     const data = {
-      followingList: [],
+      followingList: user?.follow?.followingsId || [],
       followersList: [],
-    }
-    if (following && following.followingId) {
-      data.followingList = following.followingId
     }
 
     res.render("users/follow", data)
@@ -231,14 +252,13 @@ exports.following_index_get = async (req, res) => {
 
 exports.follower_index_get = async (req, res) => {
   try {
-    const userId = req.params.userId
-    const followers = await User.findOne({ userId }).populate("followersId")
+    const user = await User.findById(req.params.userId).populate(
+      "follow.followersId"
+    )
+
     const data = {
-      followersList: [],
+      followersList: user?.follow?.followersId || [],
       followingList: [],
-    }
-    if (followers && followers.followersId) {
-      data.followersList = followers.followersId
     }
     res.render("users/follow", data)
   } catch (error) {

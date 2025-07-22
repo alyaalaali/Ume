@@ -28,16 +28,15 @@ app.use(
   })
 )
 // Require MiddleWares
-
+const isSignIn = require("./middlewares/is-signin.js")
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
-const createDummyUser = require("./middlewares/create-dummy-user.js")
+// const createDummyUser = require('./middlewares/create-dummy-user.js')
 
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-app.use(createDummyUser)
 app.use(passUserToViews)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -47,14 +46,20 @@ app.use(express.static(path.join(__dirname, "public")))
 
 //passUserToView middleware
 
-app.get("/", async (req, res) => {
-  res.send(`Your app is connected . . . `)
-})
 
-app.get("/", (req, res) => {
-  res.render("index.ejs", {
-    user: req.session.user,
-  })
+app.get("/", async (req, res) => {
+  const Post = require("./models/post.js")
+  const allPosts = await Post.find({}).populate("userId").populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {pageName: "Timeline", allPosts})
+})
+app.get("/", async (req, res) => {
+  res.render("posts/timeline.ejs", {pageName: "Timeline"})
 })
 
 // Require Routers
@@ -65,9 +70,10 @@ const commentsRouter = require("./routes/comments.js")
 
 // use Routers
 app.use("/users", authRouter)
+app.use(isSignIn)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
-// app.use("/follows", followRouter)
+app.use("/follows", authRouter)
 
 // Listener
 app.listen(port, () => {
