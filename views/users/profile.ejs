@@ -15,12 +15,14 @@
     <h3>posts</h3>
     <p><%= posts.length %></p>
 
-    <h3>followers</h3>
-    <p><a href="/follows/followers/<%= user._id %>"><%= followerCount %></a></p>
-    <h2>following</h2>
-    <p>
-      <a href="/follows/followings/<%= user._id %>"><%= followingCount %></a>
-    </p>
+    <div>
+      <a href="/users/<%= user._id %>/followers">
+        <strong><%= followerCount %></strong> followers
+      </a>
+      <a href="/users/<%= user._id %>/following">
+        <strong><%= followingCount %></strong> following
+      </a>
+    </div>
 
     <form action="/users/<%=user._id%>/follow" method="POST">
       <button type="submit">Follow</button>
