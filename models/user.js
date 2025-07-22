@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
+      default: "/images/icons/dummyUser.png",
     },
     password: {
       type: String,

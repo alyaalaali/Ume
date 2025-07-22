@@ -1,48 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>friends</title>
-  </head>
-  <body>
-    <h1>Friends</h1>
+<h1>
+  <% if (followingList.length > 0) { %> Following <% } else if
+  (followersList.length > 0) { %> Followers <% } %>
+</h1>
 
-    <ul class="nav nav-pills">
-      <li class="active">
-        <a data-toggle="pill" href="#followers">Followers</a>
-      </li>
-      <li><a data-toggle="pill" href="#following">Following</a></li>
-    </ul>
-
-    <div class="tab-content">
-      <div id="followers" class="tab-pane fade in active">
-        <ul>
-          <% followersList.forEach(user => { %>
-
-          <li>
-            <a href="/profile/<%= user._id %>"><%= user.displayName %></a>
-          </li>
-          <% }); %>
-        </ul>
-      </div>
-      <div id="following" class="tab-pane fade">
-        <ul>
-          <% followingList.forEach(user => { %>
-
-          <li>
-            <a href="/profile/<%= user._id %>"><%= user.displayName %></a>
-          </li>
-          <% }); %>
-        </ul>
-      </div>
-    </div>
-  </body>
-</html>
-<!-- site used https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_tabs_dynamic&stacked=h -->
+<% if (followingList.length > 0) { %>
+<div>
+  <% followingList.forEach(user => { %>
+  <div>
+    <img alt="<%= user.displayName %>" />
+    <h3><%= user.displayName %></h3>
+    <p>@<%= user.username %></p>
+  </div>
+  <% }); %>
+</div>
+<% } %> <% if (followersList.length > 0) { %>
+<div>
+  <% followersList.forEach(user => { %>
+  <div>
+    <img alt="<%= user.displayName %>" />
+    <h3><%= user.displayName %></h3>
+    <p>@<%= user.username %></p>
+  </div>
+  <% }); %>
+</div>
+<% } %>

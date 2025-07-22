@@ -11,6 +11,12 @@
 
 ---
 
+### _Getting Started_
+
+You can deploy the app on: [Ume!](https://google.com)
+
+---
+
 ### _Technology Stack:_
 
 - **Front-end:** EJS, CSS
@@ -54,3 +60,7 @@
 - Users can add a comment to a post.
 - Users can edit their own posts.
 - Users can delete their own comment.
+
+---
+
+### _Attributions_
