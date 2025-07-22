@@ -26,10 +26,7 @@
       <button type="submit">Follow</button>
     </form>
 
-    <form
-      action="/users/<%=user._id%>/unfollow/?_method=DELETE"
-      method="POST"
-    >
+    <form action="/users/<%=user._id%>/unfollow/?_method=DELETE" method="POST">
       <button type="submit">Unfollow</button>
     </form>
 
@@ -40,13 +37,12 @@
       <% }) %>
     </div>
 
-    
-<form action="/user/<%= user._id %>/edit">
-  <button>Edit</button>
-</form>
+    <form action="/users/<%= user._id %>/profile/edit">
+      <button>Edit</button>
+    </form>
 
-<form action="/user/<%= user._id %>?_method=DELETE" method="POST">
-  <button type="submit">Delete</button>
-</form>
+    <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
   </body>
 </html>
