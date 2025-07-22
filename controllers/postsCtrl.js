@@ -47,6 +47,7 @@ exports.post_show_get = async (req, res) => {
       path: "userId",
       select: "username displayName",
     })
+    
     res.status(200).render("posts/show.ejs", { post })
   } catch (error) {
     res.status(500).json({ error: "Failed to show specific post!" })
