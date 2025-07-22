@@ -1,20 +1,31 @@
 <html>
   <head>
     <title>User Search</title>
+    <link rel="stylesheet" href="/stylings/search.css" />
   </head>
   <body>
-    <h1>User Search</h1>
-    <form action="/users/search" method="post">
-      <input type="text" name="string" placeholder="Search for users..." />
-      <button type="submit">Search</button>
-    </form>
-    <% if (users) { %>
-    <h2>Search Results:</h2>
+    <header>
+      <div class="header-top">
+        <img
+          class="previousPage"
+          onclick=""
+          src="/images/icons/leftArrow.png"
+          alt=""
+        />
+        <h1 class="pageName"><%= pageName %></h1>
+      </div>
+      <form action="/users/search" method="post" class="searchForm">
+        <input type="text" name="string" />
+        <button type="submit" class="hidden-btn" ;>Search</button>
+      </form>
+    </header>
+    <% if (hasSearched){ %>
     <ul>
       <% users.forEach(user => { %>
-      <li>
-        <a href="/users/<%= user._id %>"
-          ><%= user.displayName %> <%= user.username %></a
+      <li class="user">
+        <a href="/users/<%= user._id %>">
+          <span class="display-name"><%= user.displayName %></span>
+          <span class="username">@<%= user.username %></span></a
         >
       </li>
       <% }); %>
