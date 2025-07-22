@@ -1,23 +1,23 @@
-const express = require("express")
+const express = require('express')
 const router = express.Router()
-const bcrypt = require("bcrypt")
-const User = require("../models/user.js")
-const Post = require("../models/post.js")
+const bcrypt = require('bcrypt')
+const User = require('../models/user.js')
+const Post = require('../models/post.js')
 
 //API's
 exports.auth_signup_get = async (req, res) => {
-  res.render("auth/sign-up.ejs")
+  res.render('auth/sign-up.ejs')
 }
 
 exports.auth_signup_post = async (req, res) => {
-  console.log( await User.findOne({ username: req.body.username }))
+  console.log(await User.findOne({ username: req.body.username }))
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
-    return res.send("Username already taken.")
-  } 
+    return res.send('Username already taken.')
+  }
 
   if (req.body.password !== req.body.confirmPassword) {
-    return res.send("Password and Confirm Password must match")
+    return res.send('Password and Confirm Password must match')
   }
 
   //bcryp
@@ -28,17 +28,17 @@ exports.auth_signup_post = async (req, res) => {
 
   const user = await User.create(req.body)
   console.log(user)
-  res.render("index.ejs")
+  res.render('index.ejs')
 }
 
 exports.auth_signin_get = async (req, res) => {
-  res.render("auth/sign-in.ejs")
+  res.render('auth/sign-in.ejs')
 }
 
 exports.auth_signin_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (!userInDatabase) {
-    return res.send("Login failed. Please try again.")
+    return res.send('Login failed. Please try again.')
   }
 
   const validPassword = bcrypt.compareSync(
@@ -47,61 +47,60 @@ exports.auth_signin_post = async (req, res) => {
   )
 
   if (!validPassword) {
-    return res.send("Login failed. Please try again.")
+    return res.send('Login failed. Please try again.')
   }
 
   //user exist and password matched
   req.session.user = {
     username: userInDatabase.username,
-    _id: userInDatabase._id,
+    _id: userInDatabase._id
   }
-  res.render("index.ejs")
+  res.render('index.ejs')
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
   const user = req.session.user
   res.render('users/edit.ejs', { user })
-
+}
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
     console.log(req.params.id)
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      new: true
     })
     console.log(user)
     res.redirect(`/users/${req.params.id}`)
   } catch (error) {
-    console.log("An error has occured")
+    console.log('An error has occured')
   }
 }
 
 exports.auth_updatePassword_get = (req, res) => {
   const user = req.session.user
   res.render('auth/update-pass.ejs', { user })
-
 }
 
 exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
-      return res.send("No user with that ID exists!")
+      return res.send('No user with that ID exists!')
     }
     const validPassword = bcrypt.compareSync(
       req.body.oldPassword,
       user.password
     )
     if (!validPassword) {
-      return res.send("Your old password was not correct! Please try again.")
+      return res.send('Your old password was not correct! Please try again.')
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-      return res.send("Password and Confirm Password must match")
+      return res.send('Password and Confirm Password must match')
     }
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.render("./auth/confpas.ejs", { user })
+    res.render('./auth/confpas.ejs', { user })
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
@@ -111,18 +110,18 @@ exports.auth_updatePassword_post = async (req, res) => {
 }
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
-    const user = req.session.user
+  const user = req.session.user
   try {
     await User.findByIdAndDelete(req.params.id)
-    res.render('./user/confirm.ejs', {user})
+    res.render('./user/confirm.ejs', { user })
   } catch (error) {
-    console.error("An error has occured")
+    console.error('An error has occured')
   }
 }
 
 exports.users_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect("/")
+  res.redirect('/')
 }
 
 exports.profile_get = async (req, res) => {
@@ -146,19 +145,19 @@ exports.profile_get = async (req, res) => {
   //   user.equals(req.session.user.userId)
   // )
 
-  res.render("users/profile", {
+  res.render('users/profile', {
     user,
     posts: posts,
     followerCount: follows?.followersId.length,
     followingCount: follows?.followingId.length,
-    userHasFollowed: false,
+    userHasFollowed: false
   })
 }
 
 exports.search_get = async (req, res) => {
   const users = await User.find()
   console.log(users)
-  res.render("users/search.ejs", { users })
+  res.render('users/search.ejs', { users })
 }
 
 exports.search_post = async (req, res) => {
@@ -167,21 +166,21 @@ exports.search_post = async (req, res) => {
     console.log(string)
     const users = await User.find({
       $or: [
-        { username: { $regex: string, $options: "i" } },
-        { displayName: { $regex: string, $options: "i" } },
-      ],
+        { username: { $regex: string, $options: 'i' } },
+        { displayName: { $regex: string, $options: 'i' } }
+      ]
     })
 
-    res.render("users/search.ejs", { users })
+    res.render('users/search.ejs', { users })
   } catch (error) {
     console.error(error)
-    res.status(500)("Error searching users")
+    res.status(500)('Error searching users')
   }
 }
 // site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
 exports.follow_create_post = async (req, res) => {
-  console.log("it works")
+  console.log('it works')
   try {
     // The user who is trying to follow
     const follower = await User.findById(req.params.userId)
@@ -191,17 +190,17 @@ exports.follow_create_post = async (req, res) => {
 
     await User.findByIdAndUpdate(followed._id, {
       $push: {
-        "follow.followingsId": follower._id,
-      },
+        'follow.followingsId': follower._id
+      }
     })
 
     await User.findByIdAndUpdate(follower._id, {
       $push: {
-        "follow.followersId": followed._id,
-      },
+        'follow.followersId': followed._id
+      }
     })
 
-    res.send("You followed someone successfully")
+    res.send('You followed someone successfully')
   } catch (error) {
     res.status(500).json({ error: `failed to follow user! ${error}` })
   }
@@ -216,16 +215,16 @@ exports.follow_delete_delete = async (req, res) => {
 
     await User.findByIdAndUpdate(followed._id, {
       $pull: {
-        "follow.followingsId": follower._id,
-      },
+        'follow.followingsId': follower._id
+      }
     })
 
     await User.findByIdAndUpdate(follower._id, {
       $pull: {
-        "follow.followersId": followed._id,
-      },
+        'follow.followersId': followed._id
+      }
     })
-    res.send("Follow Deleted Successfuly")
+    res.send('Follow Deleted Successfuly')
   } catch (error) {
     res.status(500).json({ error: `failed to follow user! ${error}` })
   }
@@ -234,35 +233,35 @@ exports.follow_delete_delete = async (req, res) => {
 exports.following_index_get = async (req, res) => {
   try {
     const userId = req.params.userId
-    const following = await User.findOne({ userId }).populate("followingId")
+    const following = await User.findOne({ userId }).populate('followingId')
 
     const data = {
       followingList: [],
-      followersList: [],
+      followersList: []
     }
     if (following && following.followingId) {
       data.followingList = following.followingId
     }
 
-    res.render("users/follow", data)
+    res.render('users/follow', data)
   } catch (error) {
-    res.status(500).json({ error: "failed to get the followings list!" })
+    res.status(500).json({ error: 'failed to get the followings list!' })
   }
 }
 
 exports.follower_index_get = async (req, res) => {
   try {
     const userId = req.params.userId
-    const followers = await User.findOne({ userId }).populate("followersId")
+    const followers = await User.findOne({ userId }).populate('followersId')
     const data = {
       followersList: [],
-      followingList: [],
+      followingList: []
     }
     if (followers && followers.followersId) {
       data.followersList = followers.followersId
     }
-    res.render("users/follow", data)
+    res.render('users/follow', data)
   } catch (error) {
-    res.status(500).json({ error: "failed to get the followers list!" })
+    res.status(500).json({ error: 'failed to get the followers list!' })
   }
 }
