@@ -19,17 +19,24 @@
         <button type="submit" class="hidden-btn" ;>Search</button>
       </form>
     </header>
-    <% if (hasSearched){ %>
-    <ul>
-      <% users.forEach(user => { %>
-      <li class="user">
-        <a href="/users/<%= user._id %>">
-          <span class="display-name"><%= user.displayName %></span>
-          <span class="username">@<%= user.username %></span></a
-        >
-      </li>
-      <% }); %>
-    </ul>
-    <% } %>
+
+    <main>
+      <% if (hasSearched){ %> <% users.forEach(user => { %>
+      <div class="user-item">
+        <a href="/users/<%= user._id %>" class="user-link">
+          <div class="user-content">
+            <img
+              src="/images/icons/dummyUser.png"
+              alt="<%= user.displayName %>"
+            />
+            <div class="user-text">
+              <h3><%= user.displayName %></h3>
+              <p>@<%= user.username %></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% }); %> <% } %>
+    </main>
   </body>
 </html>
