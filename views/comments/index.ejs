@@ -6,63 +6,31 @@
 <% %>
 <section class="commentsSection">
   
-  <div class="comment">
-    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
-    <div class="commentDetails">
-      <div>
-        <p class="commenterName">Yousif</p>
-        <p class="commentTime">2:21 PM</p>
-      </div>
-      <p class="commentContent commentOptionsButton">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </div>
-    <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="">
-      <form class="commentOptionsPanel">
-        <button>Delete</button>
-      </form>
-    </div>
-  </div>
-  
-  <div class="comment">
-    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
-    <div class="commentDetails">
-      <div>
-        <p class="commenterName">Yousif</p>
-        <p class="commentTime">2:21 PM</p>
-      </div>
-      <p class="commentContent commentOptionsButton">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </div>
-    <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="">
-      <form class="commentOptionsPanel">
-        <button>Delete</button>
-      </form>
-    </div>
-  </div>
-
   <%postComments.forEach((postComment)=>{%>
-    <div class="comment">
-      <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
-      <div class="commentDetails">
-        <div>
-          <p class="commenterName"><%= postComment.userId.displayName %></p>
-          <p class="commentTime"><%= postComment.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %></p>
-        </div>
-        <p class="commentContent"><%= postComment.description %></p>
+  <div class="comment">
+    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
+    <div class="commentDetails">
+      <div>
+        <p class="commenterName"><%= postComment.userId.displayName %></p>
+        <p class="commentTime"><%= postComment.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %></p>
       </div>
-      <div class="commentButtons">
-        <img src="/images/icons/heart.png" alt="">
-        <img src="/images/icons/options.png" alt="">
-      </div>
+      <p class="commentContent commentOptionsButton"><%= postComment.description %></p>
     </div>
-<%  })%>
+    <div class="commentButtons">
+      <img src="/images/icons/heart.png" alt="">
+      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="" style="<%= postComment.userId.equals(user.userId)//? '':'opacity:0;pointer-events:none;' %>">
+      <form class="commentOptionsPanel" action="/comments/postComment._id?_method=DELETE">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+  <%  })%>
+
 
 
 </section>
 </main>
-<form class="newCommentForm" action="">
+<form class="newCommentForm" action="/comments/<%= currentPostId%>" method="post">
   <div class="inputContainer">
     <img src="/images/icons/chatBubble.png">
     <input type="text" name="description" placeholder="Write your comment" id="description">
