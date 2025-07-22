@@ -1,5 +1,3 @@
-  <%- include('../partials/_navbar') %>
-
 <h2>Update Password</h2>
 <form action="/users/<%= user._id %>?_method=PUT" method="POST">
   <input type="password" name="oldPassword" placeholder="Old Password" required />
