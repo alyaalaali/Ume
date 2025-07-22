@@ -2,8 +2,10 @@
 
 <img src="/uploadImages/<%= post.photo %>"/>
 <p><%= post.caption %></p>
+<% if(post.userId._id.equals(user._id)) { %>
+  <a href="/posts/<%= post._id %>/edit"> Edit </a>
 
-<a href="/posts/<%= post._id %>/edit"> Edit </a>
+<% } %>
 
 <form action="/comments/<%= post._id%>" method="post">
   <label for="description">Write a comment: </label>
