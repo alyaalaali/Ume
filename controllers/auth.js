@@ -77,10 +77,11 @@ exports.auth_updateProfileById_put = async (req, res) => {
         new: true,
       }
     )
+    console.log(user)
 
-    res.redirect(`/users/${req.params.id}`)
+    res.redirect(`/users/${user._id}/profile/edit`)
   } catch (error) {
-    console.log("An error has occured")
+    console.log("An error has occured while updating")
   }
 }
 

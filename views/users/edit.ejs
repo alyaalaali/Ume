@@ -1,8 +1,12 @@
 <h2>Edit Profile</h2>
-<img src="<%= user.photo %>" >
-<form action="/users/<%= user._id %>/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+<img src="<%= user.photo %>" />
+<form
+  action="/users/<%= user._id %>/profile?_method=PUT"
+  method="POST"
+  enctype="multipart/form-data"
+>
   <label for="photo">Choose your image</label>
-  <input type="file" name="photo" id="photo">
+  <input type="file" name="photo" id="photo" />
   <input type="text" name="username" placeholder="Username" required />
   <input type="name" name="displayName" placeholder="Display Name" required />
   <input type="text" name="bio" placeholder="Bio" />
