@@ -178,6 +178,7 @@ exports.follow_create_post = async (req, res) => {
     // The user who is trying to follow
     const follower = await User.findById(req.params.userId)
     // The user who is being followed
+    console.log(req.session.user)
     const followed = await User.findById(req.session.user._id)
 
     await User.findByIdAndUpdate(followed._id, {

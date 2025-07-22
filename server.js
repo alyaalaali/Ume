@@ -37,7 +37,7 @@ const createDummyUser = require("./middlewares/create-dummy-user.js")
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
-app.use(createDummyUser)
+// app.use(createDummyU ser)
 app.use(passUserToViews)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
