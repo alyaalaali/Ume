@@ -28,7 +28,7 @@ app.use(
   })
 )
 // Require MiddleWares
-
+const isSignIn = require("./middlewares/is-signin.js")
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
@@ -70,6 +70,7 @@ const commentsRouter = require("./routes/comments.js")
 
 // use Routers
 app.use("/users", authRouter)
+app.use(isSignIn)
 app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", authRouter)
