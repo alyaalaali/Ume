@@ -32,7 +32,7 @@ exports.post_create_post = async (req, res) => {
     const postData = {
       photo: `${req.file.filename}`,
       caption: req.body.caption,
-      userId: req.session.user.userId,
+      userId: req.session.user._id,
     }
     await Post.create(postData)
     res.redirect("/posts")
