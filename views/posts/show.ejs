@@ -1,20 +1,36 @@
-<h1>Posted by: <%= post.userId.username %></h1>
+<head>
+  <link rel="stylesheet" href="/stylings/general.css" />
+  <link rel="stylesheet" href="/stylings/post.css"/>
+</head>
+<%- include("./../partials/_header.ejs")%>
 
-<img src="/uploadImages/<%= post.photo %>"/>
-<p><%= post.caption %></p>
-<% if(post.userId._id.equals(user._id)) { %>
-  <a href="/posts/<%= post._id %>/edit"> Edit </a>
-
-<% } %>
+<div class="backgroun-color" id="h1">
+  <div class="icon">
+    <img src="<%= post.userId.photo %>" alt="icon"/>
+  </div>
+  <h1 class="color" id="username" ><%= post.userId.username %></h1>
+  <div>
+    <% if(post.userId._id.equals(user._id)) { %>
+      <a id="edit" href="/posts/<%= post._id %>/edit"> Edit </a>
+    <% } %>
+  </div>
+</div>
+<div class="backgroun-color" id="image">
+  <img class="post" src="/uploadImages/<%= post.photo %>"/>
+</div>
+<div class="backgroun-color" id="p">
+  <p class="color"><span><%= post.userId.username %></span> <%= post.caption %></p>
+</div>
 
 <form action="/comments/<%= post._id%>" method="post">
-  <label for="description">Write a comment: </label>
+  <label class="color" for="description">Write a comment: </label>
   <input type="text" name="description" id="description" />
   <button type="submit">Send</button>
 </form>
 
 <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-  <label for="comment">Write a comment: </label>
+  <label class="color" for="comment">Write a comment: </label>
   <input type="text" name="comment" id="comment" />
   <button type="submit">Delete this post</button>
 </form>
+<%- include("./../partials/_footer.ejs") %>
