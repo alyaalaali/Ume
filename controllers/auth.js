@@ -11,10 +11,11 @@ exports.auth_signup_get = async (req, res) => {
 }
 
 exports.auth_signup_post = async (req, res) => {
+  console.log( await User.findOne({ username: req.body.username }))
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
     return res.send("Username already taken.")
-  }
+  } 
 
   if (req.body.password !== req.body.confirmPassword) {
     return res.send("Password and Confirm Password must match")
@@ -26,7 +27,8 @@ exports.auth_signup_post = async (req, res) => {
 
   // validation logic
   const user = await User.create(req.body)
-  res.send(`Thanks for signing up ${user.username}`)
+  console.log(user)
+  res.render("index.ejs")
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -56,22 +58,26 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  res.render('users/edit.ejs')
+  const user = req.session.user
+  res.render('users/edit.ejs', { user })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
+    console.log(req.params.id)
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     })
-    // res.redirect(`/users`)
+    console.log(user)
+    res.redirect(`/users/${req.params.id}`)
   } catch (error) {
     console.log('An error has occured')
   }
 }
 
 exports.auth_updatePassword_get = (req, res) => {
-  res.render('auth/update-password.ejs')
+  const user = req.session.user
+  res.render('auth/update-pass.ejs', { user })
 }
 
 exports.auth_updatePassword_post = async (req, res) => {
@@ -103,15 +109,16 @@ exports.auth_updatePassword_post = async (req, res) => {
 }
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
+    const user = req.session.user
   try {
-    await user.findByIdAndDelete(req.params.id)
-    res.render('./user/confirm.ejs')
+    await User.findByIdAndDelete(req.params.id)
+    res.render('./user/confirm.ejs', {user})
   } catch (error) {
     console.error('An error has occured')
   }
 }
 
-exports.auth_signout_get = (req, res) => {
+exports.users_signout_get = (req, res) => {
   req.session.destroy()
   res.redirect("/")
 }
