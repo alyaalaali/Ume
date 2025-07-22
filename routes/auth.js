@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 const router = require("express").Router()
 const authCtrl = require("../controllers/auth")
+=======
+
+const router = require("express").Router()
+const authCtrl = require("../controllers/auth")
+const upload = require("../config/multer")
+>>>>>>> 2d7af2db4c0f5051b04f44e9788d873529a45051
 
 // Routes - Call API's
 
@@ -23,6 +30,17 @@ router.delete("/:id", authCtrl.auth_deleteProfileById_delete)
 router.get("/:userId", authCtrl.profile_get)
 router.post("/:userId/follow", authCtrl.follow_create_post)
 router.delete("/:userId/unfollow", authCtrl.follow_delete_delete)
+
+//profile routes
+router.get("/update-password", authCtrl.auth_updatePassword_get)
+router.put("/:id", authCtrl.auth_updatePassword_post)
+router.get("/:id/profile/edit", authCtrl.auth_updateProfileById_get)
+router.put("/:id/profile", upload.single("photo"), authCtrl.auth_updateProfileById_put)
+router.delete("/:id", authCtrl.auth_deleteProfileById_delete)
+router.get("/:userId", authCtrl.profile_get)
+router.post("/:userId/follow", authCtrl.follow_create_post)
+router.delete("/:userId/unfollow", authCtrl.follow_delete_delete)
+
 
 //follow routes
 router.get("/:userId/followers", authCtrl.follower_index_get)

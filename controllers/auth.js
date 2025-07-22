@@ -59,17 +59,31 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
+<<<<<<< HEAD
   const user = req.session.user
   res.render("users/edit.ejs", { user })
+=======
+  const user = await User.findById(req.params.id)
+  res.render("users/edit.ejs" ,{ user })
+
+>>>>>>> 2d7af2db4c0f5051b04f44e9788d873529a45051
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
+<<<<<<< HEAD
     console.log(req.params.id)
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+=======
+    const user = await User.findByIdAndUpdate(req.params.id, {username: req.body.username,
+      displayName: req.body.displayName,
+      bio: req.body.bio,
+      photo:  `/uploadImages/${req.file.filename}`
+    }, {
+>>>>>>> 2d7af2db4c0f5051b04f44e9788d873529a45051
       new: true,
     })
-    console.log(user)
+   
     res.redirect(`/users/${req.params.id}`)
   } catch (error) {
     console.log("An error has occured")
