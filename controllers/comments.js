@@ -5,7 +5,7 @@ const Post = require("./../models/post")
 
 exports.comment_index_get = async (req, res) => {
   const postComments = await Comment.find({ postId: req.params.postId }).populate("userId")
-
+  console.log("post comments", postCommentsx``)
   res.render("./comments/index.ejs", {pageName: "Comments", postComments})
 
 }

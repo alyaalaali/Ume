@@ -23,6 +23,24 @@
       </form>
     </div>
   </div>
+  
+  <div class="comment">
+    <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
+    <div class="commentDetails">
+      <div>
+        <p class="commenterName">Yousif</p>
+        <p class="commentTime">2:21 PM</p>
+      </div>
+      <p class="commentContent commentOptionsButton">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+    <div class="commentButtons">
+      <img src="/images/icons/heart.png" alt="">
+      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="">
+      <form class="commentOptionsPanel">
+        <button>Delete</button>
+      </form>
+    </div>
+  </div>
 
   <%postComments.forEach((postComment)=>{%>
     <div class="comment">
