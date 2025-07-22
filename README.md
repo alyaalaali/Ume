@@ -24,6 +24,33 @@
 
 ### Prototype
 
-##### You can view our app prototype on [Figma!](https://www.figma.com/design/eDMvcsURIvutKbY7duoxe0/UME?node-id=31-511&t=yuzEu3rNqDhepziH-1)
+##### You can view our app prototype on Figma: [Ume!](https://www.figma.com/design/eDMvcsURIvutKbY7duoxe0/UME?node-id=31-511&t=yuzEu3rNqDhepziH-1)
 
 ---
+
+### _User Stories_
+
+#### Users
+
+- Users can search for other users
+- Users can register to create new accounts
+- Users can view their profile and other user's profile
+- Users can edit and update their own profile, but cant edit other peoples profile
+- Users can log out or delete their own account.
+- Users can view a user’s following or followers list.
+- Users can follow or unfollow other users.
+- Users can remove a follower from their follow list.
+
+#### Posts
+
+- Users can view a timeline of their own Posts their following's posts.
+- Users can create a new post.
+- Users can edit abd update their own posts.
+- Users can delete their own posts.
+
+#### Comments
+
+- Users can view the comments on a specific post.
+- Users can add a comment to a post.
+- Users can edit their own posts.
+- Users can delete their own comment.
