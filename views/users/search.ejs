@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>User Search</title>
+  </head>
+  <body>
+    <h1>User Search</h1>
+    <form action="/users/search" method="post">
+      <input type="text" name="string" placeholder="Search for users..." />
+      <button type="submit">Search</button>
+    </form>
+    <% if (users) { %>
+    <h2>Search Results:</h2>
+    <ul>
+      <% users.forEach(user => { %>
+      <li>
+        <a href="/users/<%= user._id %>"
+          ><%= user.displayName %> <%= user.username %></a
+        >
+      </li>
+      <% }); %>
+    </ul>
+    <% } %>
+  </body>
+</html>

@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
+      default: "/images/icons/dummyUser.png",
     },
     password: {
       type: String,
@@ -19,8 +20,18 @@ const userSchema = new mongoose.Schema(
     },
     bio: {
       type: String
+    },
+    follow:{
+      followingsId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }],
+      followersId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }]
     }
-  },
+},
   { timestamps: true }
 )
 

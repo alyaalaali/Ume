@@ -15,12 +15,22 @@
     <h3>posts</h3>
     <p><%= posts.length %></p>
 
-    <h3>followers</h3>
-    <p><a href="/follows/followers/<%= user._id %>"><%= followerCount %></a></p>
-    <h2>following</h2>
-    <p>
-      <a href="/follows/followings/<%= user._id %>"><%= followingCount %></a>
-    </p>
+    <div>
+      <a href="/users/<%= user._id %>/followers">
+        <%= followerCount %>followers
+      </a>
+      <a href="/users/<%= user._id %>/following">
+        <%= followingCount %>following
+      </a>
+    </div>
+
+    <form action="/users/<%=user._id%>/follow" method="POST">
+      <button type="submit">Follow</button>
+    </form>
+
+    <form action="/users/<%=user._id%>/unfollow/?_method=DELETE" method="POST">
+      <button type="submit">Unfollow</button>
+    </form>
 
     <div>
       <% posts.forEach((post) => { %>
@@ -28,6 +38,13 @@
       <p><%= post.caption%></p>
       <% }) %>
     </div>
+
+    <form action="/users/<%= user._id %>/profile/edit">
+      <button>Edit</button>
+    </form>
+
+    <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
   </body>
 </html>
-
