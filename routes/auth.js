@@ -24,4 +24,9 @@ router.get('/:userId', authCtrl.profile_get)
 router.post('/:userId/follow', authCtrl.follow_create_post)
 router.delete('/:userId/unfollow', authCtrl.follow_delete_delete)
 
+
+//follow routes
+router.get("/followings/:userId", authCtrl.following_index_get)
+router.get("/followers/:userId/", authCtrl.follower_index_get)
+
 module.exports = router
