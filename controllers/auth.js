@@ -134,7 +134,18 @@ exports.users_signout_get = (req, res) => {
 
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
-  const posts = await Post.find({ username: req.params.userId })
+  const posts = await Post.find({ userId: req.params.userId })
+    .sort({
+      createdAt: -1,
+    })
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
   const isOwnProfile =
     req.session.user && req.session.user._id.toString() === user._id.toString()
 
@@ -147,11 +158,13 @@ exports.profile_get = async (req, res) => {
   res.render("users/profile", {
     user,
     posts: posts,
+    allPosts: posts,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
     userHasFollowed,
     isOwnProfile,
     req: req,
+    currentUser: req.session.user,
   })
 }
 

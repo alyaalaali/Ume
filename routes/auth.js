@@ -39,6 +39,7 @@ router.delete("/:id", authCtrl.auth_deleteProfileById_delete)
 router.get("/:userId", authCtrl.profile_get)
 router.post("/:userId/follow", authCtrl.follow_create_post)
 router.delete("/:userId/unfollow", authCtrl.follow_delete_delete)
+
 //follow routes
 
 router.get("/:userId/followers", authCtrl.follower_index_get)

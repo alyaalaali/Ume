@@ -3,54 +3,146 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/profile.css" />
+
     <title>Profile Page</title>
   </head>
   <body>
-    <h2><%= user.displayName %></h2>
-    <h3><%= user.username%></h3>
+    <header>
+      <div class="header-top">
+        <img
+          class="previousPage"
+          onclick=""
+          src="/images/icons/leftArrow.png"
+          alt=""
+        />
+        <h1 class="pageName"><%= user.username %></h1>
+      </div>
+    </header>
+    <main>
+      <section class="profile-section">
+        <div class="profile-header">
+          <img
+            class="profile-pic"
+            src="/images/icons/dummyUser.png"
+            alt="<%=user.username%> profile photo"
+          />
 
-    <img src="<% user.photo %>" alt="<%=user.username%> profile photo" />
-    <h2><%=user.bio%></h2>
+          <div class="profile-names">
+            <h2><%= user.displayName %></h2>
+            <h3>@<%= user.username %></h3>
+          </div>
 
-    <h3>posts</h3>
-    <p><%= posts.length %></p>
+          <div class="profile-actions">
+            <% if (isOwnProfile) { %>
 
-    <div>
-      <a href="/users/<%= user._id %>/followers">
-        <%= followerCount %>followers
+            <form action="/users/<%= user._id %>/profile/edit">
+              <button class="btn">Edit</button>
+
+              <% } else if (req.session.user) { %> <% if (!userHasFollowed) { %>
+            </form>
+            <form action="/users/<%=user._id%>/follow" method="POST">
+              <button class="btn" type="submit">Follow</button>
+            </form>
+
+            <% } else { %>
+
+            <form
+              action="/users/<%=user._id%>/unfollow/?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn" type="submit">Unfollow</button>
+            </form>
+
+            <% } %> <% } %>
+          </div>
+        </div>
+        <p class="profile-bio"><%=user.bio%></p>
+      </section>
+
+      <!-- stat section -->
+      <section class="stats-section">
+        <div class="stat-item">
+          <h3>posts</h3>
+          <p><%= posts.length %></p>
+        </div>
+        <a href="/users/<%= user._id %>/followers" class="stat-item">
+          <h3>Followers</h3>
+          <p><%= followerCount %></p>
+        </a>
+        <a href="/users/<%= user._id %>/following" class="stat-item">
+          <h3>Following</h3>
+          <p><%= followingCount %></p>
+        </a>
+      </section>
+
+      <!-- post section -->
+      <section class="posts-section">
+        <% allPosts.forEach((post)=>{%>
+        <div class="post">
+          <div class="postHeader">
+            <a href="/users/<%= user._id %>">
+              <div class="postDetails">
+                <img
+                  class="postOwnerProfile"
+                  src="/images/icons/dummyUser.png"
+                  alt=""
+                />
+                <div>
+                  <p class="postOwner"><%= post.userId.displayName%></p>
+                  <p class="postTime">
+                    <%= post.createdAt.toLocaleString("en-GB", { timeZone: "UTC"
+                    }) %>
+                  </p>
+                </div>
+              </div>
+            </a>
+            <img class="postOptions" src="/images/icons/options.png" alt="" />
+          </div>
+          <div class="postImageContainer">
+            <img src="/uploadImages/<%=post.photo %>" alt="" />
+          </div>
+          <p class="postCaption"><%= post.caption %></p>
+          <div class="postButtons">
+            <div class="reactions">
+              <div class="likes">
+                <img src="/images/icons/heart.png" alt="" />
+                <p>1</p>
+              </div>
+                <div class="comments">
+                  <img
+                    src="/images/icons/chatBubble.png"
+                    onclick="document.location.href='/comments/<%=post._id%> '"
+                    alt=""
+                  />
+                  <p><%=post.comments.length%></p>
+                </div></a
+              >
+            </div>
+
+            <div class="share">
+              <!-- comment stuff -->
+
+              <img src="/images/icons/share.png" alt="comment icon" />
+              <p>Share</p>
+            </div>
+          </div>
+        </div>
+
+        <% })%>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/">
+        <img src="/images/icons/home.png" alt="" />
       </a>
-      <a href="/users/<%= user._id %>/following">
-        <%= followingCount %>following
+      <a href="/posts/new">
+        <img src="/images/icons/new.png" alt="" />
       </a>
-    </div>
-    <% if (isOwnProfile) { %>
-
-    <form action="/users/<%= user._id %>/profile/edit">
-      <button>Edit</button>
-
-      <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-        <button type="submit">Delete</button>
-      </form>
-
-      <% } else if (req.session.user) { %> <% if (!userHasFollowed) { %>
-    </form>
-    <form action="/users/<%=user._id%>/follow" method="POST">
-      <button type="submit">Follow</button>
-    </form>
-
-    <% } else { %>
-
-    <form action="/users/<%=user._id%>/unfollow/?_method=DELETE" method="POST">
-      <button type="submit">Unfollow</button>
-    </form>
-
-    <% } %> <% } %>
-
-    <div>
-      <% posts.forEach((post) => { %>
-      <img src="<%= post.photo%>" alt="post image" />
-      <p><%= post.caption%></p>
-      <% }) %>
-    </div>
+      <a href="/users/<%= user._id%>">
+        <img src="/images/icons/user.png" alt="" />
+      </a>
+    </footer>
   </body>
 </html>
