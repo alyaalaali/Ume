@@ -1,3 +1,51 @@
+<head>
+  <link rel="stylesheet" href="/stylings/general.css" />
+  <link rel="stylesheet" href="/stylings/timeline.css"/>
+  <link rel="stylesheet" href="/stylings/edit.css"/>
+</head>
+<%- include("./../partials/_header.ejs")%>
+<div class="post">
+    <div class="postHeader">
+      <div class="postDetails">
+        <img
+          class="postOwnerProfile"
+          src="/images/icons/dummyUser.png"
+          alt=""
+        />
+        <div>
+          <p class="postOwner"><%= post.userId.displayName%></p>
+          <p class="postTime">
+            <%= post.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %>
+          </p>
+        </div>
+      </div>
+      <img
+        style="display:<%= post.userId.equals(user._id)?'block':'none'%> ;"
+        class="postOptions"
+        onclick="document.querySelectorAll('.optionsPanel').style.display= 'block'"
+        src="/images/icons/options.png"
+        alt=""
+      />
+    </div>
+    <div class="postImageContainer">
+      <img src="/uploadImages/<%= post.photo%>" alt="" />
+    </div>
+    <form action="/posts/<%= post._id %>?_method=PUT" method="POST">
+      <input class="postCaption" type="text" name="caption" id="caption" value="<%= post.caption %>" />
+    
+      <button class="postCaption" type="submit">Confirm changes</button>
+    </form>
+    <div class="postButtons">
+      <div class="reactions">
+      </div>
+      </div>
+    </div>
+    <div class="optionsPanel">
+      <form action="/posts/<%= post._id%>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
 
 <h1>Edit: <img src="/uploadImages/<%= post.photo %>" /></h1>
 
@@ -6,3 +54,4 @@
 
   <button type="submit">Upload post</button>
 </form>
+

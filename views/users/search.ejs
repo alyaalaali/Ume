@@ -25,10 +25,7 @@
       <div class="user-item">
         <a href="/users/<%= user._id %>" class="user-link">
           <div class="user-content">
-            <img
-              src="/images/icons/dummyUser.png"
-              alt="<%= user.displayName %>"
-            />
+            <img src="<%= user.photo %>" alt="<%= user.displayName %>" />
             <div class="user-text">
               <h3><%= user.displayName %></h3>
               <p>@<%= user.username %></p>

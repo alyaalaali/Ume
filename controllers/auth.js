@@ -125,34 +125,37 @@ exports.users_signout_get = (req, res) => {
 
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
-  const posts = await Post.find({ username: req.params.userId })
-  const follows = await User.findOne({ userId: req.params.userId })
-  
-  // let followersId = []
-  // let followingId = []
-  // if (follows) {
-  //   if (follows.followersId.length > 0) {
-  //     followersId = follows.followersId
-  //   }
-  //   if (follows.followingId) {
-  //     followingId = follows.followingId
-  //   }
-  // }
-  // const populatedList = await Follow.findById(req.params.userId).populate(
-  //   "userId"
-  // )
-  // const userHasFollowed = populatedList.followingId.some((user) =>
-  //   user.equals(req.session.user.userId)
-  // )
+  const posts = await Post.find({ userId: req.params.userId })
+    .sort({
+      createdAt: -1,
+    })
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  const isOwnProfile =
+    req.session.user && req.session.user._id.toString() === user._id.toString()
 
-  res.render('users/profile', {
+  let userHasFollowed = false
+  if (req.session.user) {
+    userHasFollowed = user.follow.followersId.some(
+      (followerId) => followerId.toString() === req.session.user._id.toString()
+    )
+  }
+  res.render("users/profile", {
     user,
     posts: posts,
+    allPosts: posts,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
     userHasFollowed,
     isOwnProfile,
     req: req,
+    currentUser: req.session.user,
   })
 }
 
@@ -241,6 +244,7 @@ exports.following_index_get = async (req, res) => {
       "follow.followingsId"
     )
     const data = {
+      user,
       followingList: user?.follow?.followingsId || [],
       followersList: [],
       pageName: "Following",
@@ -259,6 +263,7 @@ exports.follower_index_get = async (req, res) => {
     )
 
     const data = {
+      user,
       followersList: user?.follow?.followersId || [],
       followingList: [],
       pageName: "Followers",

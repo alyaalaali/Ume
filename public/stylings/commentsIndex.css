@@ -153,6 +153,7 @@ main {
 .optionsPanel {
   display: none;
 }
+
 .optionsPanel button {
   font-size: 3rem;
   cursor: pointer;
@@ -162,4 +163,9 @@ main {
   color: #24293d;
   background-color: white;
   border-radius: 10px;
+}
+
+.commentButtons form button{
+  background-color: transparent;
+  border: none;
 }
