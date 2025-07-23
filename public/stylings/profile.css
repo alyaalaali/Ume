@@ -1,0 +1,282 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+main {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+body {
+  background-color: #24293d;
+  color: white;
+  font-family: "GeologicaBold";
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 2rem 2rem;
+  border-bottom: 1px solid #3a425f;
+  background-color: #24293d;
+  z-index: 100;
+  padding: 2rem 2rem;
+  border-bottom: 1px solid #3a425f;
+}
+@font-face {
+  font-family: "GeologicaBold";
+  src: url("./../fonts/Geologica/Geologica-Bold.ttf");
+}
+
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 2%;
+}
+
+.previousPage {
+  position: absolute;
+  left: 0.3rem;
+  height: 20px;
+  filter: invert(100%);
+}
+
+.pageName {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.profile-section {
+  background-color: #24293d;
+  padding: 2rem 2rem;
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #bfc4d6;
+  object-fit: cover;
+}
+
+.profile-names h2 {
+  font-size: 1.8rem;
+}
+
+.profile-names h3 {
+  color: #bfc4d6;
+  font-size: 1.4rem;
+}
+
+.profile-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  background-color: #4dade9;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  height: 3rem;
+  width: 8rem;
+  font-family: "GeologicaBold";
+}
+
+.profile-bio {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Stats Section */
+.stats-section {
+  border-radius: 30px 30px 0px 0px;
+  background-color: #2f3651;
+  padding: 1.5rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #3a425f;
+}
+
+.stat-item {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+
+.stat-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+  color: #bfc4d6;
+  font-size: 1.1rem;
+}
+
+/* Posts Section */
+.posts-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  margin-bottom: 1rem;
+}
+
+.post {
+  background-color: #2f3855;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.postDetails {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.postOwnerProfile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #bfc4d6;
+}
+
+.postOptions {
+  filter: invert(100%);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.postDetails div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.postOwner {
+  font-family: "GeologicaBold";
+  font-size: 1.2rem;
+  color: white;
+}
+
+.postTime {
+  font-size: 0.9rem;
+  font-family: "DMSansRegular";
+  color: #bfc4d6;
+}
+
+.postImageContainer {
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.postImageContainer img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.postCaption {
+  font-size: 1.1rem;
+  color: #aab2ba;
+  line-height: 1.4;
+}
+
+.postButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.reactions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.reactions .likes,
+.reactions .comments,
+.postButtons .share {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reactions img,
+.postButtons .share img {
+  width: 24px;
+  height: 24px;
+  filter: invert(100%);
+  cursor: pointer;
+}
+
+.postButtons p {
+  font-size: 1rem;
+  color: #bfc4d6;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+  background-color: #24293d;
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #3a425f;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+footer img {
+  width: 24px;
+  height: 24px;
+  filter: invert(100%);
+  margin-bottom: 0.2rem;
+}

@@ -46,7 +46,6 @@ app.use(express.static(path.join(__dirname, "public")))
 
 //passUserToView middleware
 
-
 // Require Routers
 const authRouter = require("./routes/auth.js")
 const postRouter = require("./routes/postRouter.js")
@@ -60,22 +59,19 @@ app.use("/posts", postRouter)
 app.use("/comments", commentsRouter)
 app.use("/follows", authRouter)
 
-
 app.get("/", async (req, res) => {
   const Post = require("./models/post.js")
-  const allPosts = await Post.find({}).populate("userId").populate({
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
       path: "comments",
       populate: {
         path: "userId",
         select: "username displayName",
       },
     })
-  res.render("posts/timeline.ejs", {pageName: "Timeline", allPosts})
+  res.render("posts/timeline.ejs", { pageName: "Timeline", allPosts })
 })
-app.get("/", async (req, res) => {
-  res.render("posts/timeline.ejs", {pageName: "Timeline"})
-})
-
 
 // Listener
 app.listen(port, () => {

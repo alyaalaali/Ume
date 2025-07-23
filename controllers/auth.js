@@ -58,29 +58,20 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  const user = await User.findById(req.params.id)
-  res.render("users/edit.ejs", { user })
+  const user = req.session.user
+  res.render('users/edit.ejs', { user,pageName:"My Profile" })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        username: req.body.username,
-        displayName: req.body.displayName,
-        bio: req.body.bio,
-        photo: `/uploadImages/${req.file.filename}`,
-      },
-      {
-        new: true,
-      }
-    )
+    console.log(req.params.id)
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
     console.log(user)
-
-    res.redirect(`/users/${user._id}/profile/edit`)
+    res.redirect(`/users/${req.params.id}` )
   } catch (error) {
-    console.log("An error has occured while updating")
+    console.log('An error has occured')
   }
 }
 
@@ -134,7 +125,18 @@ exports.users_signout_get = (req, res) => {
 
 exports.profile_get = async (req, res) => {
   const user = await User.findById(req.params.userId)
-  const posts = await Post.find({ username: req.params.userId })
+  const posts = await Post.find({ userId: req.params.userId })
+    .sort({
+      createdAt: -1,
+    })
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
   const isOwnProfile =
     req.session.user && req.session.user._id.toString() === user._id.toString()
 
@@ -147,11 +149,13 @@ exports.profile_get = async (req, res) => {
   res.render("users/profile", {
     user,
     posts: posts,
+    allPosts: posts,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
     userHasFollowed,
     isOwnProfile,
     req: req,
+    currentUser: req.session.user,
   })
 }
 
@@ -240,6 +244,7 @@ exports.following_index_get = async (req, res) => {
       "follow.followingsId"
     )
     const data = {
+      user,
       followingList: user?.follow?.followingsId || [],
       followersList: [],
       pageName: "Following",
@@ -258,6 +263,7 @@ exports.follower_index_get = async (req, res) => {
     )
 
     const data = {
+      user,
       followersList: user?.follow?.followersId || [],
       followingList: [],
       pageName: "Followers",
