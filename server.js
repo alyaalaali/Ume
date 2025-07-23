@@ -4,7 +4,6 @@ require("dotenv").config()
 const session = require("express-session")
 const path = require("path")
 const multer = require("multer")
-
 // Initialize app
 const app = express()
 
@@ -32,16 +31,18 @@ const isSignIn = require("./middlewares/is-signin.js")
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
+const previousPage = require("./middlewares/previousPage.js") 
 // const createDummyUser = require('./middlewares/create-dummy-user.js')
 
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
 app.use(passUserToViews)
+app.use(previousPage)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
-app.use(morgan("dev"))
+// app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
 
 //passUserToView middleware

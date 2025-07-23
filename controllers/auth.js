@@ -54,6 +54,9 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
+
+  req.session.pagesStack = new Array() 
+
   res.render("index.ejs")
 }
 
