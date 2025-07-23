@@ -14,17 +14,6 @@ router.get("/sign-out", authCtrl.users_signout_get)
 router.get("/search", authCtrl.search_get)
 router.post("/search", authCtrl.search_post)
 
-router.get("/update-password", authCtrl.auth_updatePassword_get)
-router.put("/:id", authCtrl.auth_updatePassword_post)
-
-router.get("/:id/profile/edit", authCtrl.auth_updateProfileById_get)
-
-router.put(
-  "/:id/profile",
-  upload.single("photo"),
-  authCtrl.auth_updateProfileById_put
-)
-
 //profile routes
 router.get("/update-password", authCtrl.auth_updatePassword_get)
 router.put("/:id", authCtrl.auth_updatePassword_post)
