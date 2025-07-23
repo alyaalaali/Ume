@@ -92,3 +92,14 @@ exports.post_delete_destroy = async (req, res) => {
     res.status(500).json({ error: "Failed to destroy post!" })
   }
 }
+
+exports.fav_create_post = async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.postId, {
+      $push: { favoritedByUser : req.params.userId}
+    })
+    res.redirect(`/posts/${req.params.postId}`)
+  } catch (error) {
+
+  }
+}
