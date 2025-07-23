@@ -134,7 +134,8 @@ exports.auth_updatePassword_post = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.render("./auth/confpas.ejs", { user })
+    // res.render("./auth/confpas.ejs", { user })
+    res.redirect(`/users/${user._id}`)
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
