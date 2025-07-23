@@ -1,18 +1,79 @@
-<h2>Edit Profile</h2>
-<img src="<%= user.photo %>" />
-<form
-  action="/users/<%= user._id %>/profile?_method=PUT"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <label for="photo">Choose your image</label>
-  <input type="file" name="photo" id="photo" />
-  <input type="text" name="username" placeholder="Username" required />
-  <input type="name" name="displayName" placeholder="Display Name" required />
-  <input type="text" name="bio" placeholder="Bio" />
-  <button type="submit">Save</button>
-  <a href="/users/update-password"><p>Update Password</p></a>
-</form>
-<form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete</button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/edit.css" />
+
+
+    <title>Edit</title>
+  </head>
+  <body>
+    <header class="profileHeader">
+      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
+      <h2>My Account</h2>
+      <div>
+    </header>
+
+    <section class="Profile-photo">
+      <img class="profile-photo" src="<%= user.photo %>" />
+      <form
+        class="photo"
+        action="/users/<%= user._id %>/profile?_method=PUT"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <label for="photo" class="photo-label">Choose your image</label>
+        <input type="file" name="photo" id="photo" class="photo-input" />
+      </form>
+    </section>
+
+    <div class="form-group">
+      <input type="text" name="username" placeholder="Username" required />
+    </div>
+
+    <br />
+
+    <div class="form-group">
+      <input type="text" name="displayName" placeholder="Display Name" required
+      />
+    </div>
+
+    <br />
+
+    <div class="form-group">
+      <input type="text" name="bio" placeholder="Bio" />
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="button-group">
+      <button type="submit" class="submit-button">Save</button>
+    </div>
+
+    <div class="dark-button">
+      <a href="/users/update-password"
+        ><button class="dark-button">Update Password</button></a
+      >
+    </div>
+
+    <div class="dark-button">
+      <a href="/users/sign-out"
+        ><button class="dark-button">Signs out</button></a
+      >
+    </div>
+
+    <div class="dark-button">
+      <form
+        class="dark-button"
+        action="/users/<%= user._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button type="submit" class="dark-button">Delete Account</button>
+      </form>
+    </div>
+    </main>
+  </body>
+</html>

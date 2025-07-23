@@ -58,29 +58,20 @@ exports.auth_signin_post = async (req, res) => {
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
-  const user = await User.findById(req.params.id)
-  res.render("users/edit.ejs", { user })
+  const user = req.session.user
+  res.render('users/edit.ejs', { user,pageName:"My Profile" })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        username: req.body.username,
-        displayName: req.body.displayName,
-        bio: req.body.bio,
-        photo: `/uploadImages/${req.file.filename}`,
-      },
-      {
-        new: true,
-      }
-    )
+    console.log(req.params.id)
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
     console.log(user)
-
-    res.redirect(`/users/${user._id}/profile/edit`)
+    res.redirect(`/users/${req.params.id}` )
   } catch (error) {
-    console.log("An error has occured while updating")
+    console.log('An error has occured')
   }
 }
 
