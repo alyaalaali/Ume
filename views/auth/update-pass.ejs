@@ -1,7 +1,39 @@
-<h2>Update Password</h2>
-<form action="/users/<%= user._id %>?_method=PUT" method="POST">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/update-pass.css" />
+
+    <title>update password</title>
+  </head>
+
+  <body>
+  <header class="profileHeader">
+      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
+    </header>
+    
+    
+    <div class="container">
+    <h2>Update Password</h2>
+
+<form action="/users/<%= user._id %>?_method=PUT" method="POST" class="user">
+  <div class="inputContainer">
+
+  <div class="password">
   <input type="password" name="oldPassword" placeholder="Old Password" required />
+  </div>
+
+  <div class="password">
   <input type="password" name="newPassword" placeholder="New Password" required />
+  </div>
+
+  <div class="password">
   <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
-  <button type="submit">Update</button>
+  </div>
+</div>
+  <button type="submit" class="submit-button">Update</button>
 </form>
+</div>
+</body>
+</html>

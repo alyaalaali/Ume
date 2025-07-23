@@ -3,18 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/welcome.css" />
+
     <title>Ume</title>
   </head>
+
   <body>
-    <h1>Welcome to Ume!!!</h1>
-    <% if (user) { %>
-    <h1>Welcome to the app, <%= user.username %>!</h1>
-    <% } else { %>
-    <h1>Welcome to the app, guest.</h1>
-    <p>
-      <a href="/users/sign-up">Sign up</a> or
-      <a href="/users/sign-in">Sign in</a>.
-    </p>
-    <% } %>
+    <div class="top-bar">
+      <a class="sign-in" href="/users/sign-in">Sign in</a>
+    </div>
+
+    <div class="content">
+      <h1>Welcome to Ume!</h1>
+      <p class="msg">Where you and me connect!</p>
+    </div>
+
+    <div class="bottom-bar">
+      <a class="sign-up" href="/users/sign-up">Create a new account</a>
+    </div>
   </body>
 </html>

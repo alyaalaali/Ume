@@ -10,7 +10,8 @@
   </head>
   <body>
     <header class="profileHeader">
-      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
+
+      <a href="/users/<%= user._id %>"><img src="/images/icons/leftArrow.png" alt=""></a>
       <h2>My Account</h2>
       <div>
     </header>
@@ -32,14 +33,12 @@
       <input type="text" name="username" placeholder="Username" value="<%= profileUser.username%>" required />
     </div>
 
-    <br />
 
     <div class="form-group">
       <input type="text" name="displayName" placeholder="Display Name" value="<%= profileUser.displayName%>" required
       />
     </div>
 
-    <br />
 
     <div class="form-group">
       <input type="text" name="bio" placeholder="Bio"  value="<%= profileUser.username %>"/>
@@ -49,9 +48,11 @@
     <br />
     <br />
 
-    <div class="button-group">
-      <button type="submit" class="submit-button">Save</button>
+    <div class="button-group"> 
+      <a href="/users/<%= user._id %>">
+      <button type="submit" class="submit-button">Save</button></a>
     </div>
+    </form>
 
 </form>
     <div class="dark-button">
@@ -62,7 +63,7 @@
 
     <div class="dark-button">
       <a href="/users/sign-out"
-        ><button class="dark-button">Signs out</button></a
+        ><button class="dark-button">Log out</button></a
       >
     </div>
 
@@ -73,7 +74,6 @@
         method="POST"
       >
         <button type="submit" class="dark-button">Delete Account</button>
-      </form>
     </div>
     </main>
   </body>
