@@ -2,12 +2,14 @@
   <link rel="stylesheet" href="/stylings/general.css" />
   <link rel="stylesheet" href="/stylings/explorer.css" />
 </head>
-<%- include("./../partials/_header.ejs")%>
+<%- include("./../partials/_header.ejs")%> 
+
 <% posts.forEach((post) => { %>
   <div class="img">
-  <a href="/posts/<%= post._id %>">
-    <img src="/uploadImages/<%= post.photo %>"  />
-  </a>
+    <a href="/posts/<%= post._id %>">
+    <img src="/uploadImages/<%= post.photo %>"/>
+    </a>
   </div>
-  <% }) %>
+<% }) %> 
+
 <%- include("./../partials/_footer.ejs") %>
