@@ -58,10 +58,10 @@ exports.auth_signin_post = async (req, res) => {
   res.render("posts/timeline.ejs", { pageName: "timeline" })
 }
 
-exports.auth_updateProfileById_get = async (req, res) => {
-  const user = await User.findById(req.session.user._id)
-  console.log(user)
-  res.render("users/edit.ejs", { user, pageName: "My Profile" })
+  exports.auth_updateProfileById_get = async (req, res) => {
+  const profileUser =await User.findById(req.params.id)
+  console.log(profileUser)
+  res.render("users/edit.ejs", { profileUser, pageName: "My Profile" })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {

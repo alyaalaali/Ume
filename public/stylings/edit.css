@@ -139,3 +139,7 @@ input::placeholder {
   position: relative;
   left: 0px;
 }
+
+.profileEditForm {
+  width: 100%;
+}
