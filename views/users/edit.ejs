@@ -18,7 +18,9 @@
     <form 
       action="/users/<%= profileUser._id %>/profile?_method=PUT"   
       enctype="multipart/form-data"
-      method="post">
+      method="post"
+      class="profileEditForm"
+      >
     <section class="Profile-photo">
       <img class="profile-photo" src="<%= profileUser.photo %>" />
         <label for="photo" class="photo-label">Choose your image</label>
