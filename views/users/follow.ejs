@@ -9,15 +9,17 @@
   </head>
   <body>
     <header>
-      <div class="header-top">
-        <img
-          class="previousPage"
-          onclick=""
-          src="/images/icons/leftArrow.png"
-          alt=""
-        />
-        <h1 class="pageName"><%= pageName %></h1>
-      </div>
+      <a href="/users/<%= user._id %>">
+        <div class="header-top">
+          <img
+            class="previousPage"
+            onclick=""
+            src="/images/icons/leftArrow.png"
+            alt="left arrow icon"
+          />
+          <h1 class="pageName"><%= pageName %></h1>
+        </div></a
+      >
     </header>
 
     <main>

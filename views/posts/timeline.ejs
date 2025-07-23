@@ -12,7 +12,8 @@
         <img
           class="postOwnerProfile"
           src="<%= post.userId.photo %>"
-          alt=""
+          alt="<%= post.userId.displayName %> profile picture"
+
         />
         <div>
           <p class="postOwner"><%= post.userId.displayName%></p>
@@ -26,11 +27,11 @@
         class="postOptions"
         onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
         src="/images/icons/options.png"
-        alt=""
+        alt="three dots icon"
       />
     </div>
     <div class="postImageContainer">
-      <img src="/uploadImages/<%= post.photo%>" alt="" />
+      <img src="/uploadImages/<%= post.photo%>" alt="<%= post.userId.displayName %>post image" />
     </div>
     <p class="postCaption"><%= post.caption %></p>
     <div class="postButtons">
@@ -55,18 +56,19 @@
           </form>
           <% } %>
           <p><%= post.favoritedByUser.length %></p>
+
         </div>
         <div class="comments">
           <img
             onclick="document.location.href ='/comments/<%=post._id%>'"
             src="/images/icons/chatBubble.png"
-            alt=""
+            alt="speech bubble icon"
           />
           <p><%=post.comments.length%></p>
         </div>
       </div>
       <div class="share">
-        <img class="pointer" src="/images/icons/share.png" alt="" />
+        <img class="pointer" src="/images/icons/share.png" alt="share icon" />
         <p>Share</p>
       </div>
     </div>

@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("../models/user.js")
 const Post = require("../models/post.js")
+const { post } = require("../routes/auth.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
@@ -24,10 +25,26 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   // validation logic
-
   const user = await User.create(req.body)
-  console.log(user)
-  res.render("index.ejs")
+
+  req.session.user = {
+    _id: user._id,
+    username: user.username,
+  }
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -54,24 +71,42 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
-  res.render("index.ejs")
+
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
-exports.auth_updateProfileById_get = async (req, res) => {
-  const user = req.session.user
-  res.render('users/edit.ejs', { user,pageName:"My Profile" })
+  exports.auth_updateProfileById_get = async (req, res) => {
+  const profileUser =await User.findById(req.params.id)
+  console.log(profileUser)
+  res.render("users/edit.ejs", { profileUser, pageName: "My Profile" })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    console.log(req.params.id)
+    req.body.photo = "/uploadImages/"+ req.file.filename
+    console.log( "req.file.filename", req.file.filename)
+    console.log( "req.body.photo", req.body.photo)
+    
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
+      new: true,
     })
     console.log(user)
-    res.redirect(`/users/${req.params.id}` )
+    res.redirect(`/users/${req.params.id}`)
   } catch (error) {
-    console.log('An error has occured')
+    console.log("An error has occured")
   }
 }
 
@@ -99,7 +134,8 @@ exports.auth_updatePassword_post = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.render("./auth/confpas.ejs", { user })
+    // res.render("./auth/confpas.ejs", { user })
+    res.redirect(`/users/${user._id}`)
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
@@ -112,7 +148,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
     const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
-    res.render("./user/confirm.ejs", { user })
+    res.render("index.ejs")
   } catch (error) {
     console.error("An error has occured")
   }
@@ -120,7 +156,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
 
 exports.users_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect("/")
+  res.render("index.ejs")
 }
 
 exports.profile_get = async (req, res) => {
@@ -146,10 +182,18 @@ exports.profile_get = async (req, res) => {
       (followerId) => followerId.toString() === req.session.user._id.toString()
     )
   }
+  const userId = req.session.user._id
+  const postwithlike = posts.map((post) => {
+    const islike = post.favoritedByUser.some((user) => user.equals(userId))
+    post = post.toObject()
+    post.userHasFavorited = islike
+    return post
+  })
+
   res.render("users/profile", {
     user,
     posts: posts,
-    allPosts: posts,
+    allPosts: postwithlike,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
     userHasFollowed,

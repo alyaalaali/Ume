@@ -9,13 +9,30 @@
   </head>
 
   <body>
-    <h1>Sign in</h1>
-    <form action="/users/sign-in" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <button type="submit">Sign in</button>
-    </form>
+    <header class="profileHeader">
+      <img
+        onclick="document.location.href='/users/sign-out'"
+        src="/images/icons/leftArrow.png"
+        alt=""
+      />
+    </header>
+
+    <div class="container">
+      <img class="icon" src="/images/icons/sin.png" alt="user icon" />
+
+      <h1>Sign in</h1>
+
+      <form action="/users/sign-in" method="POST" class="sign-in">
+        <div class="inputContainer">
+          <div class="username">
+            <input type="text" name="username" placeholder="username" />
+          </div>
+          <div class="username">
+            <input type="password" name="password" placeholder="password" />
+          </div>
+        </div>
+        <button type="submit" class="submit-button">Sign in</button>
+      </form>
+    </div>
   </body>
 </html>

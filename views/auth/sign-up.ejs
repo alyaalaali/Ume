@@ -3,22 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link rel="stylesheet" href="/stylings/sign-up.css" />
     <title>Sign Up</title>
   </head>
 
   <body>
+    <header class="profileHeader">
+      <img onclick="document.location.href='/users/sign-out'" src="/images/icons/leftArrow.png" alt="left arrow">
+      </header>
+
+
+    <div class="container">
+      <img class="icon" src="/images/icons/sin.png" alt="user icon"/>
+
     <h1>Create a new account!</h1>
 
-    <form action="/users/sign-up" method="POST">
-      <label for="displayName">Display Name:</label>
-      <input type="text" name="displayName" id="displayName"/>
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
-      <button type="submit">Sign up</button>
+    <form action="/users/sign-up" method="POST" class="sign-up">
+      <div class="inputContainer">
+
+        <div class="inputInfo">
+      <input type="text" name="displayName" placeholder="displayName" />
+        </div>
+
+        <div class="inputInfo">
+      <input type="text" name="username" placeholder="username" />
+      </div>
+
+      <div class="inputInfo">
+      <input type="password" name="password" placeholder="password" />
+        </div>
+
+        <div class="inputInfo">
+      <input type="password" name="confirmPassword" placeholder="confirmPassword" />
+      </div>
+
+      <button type="submit" class="submit-button">Sign up</button>
     </form>
+    </div>
   </body>
 </html>

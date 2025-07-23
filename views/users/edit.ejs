@@ -10,49 +10,51 @@
   </head>
   <body>
     <header class="profileHeader">
-      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
+
+      <a href="/users/<%= user._id %>"><img src="/images/icons/leftArrow.png" alt="left arrow icon"></a>
       <h2>My Account</h2>
       <div>
     </header>
-
-    <section class="Profile-photo">
-      <img class="profile-photo" src="<%= user.photo %>" />
-      <form
-        class="photo"
-        action="/users/<%= user._id %>/profile?_method=PUT"
-        method="POST"
-        enctype="multipart/form-data"
+    
+    <form 
+      action="/users/<%= profileUser._id %>/profile?_method=PUT"   
+      enctype="multipart/form-data"
+      method="post"
+      class="profileEditForm"
       >
+    <section class="Profile-photo">
+      <img class="profile-photo" src="<%= profileUser.photo %>" alt="<%= profileUser.displayName %> profile picture"/>
         <label for="photo" class="photo-label">Choose your image</label>
-        <input type="file" name="photo" id="photo" class="photo-input" />
-      </form>
+        <input type="file" name="photo" id="photo" `class="photo-input" />
+      
     </section>
 
     <div class="form-group">
-      <input type="text" name="username" placeholder="Username" required />
+      <input type="text" name="username" placeholder="Username" value="<%= profileUser.username%>" required />
     </div>
 
-    <br />
 
     <div class="form-group">
-      <input type="text" name="displayName" placeholder="Display Name" required
+      <input type="text" name="displayName" placeholder="Display Name" value="<%= profileUser.displayName%>" required
       />
     </div>
 
-    <br />
 
     <div class="form-group">
-      <input type="text" name="bio" placeholder="Bio" />
+      <input type="text" name="bio" placeholder="Bio"  value="<%= profileUser.username %>"/>
     </div>
 
     <br />
     <br />
     <br />
 
-    <div class="button-group">
-      <button type="submit" class="submit-button">Save</button>
+    <div class="button-group"> 
+      <a href="/users/<%= user._id %>">
+      <button type="submit" class="submit-button">Save</button></a>
     </div>
+    </form>
 
+</form>
     <div class="dark-button">
       <a href="/users/update-password"
         ><button class="dark-button">Update Password</button></a
@@ -61,18 +63,17 @@
 
     <div class="dark-button">
       <a href="/users/sign-out"
-        ><button class="dark-button">Signs out</button></a
+        ><button class="dark-button">Log out</button></a
       >
     </div>
 
     <div class="dark-button">
       <form
         class="dark-button"
-        action="/users/<%= user._id %>?_method=DELETE"
+        action="/users/<%= profileUser._id %>?_method=DELETE"
         method="POST"
       >
         <button type="submit" class="dark-button">Delete Account</button>
-      </form>
     </div>
     </main>
   </body>
