@@ -110,7 +110,7 @@ exports.auth_updatePassword_post = async (req, res) => {
 
 exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
-  const user = req.session.user
+    const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
     res.render("./user/confirm.ejs", { user })
   } catch (error) {
@@ -158,26 +158,31 @@ exports.profile_get = async (req, res) => {
 
 exports.search_get = async (req, res) => {
   const users = await User.find()
-  console.log(users)
-  res.render("users/search.ejs", { users })
+  res.render("users/search.ejs", {
+    users,
+    pageTitle: "Search",
+    pageName: "Search",
+    hasSearched: false,
+  })
 }
 
 exports.search_post = async (req, res) => {
-  try {
-    const string = req.body.string
-    console.log(string)
-    const users = await User.find({
+  const string = req.body.string.trim()
+  let users = []
+  if (string) {
+    users = await User.find({
       $or: [
         { username: { $regex: string, $options: "i" } },
         { displayName: { $regex: string, $options: "i" } },
       ],
     })
-
-    res.render("users/search.ejs", { users })
-  } catch (error) {
-    console.error(error)
-    res.status(500)("Error searching users")
   }
+  res.render("users/search.ejs", {
+    users,
+    pageTitle: "Search",
+    pageName: "Search",
+    hasSearched: true,
+  })
 }
 // site used for search engine: https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like
 
@@ -238,6 +243,7 @@ exports.following_index_get = async (req, res) => {
     const data = {
       followingList: user?.follow?.followingsId || [],
       followersList: [],
+      pageName: "Following",
     }
 
     res.render("users/follow", data)
@@ -255,6 +261,7 @@ exports.follower_index_get = async (req, res) => {
     const data = {
       followersList: user?.follow?.followersId || [],
       followingList: [],
+      pageName: "Followers",
     }
     res.render("users/follow", data)
   } catch (error) {

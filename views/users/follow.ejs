@@ -1,26 +1,65 @@
-<h1>
-  <% if (followingList.length > 0) { %> Following <% } else if
-  (followersList.length > 0) { %> Followers <% } %>
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylings/follow.css" />
 
-<% if (followingList.length > 0) { %>
-<div>
-  <% followingList.forEach(user => { %>
-  <div>
-    <img alt="<%= user.displayName %>" />
-    <h3><%= user.displayName %></h3>
-    <p>@<%= user.username %></p>
-  </div>
-  <% }); %>
-</div>
-<% } %> <% if (followersList.length > 0) { %>
-<div>
-  <% followersList.forEach(user => { %>
-  <div>
-    <img alt="<%= user.displayName %>" />
-    <h3><%= user.displayName %></h3>
-    <p>@<%= user.username %></p>
-  </div>
-  <% }); %>
-</div>
-<% } %>
+    <title>Follow</title>
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <img
+          class="previousPage"
+          onclick=""
+          src="/images/icons/leftArrow.png"
+          alt=""
+        />
+        <h1 class="pageName"><%= pageName %></h1>
+      </div>
+    </header>
+
+    <main>
+      <% if (followingList.length > 0) { %>
+      <div class="user-list">
+        <% followingList.forEach(user => { %>
+        <div class="user-item">
+          <a href="/users/<%= user._id %>" class="user-link">
+            <div class="user-content">
+              <img
+                src="/images/icons/dummyUser.png"
+                alt="<%= user.displayName %>"
+              />
+              <div class="user-text">
+                <h3><%= user.displayName %></h3>
+                <p>@<%= user.username %></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% }); %>
+      </div>
+      <% } %> <% if (followersList.length > 0) { %>
+      <div class="user-list">
+        <% followersList.forEach(user => { %>
+        <div class="user-item">
+          <a href="/users/<%= user._id %>" class="user-link">
+            <div class="user-content">
+              <img
+                src="/images/icons/dummyUser.png"
+                alt="<%= user.displayName %>"
+              />
+              <div class="user-text">
+                <h3><%= user.displayName %></h3>
+                <p>@<%= user.username %></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% }); %>
+      </div>
+      <% } %>
+    </main>
+  </body>
+</html>

@@ -45,10 +45,10 @@ exports.post_show_get = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate({
       path: "userId",
-      select: "username displayName",
+      select: "username displayName photo",
     })
     
-    res.status(200).render("posts/show.ejs", { post })
+    res.status(200).render("posts/show.ejs", { post , pageName: "Post"})
   } catch (error) {
     res.status(500).json({ error: "Failed to show specific post!" })
   }
