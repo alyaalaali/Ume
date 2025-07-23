@@ -27,7 +27,7 @@ exports.auth_signup_post = async (req, res) => {
 
   const user = await User.create(req.body)
   console.log(user)
-  res.render("index.ejs")
+  res.render("posts/timeline.ejs", { pageName: "Timeline" })
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -54,7 +54,8 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
-  res.render("index.ejs")
+
+  res.render("posts/timeline.ejs", { pageName: "timeline" })
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
