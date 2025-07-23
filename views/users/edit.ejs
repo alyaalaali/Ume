@@ -14,35 +14,33 @@
       <h2>My Account</h2>
       <div>
     </header>
-
+    
+    <form 
+      action="/users/<%= profileUser._id %>/profile?_method=PUT"   
+      enctype="multipart/form-data"
+      method="post">
     <section class="Profile-photo">
-      <img class="profile-photo" src="<%= user.photo %>" />
-      <form
-        class="photo"
-        action="/users/<%= user._id %>/profile?_method=PUT"
-        method="POST"
-        enctype="multipart/form-data"
-      >
+      <img class="profile-photo" src="<%= profileUser.photo %>" />
         <label for="photo" class="photo-label">Choose your image</label>
         <input type="file" name="photo" id="photo" class="photo-input" />
-      </form>
+      
     </section>
 
     <div class="form-group">
-      <input type="text" name="username" placeholder="Username" required />
+      <input type="text" name="username" placeholder="Username" value="<%= profileUser.username%>" required />
     </div>
 
     <br />
 
     <div class="form-group">
-      <input type="text" name="displayName" placeholder="Display Name" required
+      <input type="text" name="displayName" placeholder="Display Name" value="<%= profileUser.displayName%>" required
       />
     </div>
 
     <br />
 
     <div class="form-group">
-      <input type="text" name="bio" placeholder="Bio" />
+      <input type="text" name="bio" placeholder="Bio"  value="<%= profileUser.username %>"/>
     </div>
 
     <br />
@@ -53,6 +51,7 @@
       <button type="submit" class="submit-button">Save</button>
     </div>
 
+</form>
     <div class="dark-button">
       <a href="/users/update-password"
         ><button class="dark-button">Update Password</button></a
@@ -68,7 +67,7 @@
     <div class="dark-button">
       <form
         class="dark-button"
-        action="/users/<%= user._id %>?_method=DELETE"
+        action="/users/<%= profileUser._id %>?_method=DELETE"
         method="POST"
       >
         <button type="submit" class="dark-button">Delete Account</button>
