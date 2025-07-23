@@ -27,7 +27,7 @@ exports.auth_signup_post = async (req, res) => {
 
   const user = await User.create(req.body)
   console.log(user)
-  res.render("posts/timeline.ejs", { pageName: "Timeline" })
+
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -39,23 +39,33 @@ exports.auth_signin_post = async (req, res) => {
   if (!userInDatabase) {
     return res.send("Login failed. Please try again.")
   }
-
+  
   const validPassword = bcrypt.compareSync(
     req.body.password,
     userInDatabase.password
   )
-
+  
   if (!validPassword) {
     return res.send("Login failed. Please try again.")
   }
-
+  
   //user exist and password matched
-  req.session.user = {
+   req.session.user = {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
 
-  res.render("posts/timeline.ejs", { pageName: "timeline" })
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", { pageName: "Timeline", allPosts,user: req.session.user})
+
 }
 
 exports.auth_updateProfileById_get = async (req, res) => {
