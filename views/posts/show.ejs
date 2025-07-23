@@ -20,6 +20,24 @@
 </div>
 <div class="backgroun-color" id="p">
   <p class="color"><span><%= post.userId.username %></span> <%= post.caption %></p>
+  <h2><%= post.favoritedByUser.length %> Favorites</h2>
+  <% if (userHasFavorited) { %>
+    <form
+    action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?_method=DELETE"
+    method="POST"
+    >
+    <button
+    type="submit">Unfavorite
+    </button>
+    </form>
+    <% } else { %>
+      <form
+      action="/posts/<%= post._id %>/favorited-by/<%= user._id%>"
+      method="POST"
+      >
+      <button type="submit">Favorite</button>
+      </form>
+    <% } %>
 </div>
 
 <form action="/comments/<%= post._id%>" method="post">
