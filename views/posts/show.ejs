@@ -1,36 +1,83 @@
 <head>
   <link rel="stylesheet" href="/stylings/general.css" />
   <link rel="stylesheet" href="/stylings/post.css"/>
+  <link rel="stylesheet" href="/stylings/timeline.css"/>
+
 </head>
 <%- include("./../partials/_header.ejs")%>
 
-<div class="backgroun-color" id="h1">
-  <div class="icon">
-    <img src="<%= post.userId.photo %>" alt="icon"/>
+  <div class="post">
+    <div class="postHeader">
+      <div class="postDetails">
+        <img
+          class="postOwnerProfile"
+          src="/images/icons/dummyUser.png"
+          alt=""
+        />
+        <div>
+          <p class="postOwner"><%= post.userId.displayName%></p>
+          <p class="postTime">
+            <%= post.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %>
+          </p>
+        </div>
+      </div>
+      <img
+        style="display:<%= post.userId.equals(user._id)?'block':'none'%> ;"
+        class="postOptions"
+        onclick="document.querySelectorAll('.optionsPanel').style.display= 'block'"
+        src="/images/icons/options.png"
+        alt=""
+      />
+    </div>
+    <div class="postImageContainer">
+      <img src="/uploadImages/<%= post.photo%>" alt="" />
+    </div>
+    <p class="postCaption"><%= post.caption %></p>
+    <div class="postButtons">
+      <div class="reactions">
+        <div class="likes">
+          <% if (userHasFavorited) { %>
+        <form
+        action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?_method=DELETE"
+        method="POST"
+        >
+        <button class="heart"
+        type="submit"><img src="/images/icons/filledHeart.png">
+        </button>
+        </form>
+        <% } else { %>
+          <form
+          action="/posts/<%= post._id %>/favorited-by/<%= user._id%>"
+          method="POST"
+          >
+          <button class="heart"
+        type="submit"><img src="/images/icons/heart.png">
+        </button>
+          </form>
+          <% } %>
+          <p><%= post.favoritedByUser.length %></p>
+        </div>
+        <div class="comments">
+          <img
+            onclick="document.location.href ='/comments/<%=post._id%>'"
+            src="/images/icons/chatBubble.png"
+            alt=""
+          />
+          <p><%=post.comments.length%></p>
+        </div>
+      </div>
+      <div class="share">
+        <img class="pointer" src="/images/icons/share.png" alt="" />
+        <p>Share</p>
+      </div>
+    </div>
+    <div class="optionsPanel">
+      <a href="/posts/<%= post._id%>/edit"><button>Edit</button></a>
+      <form action="/posts/<%= post._id%>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
   </div>
-  <h1 class="color" id="username" ><%= post.userId.username %></h1>
-  <div>
-    <% if(post.userId._id.equals(user._id)) { %>
-      <a id="edit" href="/posts/<%= post._id %>/edit"> Edit </a>
-    <% } %>
-  </div>
-</div>
-<div class="backgroun-color" id="image">
-  <img class="post" src="/uploadImages/<%= post.photo %>"/>
-</div>
-<div class="backgroun-color" id="p">
-  <p class="color"><span><%= post.userId.username %></span> <%= post.caption %></p>
-</div>
 
-<form action="/comments/<%= post._id%>" method="post">
-  <label class="color" for="description">Write a comment: </label>
-  <input type="text" name="description" id="description" />
-  <button type="submit">Send</button>
-</form>
-
-<form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-  <label class="color" for="comment">Write a comment: </label>
-  <input type="text" name="comment" id="comment" />
-  <button type="submit">Delete this post</button>
-</form>
+</div>
 <%- include("./../partials/_footer.ejs") %>

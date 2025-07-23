@@ -6,7 +6,7 @@
 <% %>
 <section class="commentsSection">
   
-  <%postComments.forEach((postComment)=>{%>
+  <%postComments.forEach((postComment,index)=>{%>
   <div class="comment">
     <img src="/images/icons/dummyUser.png" class="commenterImage" alt="">
     <div class="commentDetails">
@@ -14,12 +14,41 @@
         <p class="commenterName"><%= postComment.userId.displayName %></p>
         <p class="commentTime"><%= postComment.createdAt.toLocaleString("en-GB", { timeZone: "UTC" }) %></p>
       </div>
-      <p class="commentContent commentOptionsButton"><%= postComment.description %></p>
+      <p class="commentContent"><%= postComment.description %></p>
     </div>
     <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
-      <img src="/images/icons/options.png" onclick="document.querySelector('.commentOptionsPanel').style.display = 'block'" class="commentOptionsButton" onmouseleave="document.querySelector('.commentOptionsPanel').style.display = 'none'" alt="" style="<%= postComment.userId.equals(user.userId)//? '':'opacity:0;pointer-events:none;' %>">
-      <form class="commentOptionsPanel" action="/comments/postComment._id?_method=DELETE">
+      <form 
+        <% if (postComment.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) {%>
+      action="/comments/<%=postComment._id%>/unlike?_method=DELETE"
+      <%}else{%>
+              action="/comments/<%=postComment._id%>/like"
+            <%}%>
+        method="post">
+        <button><img
+            <% if (postComment.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) {%>
+      src="/images/icons/filledHeart.png"
+      <%}else{%>
+              src="/images/icons/heart.png"
+
+            <%}%>
+            alt=""></button>
+      </form>
+      <img 
+        src="/images/icons/options.png"  
+        onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
+        style="display:<%= postComment.userId.equals(user._id)?'block':'none'%> ;"
+
+              >
+      <form class="commentOptionsPanel" action="/comments/postComment._id?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+    <div class="optionsPanel">
+      <form action="/comments/<%= postComment._id%>?_method=DELETE" method="post">
         <button type="submit">Delete</button>
       </form>
     </div>
