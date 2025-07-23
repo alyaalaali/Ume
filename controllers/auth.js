@@ -26,7 +26,8 @@ exports.auth_signup_post = async (req, res) => {
   // validation logic
 
   const user = await User.create(req.body)
-  console.log(user)
+
+  res.redirect("/users/sign-in")
 
 }
 
