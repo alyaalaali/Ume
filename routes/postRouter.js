@@ -12,5 +12,6 @@ router.put("/:id", multer.single("photo"), postCtrl.post_update_put)
 router.delete("/:id", postCtrl.post_delete_destroy)
 
 router.post("/:postId/favorited-by/:userId", postCtrl.fav_create_post)
+router.delete("/:postId/favorited-by/:userId", postCtrl.fav_delete_post)
 
 module.exports = router
