@@ -5,15 +5,16 @@
 </head>
 <%- include("./../partials/_header.ejs")%>
 
-<img src="/image.png" class="add-photo" id="photo"/>
-<div class="form">
-<form name="form" id="form"
+
+  <img src="/image.png" class="add-photo" id="photo"/>
+  <div class="form">
+  <form name="form" id="form"
   action="/posts/<%=user._id %>"
   method="POST"
   enctype="multipart/form-data"
->
+  >
   <input type="file" name="photo" id="input"/>
-
+  
   
 </form>
 <div>
@@ -27,10 +28,11 @@
   <button class="upload" type="submit" form="form">Share</button>
 </div>
 
+
 <script>
   const image = document.getElementById("photo")
-image.addEventListener("click", () => {
-  document.getElementById("input").click()
-})
+  image.addEventListener("click", () => {
+    document.getElementById("input").click()
+  })
 </script>
 
