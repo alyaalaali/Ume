@@ -51,3 +51,23 @@ exports.comment_update_put = async (req, res) => {
     res.send("Unauthorized action")
   }
 }
+
+exports.like_create_post = async (req, res) => {
+  console.log("it works! ")
+  
+  await Comment.findByIdAndUpdate(req.params.commentId, {
+    $push: {
+      favoritedByUser: req.session.user._id,
+    },
+  })
+  res.redirect(req.get("referer"))
+}
+
+exports.like_delete_destroy = async (req, res) => {
+  await Comment.findByIdAndUpdate(req.params.commentId, {
+    $pull: {
+      favoritedByUser: req.session.user._id,
+    },
+  })
+  res.redirect(req.get("referer"))
+}
