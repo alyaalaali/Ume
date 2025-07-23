@@ -60,7 +60,7 @@ exports.post_edit_get = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate({
       path: "userId",
-      select: "username displayName",
+      select: "username displayName photo",
     })
     if (req.session.user && post.userId._id.equals(req.session.user._id)) {
       res.status(200).render("posts/edit.ejs", { post , pageName: "Edit Post"})
