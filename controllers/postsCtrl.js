@@ -100,7 +100,8 @@ exports.fav_create_post = async (req, res) => {
     await Post.findByIdAndUpdate(req.params.postId, {
       $push: { favoritedByUser : req.params.userId}
     })
-    res.redirect(`/posts/${req.params.postId}`)
+    const redirectBackTo = req.query.redirectBackTo || `/posts/${req.params.postId}`;
+    res.redirect(redirectBackTo);
   } catch (error) {
     res.status(500).json({ error: "Falied to favorite post!" })
   }
@@ -111,7 +112,8 @@ exports.fav_delete_post = async (req, res) => {
     await Post.findByIdAndUpdate(req.params.postId, {
       $pull: { favoritedByUser : req.params.userId}
     })
-    res.redirect(`/posts/${req.params.postId}`)
+    const redirectBackTo = req.query.redirectBackTo || `/posts/${req.params.postId}`;
+    res.redirect(redirectBackTo);
   } catch (error) {
     res.status(500).json({ error: "Falied to unfavorite post!" })
   }

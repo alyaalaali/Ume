@@ -1,6 +1,7 @@
 <head>
   <link rel="stylesheet" href="/stylings/general.css" />
   <link rel="stylesheet" href="/stylings/timeline.css" />
+  <link rel="stylesheet" href="/stylings/hidebutton.css"/>
 </head>
 <%- include("./../partials/_header.ejs")%>
 <search class="postsSection">
@@ -10,7 +11,7 @@
       <div class="postDetails">
         <img
           class="postOwnerProfile"
-          src="/images/icons/dummyUser.png"
+          src="<%= post.userId.photo %>"
           alt=""
         />
         <div>
@@ -21,7 +22,7 @@
         </div>
       </div>
       <img
-        style="display:<%= post.userId.equals(user._id)?'block':'none'%> ;"
+        style="display:<%= post.userId._id.equals(user._id) ? 'block' : 'none' %> ;"
         class="postOptions"
         onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
         src="/images/icons/options.png"
@@ -35,8 +36,25 @@
     <div class="postButtons">
       <div class="reactions">
         <div class="likes">
-          <img src="/images/icons/heart.png" alt="" />
-          <p>1</p>
+        <% if (post.userHasFavorited) { %>
+        <form
+        action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/&_method=DELETE"
+        method="POST">
+        <button class="heart"
+        type="submit"><img src="/images/icons/filledHeart.png">
+        </button>
+        </form>
+        <% } else { %>
+          <form
+          action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/"
+          method="POST"
+          >
+          <button class="heart"
+        type="submit"><img src="/images/icons/heart.png">
+        </button>
+          </form>
+          <% } %>
+          <p><%= post.favoritedByUser.length %></p>
         </div>
         <div class="comments">
           <img
