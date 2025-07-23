@@ -14,7 +14,7 @@
           class="previousPage"
           onclick=""
           src="/images/icons/leftArrow.png"
-          alt=""
+          alt="left arrow icon"
         />
         <h1 class="pageName"><%= user.username %></h1>
       </div>
@@ -86,7 +86,7 @@
                 <img
                   class="postOwnerProfile"
                   src="<%= user.photo %>"
-                  alt=""
+                  alt="<%=post.userId.displayName %> profile picture"
                 />
                 <div>
                   <p class="postOwner"><%= post.userId.displayName%></p>
@@ -97,23 +97,23 @@
                 </div>
               </div>
             </a>
-            <img class="postOptions" src="/images/icons/options.png" alt="" />
+            <img class="postOptions" src="/images/icons/options.png" alt="three dots icon" />
           </div>
           <div class="postImageContainer">
-            <img src="/uploadImages/<%=post.photo %>" alt="" />
+            <img src="/uploadImages/<%=post.photo %>" alt="<%= post.userId.displayName%> post image" />
           </div>
           <p class="postCaption"><%= post.caption %></p>
           <div class="postButtons">
             <div class="reactions">
               <div class="likes">
-                <img src="/images/icons/heart.png" alt="" />
+                <img src="/images/icons/heart.png" alt="empty heart icon" />
                 <p>1</p>
               </div>
                 <div class="comments">
                   <img
                     src="/images/icons/chatBubble.png"
                     onclick="document.location.href='/comments/<%=post._id%> '"
-                    alt=""
+                    alt="speech bubble icon"
                   />
                   <p><%=post.comments.length%></p>
                 </div></a
@@ -135,13 +135,13 @@
 
     <footer>
       <a href="/">
-        <img src="/images/icons/home.png" alt="" />
+        <img src="/images/icons/home.png" alt="home icon" />
       </a>
       <a href="/posts/new">
-        <img src="/images/icons/new.png" alt="" />
+        <img src="/images/icons/new.png" alt="plus icon" />
       </a>
       <a href="/users/<%= user._id%>">
-        <img src="/images/icons/user.png" alt="" />
+        <img src="/images/icons/user.png" alt="user icon" />
       </a>
     </footer>
   </body>
