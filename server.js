@@ -47,6 +47,20 @@ app.use(express.static(path.join(__dirname, "public")))
 //passUserToView middleware
 
 
+// Require Routers
+const authRouter = require("./routes/auth.js")
+const postRouter = require("./routes/postRouter.js")
+const commentsRouter = require("./routes/comments.js")
+// const followRouter = require("./routes/follows.js")
+
+// use Routers
+app.use("/users", authRouter)
+app.use(isSignIn)
+app.use("/posts", postRouter)
+app.use("/comments", commentsRouter)
+app.use("/follows", authRouter)
+
+
 app.get("/", async (req, res) => {
   const Post = require("./models/post.js")
   const allPosts = await Post.find({}).populate("userId").populate({
@@ -62,18 +76,6 @@ app.get("/", async (req, res) => {
   res.render("posts/timeline.ejs", {pageName: "Timeline"})
 })
 
-// Require Routers
-const authRouter = require("./routes/auth.js")
-const postRouter = require("./routes/postRouter.js")
-const commentsRouter = require("./routes/comments.js")
-// const followRouter = require("./routes/follows.js")
-
-// use Routers
-app.use("/users", authRouter)
-app.use(isSignIn)
-app.use("/posts", postRouter)
-app.use("/comments", commentsRouter)
-app.use("/follows", authRouter)
 
 // Listener
 app.listen(port, () => {

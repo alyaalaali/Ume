@@ -17,7 +17,26 @@
       <p class="commentContent"><%= postComment.description %></p>
     </div>
     <div class="commentButtons">
-      <img src="/images/icons/heart.png" alt="">
+      <form 
+        <% if (postComment.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) {%>
+      action="/comments/<%=postComment._id%>/unlike?_method=DELETE"
+      <%}else{%>
+              action="/comments/<%=postComment._id%>/like"
+            <%}%>
+        method="post">
+        <button><img
+            <% if (postComment.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) {%>
+      src="/images/icons/filledHeart.png"
+      <%}else{%>
+              src="/images/icons/heart.png"
+
+            <%}%>
+            alt=""></button>
+      </form>
       <img 
         src="/images/icons/options.png"  
         onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
