@@ -10,8 +10,12 @@
 
   <body>
     <header class="profileHeader">
-      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
-      </header>
+      <img
+        onclick="document.location.href='/users/sign-out'"
+        src="/images/icons/leftArrow.png"
+        alt=""
+      />
+    </header>
 
     <div class="container">
       <img class="icon" src="/images/icons/sin.png" alt="user icon" />
@@ -20,7 +24,6 @@
 
       <form action="/users/sign-in" method="POST" class="sign-in">
         <div class="inputContainer">
-
           <div class="username">
             <input type="text" name="username" placeholder="username" />
           </div>

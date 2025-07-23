@@ -25,11 +25,26 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   // validation logic
-
   const user = await User.create(req.body)
 
-  res.redirect("/users/sign-in")
-
+  req.session.user = {
+    _id: user._id,
+    username: user.username,
+  }
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -41,18 +56,18 @@ exports.auth_signin_post = async (req, res) => {
   if (!userInDatabase) {
     return res.send("Login failed. Please try again.")
   }
-  
+
   const validPassword = bcrypt.compareSync(
     req.body.password,
     userInDatabase.password
   )
-  
+
   if (!validPassword) {
     return res.send("Login failed. Please try again.")
   }
-  
+
   //user exist and password matched
-   req.session.user = {
+  req.session.user = {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
@@ -66,8 +81,11 @@ exports.auth_signin_post = async (req, res) => {
         select: "username displayName",
       },
     })
-  res.render("posts/timeline.ejs", { pageName: "Timeline", allPosts,user: req.session.user})
-
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
   exports.auth_updateProfileById_get = async (req, res) => {
@@ -129,7 +147,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
     const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
-    res.render("./user/confirm.ejs", { user })
+    res.render("index.ejs")
   } catch (error) {
     console.error("An error has occured")
   }
@@ -137,7 +155,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
 
 exports.users_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect("/")
+  res.render("index.ejs")
 }
 
 exports.profile_get = async (req, res) => {
