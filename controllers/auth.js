@@ -77,7 +77,10 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    console.log(req.params.id)
+    req.body.photo = req.file.filename
+    console.log( "req.file.filename", req.file.filename)
+    console.log( "req.body.photo", req.body.photo)
+    
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
