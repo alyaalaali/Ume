@@ -10,11 +10,12 @@
   </head>
   <body>
     <header class="profileHeader">
-      <a href=""><img src="/images/icons/leftArrow.png" alt=""></a>
+
+      <a href="/users/<%= user._id %>"><img src="/images/icons/leftArrow.png" alt=""></a>
       <h2>My Account</h2>
       <div>
     </header>
-
+  
     <section class="Profile-photo">
       <img class="profile-photo" src="<%= user.photo %>" />
       <form
@@ -22,36 +23,36 @@
         action="/users/<%= user._id %>/profile?_method=PUT"
         method="POST"
         enctype="multipart/form-data"
-      >
-        <label for="photo" class="photo-label">Choose your image</label>
-        <input type="file" name="photo" id="photo" class="photo-input" />
+    >
+        <label for="photo" class="photo-label">Change Profile Photo</label>
+        <input type="file" name="photo" id="photo" class="photo-input"  />
       </form>
     </section>
 
     <div class="form-group">
-      <input type="text" name="username" placeholder="Username" required />
+      <input type="text" name="username" placeholder="Username" value="<%= user.username %>" required />
     </div>
 
-    <br />
 
     <div class="form-group">
-      <input type="text" name="displayName" placeholder="Display Name" required
+      <input value="<%= user.displayName %>" type="text" name="displayName" placeholder="Display Name" required
       />
     </div>
 
-    <br />
 
     <div class="form-group">
-      <input type="text" name="bio" placeholder="Bio" />
+      <input type="text" name="bio" placeholder="Bio" <%= user.bio %>/>
     </div>
 
     <br />
     <br />
     <br />
 
-    <div class="button-group">
-      <button type="submit" class="submit-button">Save</button>
+    <div class="button-group"> 
+      <a href="/users/<%= user._id %>">
+      <button type="submit" class="submit-button">Save</button></a>
     </div>
+    </form>
 
     <div class="dark-button">
       <a href="/users/update-password"
@@ -61,7 +62,7 @@
 
     <div class="dark-button">
       <a href="/users/sign-out"
-        ><button class="dark-button">Signs out</button></a
+        ><button class="dark-button">Log out</button></a
       >
     </div>
 
@@ -72,7 +73,6 @@
         method="POST"
       >
         <button type="submit" class="dark-button">Delete Account</button>
-      </form>
     </div>
     </main>
   </body>
