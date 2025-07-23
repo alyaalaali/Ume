@@ -11,7 +11,7 @@
   <body>
     <header class="profileHeader">
 
-      <a href="/users/<%= user._id %>"><img src="/images/icons/leftArrow.png" alt=""></a>
+      <a href="/users/<%= user._id %>"><img src="/images/icons/leftArrow.png" alt="left arrow icon"></a>
       <h2>My Account</h2>
       <div>
     </header>
@@ -23,9 +23,9 @@
       class="profileEditForm"
       >
     <section class="Profile-photo">
-      <img class="profile-photo" src="/uploadImages/<%= profileUser.photo %>" />
+      <img class="profile-photo" src="<%= profileUser.photo %>" alt="<%= profileUser.displayName %> profile picture"/>
         <label for="photo" class="photo-label">Choose your image</label>
-        <input type="file" name="photo" id="photo" class="photo-input" />
+        <input type="file" name="photo" id="photo" `class="photo-input" />
       
     </section>
 
