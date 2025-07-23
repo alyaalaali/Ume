@@ -63,7 +63,7 @@ exports.post_edit_get = async (req, res) => {
       select: "username displayName",
     })
     if (req.session.user && post.userId._id.equals(req.session.user._id)) {
-      res.status(200).render("posts/edit.ejs", { post })
+      res.status(200).render("posts/edit.ejs", { post , pageName: "Edit Post"})
     } else {
       res.status(403).send("You are not allowed to edit this post.")
     }
