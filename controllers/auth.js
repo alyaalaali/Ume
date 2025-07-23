@@ -253,6 +253,7 @@ exports.following_index_get = async (req, res) => {
       "follow.followingsId"
     )
     const data = {
+      user,
       followingList: user?.follow?.followingsId || [],
       followersList: [],
       pageName: "Following",
@@ -271,6 +272,7 @@ exports.follower_index_get = async (req, res) => {
     )
 
     const data = {
+      user,
       followersList: user?.follow?.followersId || [],
       followingList: [],
       pageName: "Followers",
