@@ -25,10 +25,26 @@ exports.auth_signup_post = async (req, res) => {
   req.body.password = hashedPassword
 
   // validation logic
-
   const user = await User.create(req.body)
-  console.log(user)
-  res.render("posts/timeline.ejs", { pageName: "Timeline" })
+
+  req.session.user = {
+    _id: user._id,
+    username: user.username,
+  }
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
 exports.auth_signin_get = async (req, res) => {
@@ -56,7 +72,20 @@ exports.auth_signin_post = async (req, res) => {
     _id: userInDatabase._id,
   }
 
-  res.render("posts/timeline.ejs", { pageName: "timeline" })
+  const allPosts = await Post.find({})
+    .populate("userId")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "username displayName",
+      },
+    })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts,
+    user: req.session.user,
+  })
 }
 
   exports.auth_updateProfileById_get = async (req, res) => {
@@ -67,7 +96,10 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    console.log(req.params.id)
+    req.body.photo = "/uploadImages/"+ req.file.filename
+    console.log( "req.file.filename", req.file.filename)
+    console.log( "req.body.photo", req.body.photo)
+    
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
@@ -115,7 +147,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
   try {
     const user = req.session.user
     await User.findByIdAndDelete(req.params.id)
-    res.render("./user/confirm.ejs", { user })
+    res.render("index.ejs")
   } catch (error) {
     console.error("An error has occured")
   }
@@ -123,7 +155,7 @@ exports.auth_deleteProfileById_delete = async (req, res) => {
 
 exports.users_signout_get = (req, res) => {
   req.session.destroy()
-  res.redirect("/")
+  res.render("index.ejs")
 }
 
 exports.profile_get = async (req, res) => {
