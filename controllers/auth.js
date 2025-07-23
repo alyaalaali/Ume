@@ -77,7 +77,7 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    req.body.photo = req.file.filename
+    req.body.photo = "/uploadImages/"+ req.file.filename
     console.log( "req.file.filename", req.file.filename)
     console.log( "req.body.photo", req.body.photo)
     
