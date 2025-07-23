@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylings/profile.css" />
-
+    <link rel="stylesheet" href="/stylings/hidebutton.css"
     <title>Profile Page</title>
   </head>
   <body>
@@ -14,7 +14,7 @@
           class="previousPage"
           onclick=""
           src="/images/icons/leftArrow.png"
-          alt=""
+          alt="left arrow icon"
         />
         <h1 class="pageName"><%= user.username %></h1>
       </div>
@@ -86,7 +86,7 @@
                 <img
                   class="postOwnerProfile"
                   src="<%= user.photo %>"
-                  alt=""
+                  alt="<%=post.userId.displayName %> profile picture"
                 />
                 <div>
                   <p class="postOwner"><%= post.userId.displayName%></p>
@@ -97,27 +97,43 @@
                 </div>
               </div>
             </a>
-            <img class="postOptions" src="/images/icons/options.png" alt="" />
+            <img class="postOptions" src="/images/icons/options.png" alt="three dots icon" />
           </div>
           <div class="postImageContainer">
-            <img src="/uploadImages/<%=post.photo %>" alt="" />
+            <img src="/uploadImages/<%=post.photo %>" alt="<%= post.userId.displayName%> post image" />
           </div>
           <p class="postCaption"><%= post.caption %></p>
           <div class="postButtons">
             <div class="reactions">
               <div class="likes">
-                <img src="/images/icons/heart.png" alt="" />
-                <p>1</p>
+                <% if (post.userHasFavorited) { %>
+                  <form
+                  action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/users/<%= user._id %>&_method=DELETE"
+                  method="POST">
+                  <button class="heart"
+                  type="submit"><img src="/images/icons/filledHeart.png">
+                  </button>
+                  </form>
+                <% } else { %>
+                  <form
+                  action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/users/<%= user._id %>"
+                  method="POST"
+                  >
+                  <button class="heart"
+                  type="submit"><img src="/images/icons/heart.png">
+                  </button>
+                  </form>
+                <% } %>
+                <p><%= post.favoritedByUser.length %></p>
               </div>
                 <div class="comments">
                   <img
                     src="/images/icons/chatBubble.png"
                     onclick="document.location.href='/comments/<%=post._id%> '"
-                    alt=""
+                    alt="speech bubble icon"
                   />
                   <p><%=post.comments.length%></p>
-                </div></a
-              >
+                </div>
             </div>
 
             <div class="share">
@@ -135,13 +151,13 @@
 
     <footer>
       <a href="/">
-        <img src="/images/icons/home.png" alt="" />
+        <img src="/images/icons/home.png" alt="home icon" />
       </a>
       <a href="/posts/new">
-        <img src="/images/icons/new.png" alt="" />
+        <img src="/images/icons/new.png" alt="plus icon" />
       </a>
       <a href="/users/<%= user._id%>">
-        <img src="/images/icons/user.png" alt="" />
+        <img src="/images/icons/user.png" alt="user icon" />
       </a>
     </footer>
   </body>

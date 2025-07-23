@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("../models/user.js")
 const Post = require("../models/post.js")
+const { post } = require("../routes/auth.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
@@ -162,10 +163,18 @@ exports.profile_get = async (req, res) => {
       (followerId) => followerId.toString() === req.session.user._id.toString()
     )
   }
+  const userId = req.session.user._id
+  const postwithlike = posts.map((post) => {
+    const islike = post.favoritedByUser.some((user) => user.equals(userId))
+    post = post.toObject()
+    post.userHasFavorited = islike
+    return post
+  })
+
   res.render("users/profile", {
     user,
     posts: posts,
-    allPosts: posts,
+    allPosts: postwithlike,
     followerCount: user?.follow?.followersId?.length || 0,
     followingCount: user?.follow?.followingsId?.length || 0,
     userHasFollowed,
