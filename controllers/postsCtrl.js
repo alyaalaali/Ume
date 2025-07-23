@@ -47,8 +47,10 @@ exports.post_show_get = async (req, res) => {
       path: "userId",
       select: "username displayName photo",
     })
-    
-    res.status(200).render("posts/show.ejs", { post , pageName: "Post"})
+    const userHasFavorited = post.favoritedByUser.some((user) => {
+      return user.equals(req.session.user._id)
+    })
+    res.status(200).render("posts/show.ejs", { post , pageName: "Post", userHasFavorited})
   } catch (error) {
     res.status(500).json({ error: "Failed to show specific post!" })
   }
@@ -90,5 +92,27 @@ exports.post_delete_destroy = async (req, res) => {
     res.status(200).redirect("/posts")
   } catch {
     res.status(500).json({ error: "Failed to destroy post!" })
+  }
+}
+
+exports.fav_create_post = async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.postId, {
+      $push: { favoritedByUser : req.params.userId}
+    })
+    res.redirect(`/posts/${req.params.postId}`)
+  } catch (error) {
+    res.status(500).json({ error: "Falied to favorite post!" })
+  }
+}
+
+exports.fav_delete_post = async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.postId, {
+      $pull: { favoritedByUser : req.params.userId}
+    })
+    res.redirect(`/posts/${req.params.postId}`)
+  } catch (error) {
+    res.status(500).json({ error: "Falied to unfavorite post!" })
   }
 }
