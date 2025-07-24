@@ -73,21 +73,22 @@ app.get("/", async (req, res) => {
         select: "username displayName ",
       },
     })
-      
-    const userId = req.session.user._id
 
-    const postwithlike = allPosts.map((post) => {
-      const isliked = post.favoritedByUser.some((user) => user.equals(userId)
-    )
+
+  const userId = req.session.user._id
+
+  const postwithlike = allPosts.map((post) => {
+    const isliked = post.favoritedByUser.some((user) => user.equals(userId))
     post = post.toObject()
     post.userHasFavorited = isliked
     return post
-    })
-    res.render("posts/timeline.ejs", { pageName: "Timeline",
-    allPosts: postwithlike , user: req.session.user})
+  })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts: postwithlike,
+    user: req.session.user,
+  })
 })
-
-
 // Listener
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
