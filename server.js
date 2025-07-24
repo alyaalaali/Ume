@@ -70,33 +70,21 @@ app.get("/", async (req, res) => {
         select: "username displayName ",
       },
     })
-    
-    const userId = req.session.user._id
 
-    const postwithlike = allPosts.map((post) => {
-      const isliked = post.favoritedByUser.some((user) => user.equals(userId)
-    )
+  const userId = req.session.user._id
+
+  const postwithlike = allPosts.map((post) => {
+    const isliked = post.favoritedByUser.some((user) => user.equals(userId))
     post = post.toObject()
     post.userHasFavorited = isliked
     return post
-    })
-    res.render("posts/timeline.ejs", { pageName: "Timeline",
-    allPosts: postwithlike , user: req.session.user})
+  })
+  res.render("posts/timeline.ejs", {
+    pageName: "Timeline",
+    allPosts: postwithlike,
+    user: req.session.user,
+  })
 })
-
-// Require Routers
-const authRouter = require("./routes/auth.js")
-const postRouter = require("./routes/postRouter.js")
-const commentsRouter = require("./routes/comments.js")
-// const followRouter = require("./routes/follows.js")
-
-// use Routers
-app.use("/users", authRouter)
-app.use(isSignIn)
-app.use("/posts", postRouter)
-app.use("/comments", commentsRouter)
-app.use("/follows", authRouter)
-
 // Listener
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
