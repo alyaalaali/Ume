@@ -61,7 +61,10 @@ app.use("/follows", authRouter)
 
 app.get("/", async (req, res) => {
   const Post = require("./models/post.js")
-  const allPosts = await Post.find({})
+  const User = require("./models/user.js")
+
+  const signedUser = await User.findById(req.session.user._id) 
+  const allPosts = await Post.find({ userId: { $in: [signedUser.follow.followingsId] } })
     .populate("userId")
     .populate({
       path: "comments",
@@ -70,6 +73,7 @@ app.get("/", async (req, res) => {
         select: "username displayName ",
       },
     })
+
 
   const userId = req.session.user._id
 

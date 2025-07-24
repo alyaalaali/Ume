@@ -12,7 +12,7 @@
         <img
           class="postOwnerProfile"
           src="<%= post.userId.photo %>"
-          alt=""
+          alt="<%= post.userId.displayName %>"
         />
         <div>
           <p class="postOwner"><%= post.userId.displayName%></p>
@@ -24,7 +24,8 @@
       <img
         style="display:<%= post.userId.equals(user._id)?'block':'none'%> ;"
         class="postOptions"
-        onclick="document.querySelectorAll('.optionsPanel').style.display= 'block'"
+        onclick="document.querySelectorAll('.optionsPanel')[0].style.display= 'block'"
+        onmouseenter="document.querySelectorAll('.optionsPanel')[0].style.display= 'none'"
         src="/images/icons/options.png"
         alt=""
       />
@@ -66,8 +67,8 @@
           <p><%=post.comments.length%></p>
         </div>
       </div>
-      <div class="share">
-        <img class="pointer" src="/images/icons/share.png" alt="share icon" />
+      <div class="share" onclick="navigator.clipboard.writeText(document.location.href)">
+        <img class="pointer"  src="/images/icons/share.png" alt="share icon" />
         <p>Share</p>
       </div>
     </div>

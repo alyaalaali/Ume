@@ -81,7 +81,6 @@ exports.post_update_put = async (req, res) => {
     // const post = await Post.findByIdAndUpdate(req.params.id, req.body.caption)
     res.redirect(`/posts/${post._id}`)
   } catch (error) {
-    console.log("err", error)
     res.status(500).json({ error: "Failed to edit post!" })
   }
 }

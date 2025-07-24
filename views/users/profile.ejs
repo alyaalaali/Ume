@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylings/profile.css" />
-    <link rel="stylesheet" href="/stylings/hidebutton.css"
+
     <title>Profile Page</title>
   </head>
   <body>
@@ -14,7 +14,7 @@
           class="previousPage"
           onclick=""
           src="/images/icons/leftArrow.png"
-          alt="left arrow icon"
+          alt=""
         />
         <h1 class="pageName"><%= user.username %></h1>
       </div>
@@ -36,10 +36,11 @@
           <div class="profile-actions">
             <% if (isOwnProfile) { %>
 
-            <form action="/users/<%= user._id %>/profile/edit">
+            <form action="/users/<%= user._id %>/profile/edit" method="get">
               <button class="btn">Edit</button>
 
-              <% } else if (req.session.user) { %> <% if (!userHasFollowed) { %>
+              <% } else if (req.session.user) { %> 
+              <% if (!userHasFollowed) { %>
             </form>
             <form action="/users/<%=user._id%>/follow" method="POST">
               <button class="btn" type="submit">Follow</button>
@@ -78,7 +79,7 @@
 
       <!-- post section -->
       <section class="posts-section">
-        <% allPosts.forEach((post)=>{%>
+        <% allPosts.forEach((post,index)=>{%>
         <div class="post">
           <div class="postHeader">
             <a href="/users/<%= user._id %>">
@@ -86,7 +87,7 @@
                 <img
                   class="postOwnerProfile"
                   src="<%= user.photo %>"
-                  alt="<%=post.userId.displayName %> profile picture"
+                  alt=""
                 />
                 <div>
                   <p class="postOwner"><%= post.userId.displayName%></p>
@@ -97,53 +98,75 @@
                 </div>
               </div>
             </a>
-            <img class="postOptions" src="/images/icons/options.png" alt="three dots icon" />
+        <img
+        style="display:<%= isOwnProfile ? 'block' : 'none' %> ;"
+        
+        class="postOptions"
+        onclick="document.querySelectorAll('.optionsPanel')[<%=index %>].style.display= 'block'"
+        src="/images/icons/options.png"
+        alt="three dots icon"
+      />
           </div>
           <div class="postImageContainer">
-            <img src="/uploadImages/<%=post.photo %>" alt="<%= post.userId.displayName%> post image" />
+            <img src="/uploadImages/<%=post.photo %>" alt="" />
           </div>
           <p class="postCaption"><%= post.caption %></p>
           <div class="postButtons">
             <div class="reactions">
-              <div class="likes">
-                <% if (post.userHasFavorited) { %>
-                  <form
-                  action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/users/<%= user._id %>&_method=DELETE"
-                  method="POST">
-                  <button class="heart"
-                  type="submit"><img src="/images/icons/filledHeart.png">
-                  </button>
-                  </form>
+        <div class="likes">
+          <form action="/" method="post"></form>
+          <form
+          <% if (post.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) { %>
+            action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?_method=DELETE"
+            method="POST"
+            name="likeForm"
+            <% } else { %>
+              action="/posts/<%= post._id %>/favorited-by/<%= user._id%>"
+              method="POST"
+              name="likeForm"
+              <% } %>
+              >
+              
+              
+              <button class="heart" type="submit">
+              <% if (post.favoritedByUser.some((singleUser)=>{
+             return singleUser.equals(user._id)
+            })) { %>
+                <img src="/images/icons/filledHeart.png">
                 <% } else { %>
-                  <form
-                  action="/posts/<%= post._id %>/favorited-by/<%= user._id%>?redirectBackTo=/users/<%= user._id %>"
-                  method="POST"
-                  >
-                  <button class="heart"
-                  type="submit"><img src="/images/icons/heart.png">
-                  </button>
-                  </form>
+                <img src="/images/icons/heart.png">
                 <% } %>
-                <p><%= post.favoritedByUser.length %></p>
-              </div>
+              </button>
+        </form>
+          <p><%= post.favoritedByUser.length %></p>
+        </div>
                 <div class="comments">
                   <img
                     src="/images/icons/chatBubble.png"
                     onclick="document.location.href='/comments/<%=post._id%> '"
-                    alt="speech bubble icon"
+                    alt=""
                   />
                   <p><%=post.comments.length%></p>
-                </div>
+                </div></a
+              >
             </div>
 
-            <div class="share">
+            <div class="share" onclick="navigator.clipboard.writeText(document.location.href)">
               <!-- comment stuff -->
 
-              <img src="/images/icons/share.png" alt="comment icon" />
+              <img  src="/images/icons/share.png" alt="comment icon" />
               <p>Share</p>
             </div>
           </div>
-        </div>
+    <div class="optionsPanel">
+      <a href="/posts/<%= post._id%>/edit"><button>Edit</button></a>
+      <form action="/posts/<%= post._id%>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+          </div>
 
         <% })%>
       </section>
@@ -151,13 +174,13 @@
 
     <footer>
       <a href="/">
-        <img src="/images/icons/home.png" alt="home icon" />
+        <img src="/images/icons/home.png" alt="" />
       </a>
       <a href="/posts/new">
-        <img src="/images/icons/new.png" alt="plus icon" />
+        <img src="/images/icons/new.png" alt="" />
       </a>
       <a href="/users/<%= user._id%>">
-        <img src="/images/icons/user.png" alt="user icon" />
+        <img src="/images/icons/user.png" alt="" />
       </a>
     </footer>
   </body>
