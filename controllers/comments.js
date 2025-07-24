@@ -37,7 +37,7 @@ exports.comment_delete_delete = async (req, res) => {
     await Comment.findByIdAndDelete(comment._id)
     res.redirect(req.get("referer"))
   } else {
-    res.send("Unauthorized action")
+    res.redirect(req.get("referer"))
   }
 }
 
@@ -48,13 +48,13 @@ exports.comment_update_put = async (req, res) => {
     await comment.save()
     res.redirect(req.get("referer"))
   } else {
-    res.send("Unauthorized action")
+    res.redirect(req.get("referer"))
+
   }
 }
 
 exports.like_create_post = async (req, res) => {
-  console.log("it works! ")
-  
+
   await Comment.findByIdAndUpdate(req.params.commentId, {
     $push: {
       favoritedByUser: req.session.user._id,

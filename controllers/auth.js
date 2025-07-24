@@ -7,17 +7,19 @@ const { post } = require("../routes/auth.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
-  res.render("auth/sign-up.ejs")
+  res.render("auth/sign-up.ejs",{errorMsg:""})
 }
 
 exports.auth_signup_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (userInDatabase) {
-    return res.send("Username already taken.")
+    return res.render("auth/sign-up", {errorMsg:"Username already taken."})
+    
   }
-
+  
   if (req.body.password !== req.body.confirmPassword) {
-    return res.send("Password and Confirm Password must match")
+    return res.render("auth/sign-up",{errorMsg:"Password and Confirm Password must match"})
+
   }
 
   //bcryp
@@ -31,7 +33,10 @@ exports.auth_signup_post = async (req, res) => {
     _id: user._id,
     username: user.username,
   }
-  const allPosts = await Post.find({})
+  const signedUser = await User.findById(req.session.user._id)
+  const allPosts = await Post.find({
+    userId: { $in: [signedUser.follow.followingsId] },
+  })
     .populate("userId")
     .populate({
       path: "comments",
@@ -48,22 +53,22 @@ exports.auth_signup_post = async (req, res) => {
 }
 
 exports.auth_signin_get = async (req, res) => {
-  res.render("auth/sign-in.ejs")
+  res.render("auth/sign-in.ejs",{errorMsg:""})
 }
 
 exports.auth_signin_post = async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username })
   if (!userInDatabase) {
-    return res.send("Login failed. Please try again.")
+    return res.render("auth/sign-in",{errorMsg:"Login failed. Please try again."})
   }
-
+  
   const validPassword = bcrypt.compareSync(
     req.body.password,
     userInDatabase.password
   )
-
+  
   if (!validPassword) {
-    return res.send("Login failed. Please try again.")
+    return res.render("auth/sign-in",{errorMsg:"Login failed. Please try again."})
   }
 
   //user exist and password matched
@@ -71,8 +76,10 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
-
-  const allPosts = await Post.find({})
+  const signedUser = await User.findById(req.session.user._id)
+  const allPosts = await Post.find({
+    userId: { $in: [signedUser.follow.followingsId] },
+  })
     .populate("userId")
     .populate({
       path: "comments",
@@ -88,22 +95,19 @@ exports.auth_signin_post = async (req, res) => {
   })
 }
 
-  exports.auth_updateProfileById_get = async (req, res) => {
-  const profileUser =await User.findById(req.params.id)
-  console.log(profileUser)
+exports.auth_updateProfileById_get = async (req, res) => {
+  const profileUser = await User.findById(req.params.id)
   res.render("users/edit.ejs", { profileUser, pageName: "My Profile" })
 }
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    req.body.photo = "/uploadImages/"+ req.file.filename
-    console.log( "req.file.filename", req.file.filename)
-    console.log( "req.body.photo", req.body.photo)
-    
+    req.body.photo = "/uploadImages/" + req.file.filename
+
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
-    console.log(user)
+
     res.redirect(`/users/${req.params.id}`)
   } catch (error) {
     console.log("An error has occured")
@@ -112,24 +116,34 @@ exports.auth_updateProfileById_put = async (req, res) => {
 
 exports.auth_updatePassword_get = (req, res) => {
   const user = req.session.user
-  res.render("auth/update-pass.ejs", { user })
+  res.render("auth/update-pass.ejs", { user,errorMsg:"" })
 }
 
 exports.auth_updatePassword_post = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
-      return res.send("No user with that ID exists!")
+      return res.render("auth/update-pass.ejs", {
+        user,
+        errorMsg: "No user with that ID exists!",
+      })
+
     }
     const validPassword = bcrypt.compareSync(
       req.body.oldPassword,
       user.password
     )
     if (!validPassword) {
-      return res.send("Your old password was not correct! Please try again.")
+      return res.render("auth/update-pass.ejs", {
+        user,
+        errorMsg: "Your old password was not correct! Please try again.",
+      })
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-      return res.send("Password and Confirm Password must match")
+      return res.render("auth/update-pass.ejs", {
+        user,
+        errorMsg: "Password and Confirm Password must match",
+      })
     }
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
@@ -238,7 +252,7 @@ exports.follow_create_post = async (req, res) => {
     // The user who is trying to follow
     const follower = await User.findById(req.params.userId)
     // The user who is being followed
-    console.log(req.session.user)
+
     const followed = await User.findById(req.session.user._id)
 
     await User.findByIdAndUpdate(followed._id, {
