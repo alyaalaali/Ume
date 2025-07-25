@@ -7,6 +7,7 @@ h2 {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  font-family: "GeologicaBold";
 }
 
 body {
@@ -51,6 +52,7 @@ body {
   width: 100%;
   max-width: 400px;
   margin-bottom: 15px;
+  font-family: "GeologicaBold";
 }
 
 input[type="text"] {
@@ -63,10 +65,12 @@ input[type="text"] {
   color: white;
   font-size: 16px;
   text-align: center;
+  font-family: "GeologicaBold";
 }
 
 input::placeholder {
   color: white;
+  font-family: "GeologicaBold";
 }
 
 .submit-button {
@@ -80,6 +84,7 @@ input::placeholder {
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
+  font-family: "GeologicaBold";
 }
 
 .options-button {
@@ -93,6 +98,7 @@ input::placeholder {
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
+  font-family: "GeologicaBold";
 }
 
 .dark-button {
@@ -108,6 +114,7 @@ input::placeholder {
   border-radius: 12px;
   cursor: pointer;
   margin-bottom: 20px;
+  font-family: "GeologicaBold";
 }
 
 .button-group {
@@ -116,6 +123,7 @@ input::placeholder {
   align-items: center;
   width: 100%;
   max-width: 430px;
+  font-family: "GeologicaBold";
 }
 
 .profileHeader {
@@ -142,4 +150,60 @@ input::placeholder {
 
 .profileEditForm {
   width: 100%;
+}
+
+.input-label {
+  display: block;
+  color: #8ebbff;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.photo-button {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #8ebbff;
+  border-radius: 12px;
+  font-family: "GeologicaBold";
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.Profile-photo .input {
+  position: relative;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.photo-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.photo-label {
+  display: inline-block;
+  color: #8ebbff;
+  font-family: "GeologicaBold";
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  display: inline-block;
+  color: #8ebbff;
+  font-family: "GeologicaBold";
+  font-size: 16px;
+  text-decoration: underline;
 }

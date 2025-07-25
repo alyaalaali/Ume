@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "GeologicaBold";
+  src: url("./../fonts/Geologica/Geologica-Bold.ttf");
+}
 .newCommentForm {
   height: 18vw;
   width: 99vw;
@@ -12,7 +16,7 @@
 .inputContainer input {
   width: 70%;
   height: 100%;
-  font-size: 2rem;
+  font-size: 3rem;
   background-color: transparent;
   border: none;
   color: white;
@@ -107,7 +111,7 @@ main {
   align-items: center;
   width: 100%;
   gap: 1rem;
-  font-size: 1.75rem;
+  font-size: 2rem;
 }
 
 .commentContent {
@@ -116,13 +120,13 @@ main {
 }
 
 .commenterName {
-  font-family: "DMSansRegular";
+  font-family: "GeologicaBold";
   color: white;
 }
 
 .commentTime {
   color: #7f7f7f;
-  font-family: "DMSansRegular";
+  font-family: "GeologicaBold";
 }
 .commentOptionsPanel {
   display: none;
@@ -161,11 +165,17 @@ main {
   padding: 1rem;
   text-align: center;
   color: #24293d;
-  background-color: white;
+  background-color: #8ebbff;
   border-radius: 10px;
 }
 
-.commentButtons form button{
+.commentButtons form button {
   background-color: transparent;
   border: none;
+}
+
+input::placeholder {
+  color: white;
+  font-family: "GeologicaBold";
+  font-size: 2rem;
 }

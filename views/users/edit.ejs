@@ -24,26 +24,35 @@
       >
     <section class="Profile-photo">
       <img class="profile-photo" src="<%= profileUser.photo %>" alt="<%= profileUser.displayName %> profile picture"/>
-        <label for="photo" class="photo-label">Choose your image</label>
+        <label for="photo" class="photo-label">Choose your image
+                  <input type="file" name="photo" id="photo" `class="photo-input" />
+
+        </label>
         <br>
         <div class="input">
-        <input type="file" name="photo" id="photo" `class="photo-input" />
+        
       </div>
     </section>
 
     <div class="form-group">
+            <label for="username" class="input-label">Username</label>
+
       <input type="text" name="username" placeholder="Username" value="<%= profileUser.username%>" required />
     </div>
 
 
     <div class="form-group">
+            <label for="displayName" class="input-label">Display Name</label>
+
       <input type="text" name="displayName" placeholder="Display Name" value="<%= profileUser.displayName%>" required
       />
     </div>
 
 
     <div class="form-group">
-      <input type="text" name="bio" placeholder="Bio"  value="<%= profileUser.username %>"/>
+            <label for="bio" class="input-label">Bio</label>
+
+      <input type="text" name="bio" placeholder="Bio"  value="<%= profileUser.bio %>"/>
     </div>
 
     <br />

@@ -1,4 +1,7 @@
-
+@font-face {
+  font-family: "GeologicaBold";
+  src: url("./../fonts/Geologica/Geologica-Bold.ttf");
+}
 
 main {
   display: flex;
@@ -83,6 +86,8 @@ main {
   color: #aab2ba;
   margin-top: 1rem;
   padding: 0rem 2.5rem;
+  color: #ffffff;
+  font-family: "GeologicaBold";
 }
 
 .postButtons {
@@ -139,10 +144,9 @@ main {
   display: flex;
   gap: 1rem;
   height: 7rem;
-
 }
 
-.optionsPanel  {
+.optionsPanel {
   display: none;
 }
 .optionsPanel button {
@@ -151,8 +155,7 @@ main {
   width: 100%;
   padding: 1rem;
   text-align: center;
-  color: #24293D;
-  background-color: white;
+  color: #24293d;
+  background-color: #8ebbff;
   border-radius: 10px;
-  
 }

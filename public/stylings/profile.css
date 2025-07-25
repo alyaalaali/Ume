@@ -281,9 +281,9 @@ footer img {
   margin-bottom: 0.2rem;
 }
 
-.likes .heart{
+.likes .heart {
   background-color: transparent;
-  border:none
+  border: none;
 }
 
 .optionsPanel {
@@ -292,10 +292,9 @@ footer img {
   display: flex;
   gap: 1rem;
   height: 7rem;
-
 }
 
-.optionsPanel  {
+.optionsPanel {
   display: none;
 }
 .optionsPanel button {
@@ -305,7 +304,7 @@ footer img {
   border: none;
   padding: 1rem;
   text-align: center;
-  color: #24293D;
-  background-color: white;
+  color: #24293d;
+  background-color: #8ebbff;
   border-radius: 10px;
-  
+}
