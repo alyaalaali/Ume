@@ -32,7 +32,7 @@ const isSignIn = require("./middlewares/is-signin.js")
 const methodOverride = require("method-override")
 const morgan = require("morgan")
 const passUserToViews = require("./middlewares/pass-user-to-views.js")
-// const createDummyUser = require('./middlewares/create-dummy-user.js')
+const previousPage = require("./middlewares/previous-page.js")
 
 // Require passUserToView & isSignedIn middlewares
 
@@ -43,6 +43,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
+app.use(previousPage)
 
 //passUserToView middleware
 
@@ -63,8 +64,10 @@ app.get("/", async (req, res) => {
   const Post = require("./models/post.js")
   const User = require("./models/user.js")
 
-  const signedUser = await User.findById(req.session.user._id) 
-  const allPosts = await Post.find({ userId: { $in: [signedUser.follow.followingsId] } })
+  const signedUser = await User.findById(req.session.user._id)
+  const allPosts = await Post.find({
+    userId: { $in: [signedUser.follow.followingsId] },
+  })
     .populate("userId")
     .populate({
       path: "comments",
@@ -73,7 +76,6 @@ app.get("/", async (req, res) => {
         select: "username displayName ",
       },
     })
-
 
   const userId = req.session.user._id
 
@@ -89,6 +91,20 @@ app.get("/", async (req, res) => {
     user: req.session.user,
   })
 })
+
+app.get("/previous-page", async (req, res) => {
+  if (req.session.previousPages) {
+    req.session.previousPages.stack.pop()
+    if (req.session.previousPages.stack.length === 0 ){
+      return res.redirect("/")  
+    }else {
+      return res.redirect(req.session.previousPages.stack.pop())
+    }
+    
+  }
+
+})
+
 // Listener
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
