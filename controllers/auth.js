@@ -101,15 +101,14 @@ exports.auth_updateProfileById_get = async (req, res) => {
 
 exports.auth_updateProfileById_put = async (req, res) => {
   try {
-    req.body.photo = "/uploadImages/" + req.file.filename
+    const user = await User.findById(req.session.user._id) 
+    req.body.photo = req.file? "/uploadImages/" + req.file.filename: user.photo 
 
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+    await User.findByIdAndUpdate(req.params.id, req.body)
 
     res.redirect(`/users/${req.params.id}`)
   } catch (error) {
-    console.log("An error has occured")
+    console.log("An error has occured", error)
   }
 }
 
