@@ -3,7 +3,6 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("../models/user.js")
 const Post = require("../models/post.js")
-const { post } = require("../routes/auth.js")
 
 //API's
 exports.auth_signup_get = async (req, res) => {
