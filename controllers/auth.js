@@ -75,6 +75,10 @@ exports.auth_signin_post = async (req, res) => {
     username: userInDatabase.username,
     _id: userInDatabase._id,
   }
+
+  req.session.previousPages = {
+    stack: []
+  }
   const signedUser = await User.findById(req.session.user._id)
   const allPosts = await Post.find({
     userId: { $in: [signedUser.follow.followingsId] },
