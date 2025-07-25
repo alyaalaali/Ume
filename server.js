@@ -92,12 +92,17 @@ app.get("/", async (req, res) => {
   })
 })
 
-app.get("/previous-page", async (req, res, next) => {
+app.get("/previous-page", async (req, res) => {
   if (req.session.previousPages) {
     req.session.previousPages.stack.pop()
-    res.redirect(req.session.previousPages.stack.pop())
+    if (req.session.previousPages.stack.length === 0 ){
+      return res.redirect("/")  
+    }else {
+      return res.redirect(req.session.previousPages.stack.pop())
+    }
+    
   }
-  next()
+
 })
 
 // Listener
