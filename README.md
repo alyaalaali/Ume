@@ -2,18 +2,14 @@
 
 #### UME is a MEN-Stack social media app designed for users to create personal profiles and connect with friends.
 
+## ![COVER](./images/UmeCover.jpg)
+
 ##### _With UME, you can:_
 
 - Create Personal Profiles
 - Follow Friends
 - Create Posts
 - Interact with Each Other
-
----
-
-### _Getting Started_
-
-You can deploy the app on: [Ume!](https://google.com)
 
 ---
 
@@ -63,4 +59,16 @@ You can deploy the app on: [Ume!](https://google.com)
 
 ---
 
+### _Future Enhancements_
+
+- video uploads
+- Notifications center
+- Two-factor authentication
+- Real-time chat
+
+---
+
 ### _Attributions_
+
+1. [Multer](https://www.npmjs.com/package/multer)
+1. [Search Bar](https://stackoverflow.com/questions/3305561/how-to-query-mongodb-with-like)
