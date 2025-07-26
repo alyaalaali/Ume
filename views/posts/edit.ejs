@@ -31,7 +31,7 @@
       <img src="/uploadImages/<%= post.photo%>" alt="" />
     </div>
     <form action="/posts/<%= post._id %>?_method=PUT" method="POST">
-      <input class="postCaption" type="text" name="caption" id="caption" value="<%= post.caption %>" />
+      <input class="postCaption" type="text" name="caption" id="caption" placeholder="Caption" value="<%= post.caption %>" />
     
       <button class="postCaption" type="submit">Confirm changes</button>
     </form>
