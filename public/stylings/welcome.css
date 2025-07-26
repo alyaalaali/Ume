@@ -3,6 +3,23 @@
   src: url("./../fonts/Geologica/Geologica-Bold.ttf");
 }
 
+.header {
+   display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+img {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    margin: 2rem;
+
+
+}
 body {
   background-color: #24293d;
   min-height: 100vh;
@@ -15,10 +32,12 @@ body {
 }
 
 .top-bar {
+  position: absolute;
   display: flex;
   justify-content: flex-end;
-  padding: 2rem;
-}
+  width: 100%;
+  margin-right: 2rem
+;}
 
 .content {
   flex: 1;
